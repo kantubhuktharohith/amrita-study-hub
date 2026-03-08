@@ -1,5 +1,6 @@
 import { useState, useMemo } from "react";
 import { useQuery } from "@tanstack/react-query";
+import { AnimatePresence, motion } from "framer-motion";
 import SearchBar from "@/components/SearchBar";
 import FilterPanel from "@/components/FilterPanel";
 import ExamPaperCard from "@/components/ExamPaperCard";
@@ -8,7 +9,8 @@ import { supabase } from "@/integrations/supabase/client";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Button } from "@/components/ui/button";
 import { EXAM_TYPES, EXAM_YEARS } from "@/data/mockData";
-import { Loader2, ArrowUpDown, X } from "lucide-react";
+import { Loader2, ArrowUpDown, X, SlidersHorizontal } from "lucide-react";
+import { useIsMobile } from "@/hooks/use-mobile";
 
 type SortOption = "newest" | "oldest" | "most-downloaded" | "title-az" | "title-za" | "top-rated";
 
