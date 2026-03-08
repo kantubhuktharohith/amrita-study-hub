@@ -83,9 +83,23 @@ const Navbar = () => {
           <Button variant="ghost" size="icon" className="rounded-full" onClick={toggle} aria-label="Toggle theme">
             {theme === "light" ? <Moon className="h-5 w-5" /> : <Sun className="h-5 w-5 text-primary" />}
           </Button>
-          <button onClick={() => setMobileOpen(!mobileOpen)}>
-            {mobileOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
-          </button>
+          {user ? (
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <Button variant="ghost" size="icon" className="rounded-full"><User className="h-5 w-5" /></Button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent align="end">
+                <DropdownMenuItem className="text-xs text-muted-foreground">{user.email}</DropdownMenuItem>
+                <DropdownMenuItem asChild><Link to="/upload">Upload Notes</Link></DropdownMenuItem>
+                <DropdownMenuItem asChild><Link to="/upload-exam-paper">Upload Exam Paper</Link></DropdownMenuItem>
+                <DropdownMenuItem asChild><Link to="/my-uploads">My Uploads</Link></DropdownMenuItem>
+                <DropdownMenuItem asChild><Link to="/about"><Info className="mr-2 h-4 w-4" /> About Me</Link></DropdownMenuItem>
+                <DropdownMenuItem onClick={signOut}><LogOut className="mr-2 h-4 w-4" /> Sign out</DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
+          ) : (
+            <Link to="/login"><Button size="sm" className="bg-hero-gradient text-primary-foreground hover:opacity-90">Sign in</Button></Link>
+          )}
         </div>
       </div>
 
