@@ -103,7 +103,7 @@ const BrowseExamPapersPage = () => {
             </SelectContent>
           </Select>
           <Select value={sort} onValueChange={(v) => setSort(v as SortOption)}>
-            <SelectTrigger className="w-[170px] bg-card">
+            <SelectTrigger className="w-full min-w-[140px] sm:w-[170px] bg-card">
               <ArrowUpDown className="mr-1.5 h-3.5 w-3.5 text-muted-foreground" />
               <SelectValue placeholder="Sort by" />
             </SelectTrigger>

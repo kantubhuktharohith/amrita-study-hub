@@ -41,7 +41,7 @@ const FilterPanel = ({
       </Select>
 
       <Select value={year} onValueChange={onYearChange}>
-        <SelectTrigger className="w-[120px] bg-card">
+        <SelectTrigger className="w-full min-w-[100px] sm:w-[120px] bg-card">
           <SelectValue placeholder="Year" />
         </SelectTrigger>
         <SelectContent>
