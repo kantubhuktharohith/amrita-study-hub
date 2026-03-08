@@ -157,3 +157,7 @@
     transition: transform 0.15s ease, opacity 0.15s ease;
   }
 }
+
+.safe-area-bottom {
+  padding-bottom: env(safe-area-inset-bottom, 0px);
+}
