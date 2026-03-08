@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { Navigate } from "react-router-dom";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
@@ -9,7 +9,7 @@ import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Loader2, User, Mail, Building, GraduationCap, Save } from "lucide-react";
+import { Loader2, User, Mail, Building, GraduationCap, Save, Camera } from "lucide-react";
 import { toast } from "sonner";
 import { DEPARTMENTS } from "@/data/mockData";
 
@@ -17,9 +17,11 @@ const ProfilePage = () => {
   const { user, loading: authLoading } = useAuth();
   const queryClient = useQueryClient();
 
+  const fileInputRef = useRef<HTMLInputElement>(null);
   const [fullName, setFullName] = useState("");
   const [department, setDepartment] = useState("");
   const [year, setYear] = useState("");
+  const [uploadingAvatar, setUploadingAvatar] = useState(false);
 
   const { data: profile, isLoading } = useQuery({
     queryKey: ["profile", user?.id],
@@ -42,6 +44,36 @@ const ProfilePage = () => {
       setYear(profile.year ? String(profile.year) : "");
     }
   }, [profile]);
+
+  const handleAvatarUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file || !user) return;
+    if (!file.type.startsWith("image/")) {
+      toast.error("Please select an image file");
+      return;
+    }
+    if (file.size > 2 * 1024 * 1024) {
+      toast.error("Image must be under 2MB");
+      return;
+    }
+    setUploadingAvatar(true);
+    const ext = file.name.split(".").pop();
+    const path = `${user.id}/avatar.${ext}`;
+    const { error: uploadError } = await supabase.storage
+      .from("avatars")
+      .upload(path, file, { upsert: true });
+    if (uploadError) {
+      toast.error("Failed to upload avatar");
+      setUploadingAvatar(false);
+      return;
+    }
+    const { data: urlData } = supabase.storage.from("avatars").getPublicUrl(path);
+    const avatarUrl = `${urlData.publicUrl}?t=${Date.now()}`;
+    await supabase.from("profiles").update({ avatar_url: avatarUrl }).eq("user_id", user.id);
+    queryClient.invalidateQueries({ queryKey: ["profile", user.id] });
+    toast.success("Avatar updated!");
+    setUploadingAvatar(false);
+  };
 
   const updateProfile = useMutation({
     mutationFn: async () => {
@@ -89,12 +121,33 @@ const ProfilePage = () => {
       <Card className="shadow-card">
         <CardHeader className="pb-4">
           <div className="flex items-center gap-4">
-            <Avatar className="h-16 w-16">
-              <AvatarImage src={profile?.avatar_url || undefined} />
-              <AvatarFallback className="bg-primary/10 text-xl font-semibold text-primary">
-                {fullName.charAt(0).toUpperCase() || "U"}
-              </AvatarFallback>
-            </Avatar>
+            <div className="relative group">
+              <Avatar className="h-16 w-16">
+                <AvatarImage src={profile?.avatar_url || undefined} />
+                <AvatarFallback className="bg-primary/10 text-xl font-semibold text-primary">
+                  {fullName.charAt(0).toUpperCase() || "U"}
+                </AvatarFallback>
+              </Avatar>
+              <button
+                type="button"
+                onClick={() => fileInputRef.current?.click()}
+                disabled={uploadingAvatar}
+                className="absolute inset-0 flex items-center justify-center rounded-full bg-foreground/50 opacity-0 group-hover:opacity-100 transition-opacity"
+              >
+                {uploadingAvatar ? (
+                  <Loader2 className="h-5 w-5 animate-spin text-background" />
+                ) : (
+                  <Camera className="h-5 w-5 text-background" />
+                )}
+              </button>
+              <input
+                ref={fileInputRef}
+                type="file"
+                accept="image/*"
+                className="hidden"
+                onChange={handleAvatarUpload}
+              />
+            </div>
             <div>
               <CardTitle className="text-xl">{fullName || "Student"}</CardTitle>
               <CardDescription className="flex items-center gap-1">
