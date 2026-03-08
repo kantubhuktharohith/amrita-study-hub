@@ -20,7 +20,7 @@ export const DEPARTMENTS = [
   "Electrical & Electronics",
   "Mechanical Engineering",
   "Civil Engineering",
-  "Information Technology",
+  
 ] as const;
 
 export const SEMESTERS = [1, 2, 3, 4, 5, 6, 7, 8] as const;
