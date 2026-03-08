@@ -34,30 +34,29 @@ const AboutPage = () => {
     <div className="container max-w-3xl py-10 px-4">
       <motion.div initial="hidden" animate="visible" className="space-y-8">
 
-        {/* Hero: Photo + Name overlay */}
-        <motion.div variants={fadeUp} custom={0} className="relative rounded-2xl overflow-hidden shadow-lg">
-          <img
-            src={rohithPhoto}
-            alt="Rohith Kantubhuktha"
-            className="w-full h-[28rem] object-cover object-top"
-          />
-          {/* Gradient overlay */}
-          <div className="absolute inset-0 bg-black/40" />
-          {/* Text centered inside photo */}
-          <div className="absolute inset-0 flex flex-col items-center justify-center text-white text-center px-6">
+        {/* Hero: Photo + Name side by side */}
+        <motion.div variants={fadeUp} custom={0} className="flex flex-col sm:flex-row items-center gap-6 sm:gap-10">
+          <div className="rounded-2xl overflow-hidden shadow-lg shrink-0 w-full sm:w-64 h-72 sm:h-80">
+            <img
+              src={rohithPhoto}
+              alt="Rohith Kantubhuktha"
+              className="w-full h-full object-cover object-top"
+            />
+          </div>
+          <div className="text-center sm:text-left">
             <motion.div
               animate={{ rotate: [0, 10, -10, 0] }}
               transition={{ repeat: Infinity, duration: 3, ease: "easeInOut" }}
               className="inline-block mb-2">
               <Sparkles className="h-6 w-6 text-primary" />
             </motion.div>
-            <h1 className="font-display text-3xl sm:text-4xl font-bold tracking-tight leading-tight drop-shadow-lg">
+            <h1 className="font-display text-3xl sm:text-4xl font-bold tracking-tight leading-tight text-foreground">
               Hey there, i'm Rohith
             </h1>
-            <p className="text-white/80 text-base mt-1 drop-shadow-md">
+            <p className="text-muted-foreground text-base mt-1">
               A Programmer / Website Developer
             </p>
-            <p className="text-white/60 text-sm mt-0.5 drop-shadow-md">The person behind GetMaterial</p>
+            <p className="text-muted-foreground/60 text-sm mt-0.5">The person behind GetMaterial</p>
           </div>
         </motion.div>
 
