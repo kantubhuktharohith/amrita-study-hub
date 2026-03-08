@@ -5,6 +5,8 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { supabase } from "@/integrations/supabase/client";
 import { fetchNoteById } from "@/lib/noteQueries";
+import RatingSection from "@/components/RatingSection";
+import CommentsSection from "@/components/CommentsSection";
 import { toast } from "sonner";
 
 const NoteDetailPage = () => {
