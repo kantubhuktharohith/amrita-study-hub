@@ -6,6 +6,8 @@ import { Badge } from "@/components/ui/badge";
 import { supabase } from "@/integrations/supabase/client";
 import { fetchExamPaperById } from "@/lib/noteQueries";
 import { EXAM_TYPES } from "@/data/mockData";
+import RatingSection from "@/components/RatingSection";
+import CommentsSection from "@/components/CommentsSection";
 import { toast } from "sonner";
 
 const ExamPaperDetailPage = () => {
@@ -68,6 +70,14 @@ const ExamPaperDetailPage = () => {
             <Flag className="mr-2 h-4 w-4" /> Report
           </Button>
         </div>
+      </div>
+
+      <div className="mt-6 rounded-lg border bg-card p-6 shadow-card">
+        <RatingSection contentType="exam_paper" contentId={paper.id} />
+      </div>
+
+      <div className="mt-6 rounded-lg border bg-card p-6 shadow-card">
+        <CommentsSection contentType="exam_paper" contentId={paper.id} />
       </div>
     </div>
   );

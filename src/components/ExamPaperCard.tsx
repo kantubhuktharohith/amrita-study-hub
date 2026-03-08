@@ -1,6 +1,8 @@
-import { FileText, Image, File, Download, User, Calendar } from "lucide-react";
+import { FileText, Image, File, Download, User, Calendar, Star } from "lucide-react";
 import { Link } from "react-router-dom";
 import { Badge } from "@/components/ui/badge";
+import { useQuery } from "@tanstack/react-query";
+import { supabase } from "@/integrations/supabase/client";
 import type { ExamPaperWithProfile } from "@/lib/noteQueries";
 import { EXAM_TYPES } from "@/data/mockData";
 
@@ -13,6 +15,19 @@ const fileIcons: Record<string, typeof FileText> = {
 const ExamPaperCard = ({ paper }: { paper: ExamPaperWithProfile }) => {
   const Icon = fileIcons[paper.file_type] || FileText;
   const examLabel = EXAM_TYPES.find((t) => t.value === paper.exam_type)?.label || paper.exam_type;
+
+  const { data: avgData } = useQuery({
+    queryKey: ["avg-rating", "exam_paper", paper.id],
+    queryFn: async () => {
+      const { data } = await supabase.rpc("get_average_rating", {
+        _content_type: "exam_paper",
+        _content_id: paper.id,
+      });
+      return data?.[0] ?? { average_rating: 0, total_ratings: 0 };
+    },
+  });
+
+  const avgRating = Number(avgData?.average_rating ?? 0);
 
   return (
     <Link
@@ -42,10 +57,18 @@ const ExamPaperCard = ({ paper }: { paper: ExamPaperWithProfile }) => {
           <User className="h-3 w-3" />
           {paper.uploader_name || "Unknown"}
         </span>
-        <span className="flex items-center gap-1">
-          <Download className="h-3 w-3" />
-          {paper.downloads}
-        </span>
+        <div className="flex items-center gap-2">
+          {avgRating > 0 && (
+            <span className="flex items-center gap-0.5">
+              <Star className="h-3 w-3 fill-warning text-warning" />
+              {avgRating.toFixed(1)}
+            </span>
+          )}
+          <span className="flex items-center gap-1">
+            <Download className="h-3 w-3" />
+            {paper.downloads}
+          </span>
+        </div>
       </div>
     </Link>
   );
