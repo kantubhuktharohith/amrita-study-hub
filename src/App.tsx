@@ -15,6 +15,7 @@ import NoteDetailPage from "./pages/NoteDetailPage";
 import ExamPaperDetailPage from "./pages/ExamPaperDetailPage";
 import MyUploadsPage from "./pages/MyUploadsPage";
 import ProfilePage from "./pages/ProfilePage";
+import AboutPage from "./pages/AboutPage";
 import LoginPage from "./pages/LoginPage";
 import SignupPage from "./pages/SignupPage";
 import NotFound from "./pages/NotFound";
@@ -41,6 +42,7 @@ const App = () => (
                 <Route path="/exam-paper/:id" element={<ExamPaperDetailPage />} />
                 <Route path="/my-uploads" element={<MyUploadsPage />} />
                 <Route path="/profile" element={<ProfilePage />} />
+                <Route path="/about" element={<AboutPage />} />
                 <Route path="/login" element={<LoginPage />} />
                 <Route path="/signup" element={<SignupPage />} />
                 <Route path="*" element={<NotFound />} />

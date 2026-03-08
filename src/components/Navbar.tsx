@@ -1,5 +1,5 @@
 import { Link, useLocation } from "react-router-dom";
-import { BookOpen, Upload, Menu, X, User, LogOut } from "lucide-react";
+import { BookOpen, Upload, Menu, X, User, LogOut, Info } from "lucide-react";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { useAuth } from "@/contexts/AuthContext";
@@ -60,6 +60,7 @@ const Navbar = () => {
                 <DropdownMenuContent align="end">
                   <DropdownMenuItem className="text-xs text-muted-foreground">{user.email}</DropdownMenuItem>
                   <DropdownMenuItem asChild><Link to="/profile"><User className="mr-2 h-4 w-4" /> Profile</Link></DropdownMenuItem>
+                  <DropdownMenuItem asChild><Link to="/about"><Info className="mr-2 h-4 w-4" /> About Me</Link></DropdownMenuItem>
                   <DropdownMenuItem onClick={signOut}><LogOut className="mr-2 h-4 w-4" /> Sign out</DropdownMenuItem>
                 </DropdownMenuContent>
               </DropdownMenu>
