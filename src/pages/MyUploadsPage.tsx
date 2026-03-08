@@ -11,10 +11,12 @@ import { supabase } from "@/integrations/supabase/client";
 import { Loader2, Upload, Trash2 } from "lucide-react";
 import { toast } from "sonner";
 import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger } from "@/components/ui/alert-dialog";
+import { useIsAdmin } from "@/hooks/useIsAdmin";
 
 const MyUploadsPage = () => {
   const { user } = useAuth();
   const queryClient = useQueryClient();
+  const { isAdmin } = useIsAdmin();
   if (!user) return <Navigate to="/login" replace />;
 
   const { data: notes = [], isLoading: notesLoading } = useQuery({
@@ -88,22 +90,24 @@ const MyUploadsPage = () => {
               {notes.map((note) => (
                 <div key={note.id} className="relative group">
                   <NoteCard note={note} />
-                  {note.status === "pending" && <Badge className="absolute top-2 right-2 bg-warning text-warning-foreground text-[10px]">Pending</Badge>}
-                  <AlertDialog>
-                    <AlertDialogTrigger asChild>
-                      <Button variant="destructive" size="icon" className="absolute bottom-2 right-2 h-8 w-8 opacity-0 group-hover:opacity-100 transition-opacity"><Trash2 className="h-4 w-4" /></Button>
-                    </AlertDialogTrigger>
-                    <AlertDialogContent>
-                      <AlertDialogHeader>
-                        <AlertDialogTitle>Delete this note?</AlertDialogTitle>
-                        <AlertDialogDescription>This will permanently delete "{note.title}". This cannot be undone.</AlertDialogDescription>
-                      </AlertDialogHeader>
-                      <AlertDialogFooter>
-                        <AlertDialogCancel>Cancel</AlertDialogCancel>
-                        <AlertDialogAction onClick={() => handleDeleteNote(note.id, note.file_url)}>Delete</AlertDialogAction>
-                      </AlertDialogFooter>
-                    </AlertDialogContent>
-                  </AlertDialog>
+                   {note.status === "pending" && <Badge className="absolute top-2 right-2 bg-warning text-warning-foreground text-[10px]">Pending</Badge>}
+                   {isAdmin && (
+                   <AlertDialog>
+                     <AlertDialogTrigger asChild>
+                       <Button variant="destructive" size="icon" className="absolute bottom-2 right-2 h-8 w-8 opacity-0 group-hover:opacity-100 transition-opacity"><Trash2 className="h-4 w-4" /></Button>
+                     </AlertDialogTrigger>
+                     <AlertDialogContent>
+                       <AlertDialogHeader>
+                         <AlertDialogTitle>Delete this note?</AlertDialogTitle>
+                         <AlertDialogDescription>This will permanently delete "{note.title}". This cannot be undone.</AlertDialogDescription>
+                       </AlertDialogHeader>
+                       <AlertDialogFooter>
+                         <AlertDialogCancel>Cancel</AlertDialogCancel>
+                         <AlertDialogAction onClick={() => handleDeleteNote(note.id, note.file_url)}>Delete</AlertDialogAction>
+                       </AlertDialogFooter>
+                     </AlertDialogContent>
+                   </AlertDialog>
+                   )}
                 </div>
               ))}
             </div>
@@ -123,22 +127,24 @@ const MyUploadsPage = () => {
               {examPapers.map((paper) => (
                 <div key={paper.id} className="relative group">
                   <ExamPaperCard paper={paper} />
-                  {paper.status === "pending" && <Badge className="absolute top-2 right-2 bg-warning text-warning-foreground text-[10px]">Pending</Badge>}
-                  <AlertDialog>
-                    <AlertDialogTrigger asChild>
-                      <Button variant="destructive" size="icon" className="absolute bottom-2 right-2 h-8 w-8 opacity-0 group-hover:opacity-100 transition-opacity"><Trash2 className="h-4 w-4" /></Button>
-                    </AlertDialogTrigger>
-                    <AlertDialogContent>
-                      <AlertDialogHeader>
-                        <AlertDialogTitle>Delete this exam paper?</AlertDialogTitle>
-                        <AlertDialogDescription>This will permanently delete "{paper.title}". This cannot be undone.</AlertDialogDescription>
-                      </AlertDialogHeader>
-                      <AlertDialogFooter>
-                        <AlertDialogCancel>Cancel</AlertDialogCancel>
-                        <AlertDialogAction onClick={() => handleDeletePaper(paper.id, paper.file_url)}>Delete</AlertDialogAction>
-                      </AlertDialogFooter>
-                    </AlertDialogContent>
-                  </AlertDialog>
+                   {paper.status === "pending" && <Badge className="absolute top-2 right-2 bg-warning text-warning-foreground text-[10px]">Pending</Badge>}
+                   {isAdmin && (
+                   <AlertDialog>
+                     <AlertDialogTrigger asChild>
+                       <Button variant="destructive" size="icon" className="absolute bottom-2 right-2 h-8 w-8 opacity-0 group-hover:opacity-100 transition-opacity"><Trash2 className="h-4 w-4" /></Button>
+                     </AlertDialogTrigger>
+                     <AlertDialogContent>
+                       <AlertDialogHeader>
+                         <AlertDialogTitle>Delete this exam paper?</AlertDialogTitle>
+                         <AlertDialogDescription>This will permanently delete "{paper.title}". This cannot be undone.</AlertDialogDescription>
+                       </AlertDialogHeader>
+                       <AlertDialogFooter>
+                         <AlertDialogCancel>Cancel</AlertDialogCancel>
+                         <AlertDialogAction onClick={() => handleDeletePaper(paper.id, paper.file_url)}>Delete</AlertDialogAction>
+                       </AlertDialogFooter>
+                     </AlertDialogContent>
+                   </AlertDialog>
+                   )}
                 </div>
               ))}
             </div>
