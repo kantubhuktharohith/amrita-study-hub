@@ -8,8 +8,11 @@ import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import HomePage from "./pages/HomePage";
 import BrowsePage from "./pages/BrowsePage";
+import BrowseExamPapersPage from "./pages/BrowseExamPapersPage";
 import UploadPage from "./pages/UploadPage";
+import UploadExamPaperPage from "./pages/UploadExamPaperPage";
 import NoteDetailPage from "./pages/NoteDetailPage";
+import ExamPaperDetailPage from "./pages/ExamPaperDetailPage";
 import MyUploadsPage from "./pages/MyUploadsPage";
 import LoginPage from "./pages/LoginPage";
 import SignupPage from "./pages/SignupPage";
@@ -30,8 +33,11 @@ const App = () => (
               <Routes>
                 <Route path="/" element={<HomePage />} />
                 <Route path="/browse" element={<BrowsePage />} />
+                <Route path="/exam-papers" element={<BrowseExamPapersPage />} />
                 <Route path="/upload" element={<UploadPage />} />
+                <Route path="/upload-exam-paper" element={<UploadExamPaperPage />} />
                 <Route path="/note/:id" element={<NoteDetailPage />} />
+                <Route path="/exam-paper/:id" element={<ExamPaperDetailPage />} />
                 <Route path="/my-uploads" element={<MyUploadsPage />} />
                 <Route path="/login" element={<LoginPage />} />
                 <Route path="/signup" element={<SignupPage />} />
