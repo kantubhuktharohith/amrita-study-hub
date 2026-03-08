@@ -32,27 +32,28 @@ const App = () => (
         <Toaster />
         <Sonner />
         <BrowserRouter>
-          <div className="flex min-h-screen flex-col">
-            <Navbar />
-            <main className="flex-1">
-              <Routes>
-                <Route path="/" element={<HomePage />} />
-                <Route path="/browse" element={<BrowsePage />} />
-                <Route path="/exam-papers" element={<BrowseExamPapersPage />} />
-                <Route path="/upload" element={<UploadPage />} />
-                <Route path="/upload-exam-paper" element={<UploadExamPaperPage />} />
-                <Route path="/note/:id" element={<NoteDetailPage />} />
-                <Route path="/exam-paper/:id" element={<ExamPaperDetailPage />} />
-                <Route path="/my-uploads" element={<MyUploadsPage />} />
-                <Route path="/profile" element={<ProfilePage />} />
-                <Route path="/about" element={<AboutPage />} />
-                <Route path="/login" element={<LoginPage />} />
-                <Route path="/signup" element={<SignupPage />} />
-                <Route path="*" element={<NotFound />} />
-              </Routes>
-            </main>
-            <Footer />
-          </div>
+           <div className="flex min-h-screen flex-col pb-14 md:pb-0">
+             <Navbar />
+             <main className="flex-1">
+               <Routes>
+                 <Route path="/" element={<HomePage />} />
+                 <Route path="/browse" element={<BrowsePage />} />
+                 <Route path="/exam-papers" element={<BrowseExamPapersPage />} />
+                 <Route path="/upload" element={<UploadPage />} />
+                 <Route path="/upload-exam-paper" element={<UploadExamPaperPage />} />
+                 <Route path="/note/:id" element={<NoteDetailPage />} />
+                 <Route path="/exam-paper/:id" element={<ExamPaperDetailPage />} />
+                 <Route path="/my-uploads" element={<MyUploadsPage />} />
+                 <Route path="/profile" element={<ProfilePage />} />
+                 <Route path="/about" element={<AboutPage />} />
+                 <Route path="/login" element={<LoginPage />} />
+                 <Route path="/signup" element={<SignupPage />} />
+                 <Route path="*" element={<NotFound />} />
+               </Routes>
+             </main>
+             <Footer />
+             <MobileBottomNav />
+           </div>
         </BrowserRouter>
       </TooltipProvider>
     </AuthProvider>
