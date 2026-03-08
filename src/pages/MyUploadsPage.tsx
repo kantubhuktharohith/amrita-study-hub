@@ -16,6 +16,7 @@ import { useIsAdmin } from "@/hooks/useIsAdmin";
 const MyUploadsPage = () => {
   const { user } = useAuth();
   const queryClient = useQueryClient();
+  const { isAdmin } = useIsAdmin();
   if (!user) return <Navigate to="/login" replace />;
 
   const { data: notes = [], isLoading: notesLoading } = useQuery({
