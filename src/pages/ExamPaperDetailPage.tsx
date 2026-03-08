@@ -71,6 +71,14 @@ const ExamPaperDetailPage = () => {
           </Button>
         </div>
       </div>
+
+      <div className="mt-6 rounded-lg border bg-card p-6 shadow-card">
+        <RatingSection contentType="exam_paper" contentId={paper.id} />
+      </div>
+
+      <div className="mt-6 rounded-lg border bg-card p-6 shadow-card">
+        <CommentsSection contentType="exam_paper" contentId={paper.id} />
+      </div>
     </div>
   );
 };

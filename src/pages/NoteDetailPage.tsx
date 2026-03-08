@@ -69,6 +69,14 @@ const NoteDetailPage = () => {
           </Button>
         </div>
       </div>
+
+      <div className="mt-6 rounded-lg border bg-card p-6 shadow-card">
+        <RatingSection contentType="note" contentId={note.id} />
+      </div>
+
+      <div className="mt-6 rounded-lg border bg-card p-6 shadow-card">
+        <CommentsSection contentType="note" contentId={note.id} />
+      </div>
     </div>
   );
 };
