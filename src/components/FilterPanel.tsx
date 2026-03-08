@@ -17,7 +17,7 @@ const FilterPanel = ({
   return (
     <div className="flex flex-wrap gap-3">
       <Select value={department} onValueChange={onDepartmentChange}>
-        <SelectTrigger className="w-[200px] bg-card">
+        <SelectTrigger className="w-full min-w-[140px] sm:w-[200px] bg-card">
           <SelectValue placeholder="Department" />
         </SelectTrigger>
         <SelectContent>
@@ -29,7 +29,7 @@ const FilterPanel = ({
       </Select>
 
       <Select value={semester} onValueChange={onSemesterChange}>
-        <SelectTrigger className="w-[140px] bg-card">
+        <SelectTrigger className="w-full min-w-[120px] sm:w-[140px] bg-card">
           <SelectValue placeholder="Semester" />
         </SelectTrigger>
         <SelectContent>
@@ -41,7 +41,7 @@ const FilterPanel = ({
       </Select>
 
       <Select value={year} onValueChange={onYearChange}>
-        <SelectTrigger className="w-[120px] bg-card">
+        <SelectTrigger className="w-full min-w-[100px] sm:w-[120px] bg-card">
           <SelectValue placeholder="Year" />
         </SelectTrigger>
         <SelectContent>

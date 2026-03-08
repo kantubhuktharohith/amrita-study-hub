@@ -30,7 +30,6 @@ const Navbar = () => {
         <Link to="/" className="flex items-center gap-2">
           <img src={collegeLogo} alt="College Logo" className="h-9 w-9 rounded-lg object-cover" />
           <span className="font-display text-xl font-bold">GetMaterial</span>
-          <span className="font-display text-xl font-bold">GetMaterial</span>
         </Link>
 
         <div className="hidden items-center gap-1 md:flex">

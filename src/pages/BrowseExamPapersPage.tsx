@@ -89,21 +89,21 @@ const BrowseExamPapersPage = () => {
         <div className="flex flex-wrap items-center gap-3">
           <FilterPanel department={department} semester={semester} year={year} onDepartmentChange={setDepartment} onSemesterChange={setSemester} onYearChange={setYear} />
           <Select value={examType} onValueChange={setExamType}>
-            <SelectTrigger className="w-[150px] bg-card"><SelectValue placeholder="Exam Type" /></SelectTrigger>
+            <SelectTrigger className="w-full min-w-[120px] sm:w-[150px] bg-card"><SelectValue placeholder="Exam Type" /></SelectTrigger>
             <SelectContent>
               <SelectItem value="all">All Types</SelectItem>
               {EXAM_TYPES.map((t) => <SelectItem key={t.value} value={t.value}>{t.label}</SelectItem>)}
             </SelectContent>
           </Select>
           <Select value={examYear} onValueChange={setExamYear}>
-            <SelectTrigger className="w-[130px] bg-card"><SelectValue placeholder="Exam Year" /></SelectTrigger>
+            <SelectTrigger className="w-full min-w-[100px] sm:w-[130px] bg-card"><SelectValue placeholder="Exam Year" /></SelectTrigger>
             <SelectContent>
               <SelectItem value="all">All Years</SelectItem>
               {EXAM_YEARS.map((y) => <SelectItem key={y} value={String(y)}>{y}</SelectItem>)}
             </SelectContent>
           </Select>
           <Select value={sort} onValueChange={(v) => setSort(v as SortOption)}>
-            <SelectTrigger className="w-[170px] bg-card">
+            <SelectTrigger className="w-full min-w-[140px] sm:w-[170px] bg-card">
               <ArrowUpDown className="mr-1.5 h-3.5 w-3.5 text-muted-foreground" />
               <SelectValue placeholder="Sort by" />
             </SelectTrigger>

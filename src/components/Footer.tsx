@@ -9,7 +9,6 @@ const Footer = () => {
           <div className="flex items-center gap-2">
             <img src={collegeLogo} alt="College Logo" className="h-8 w-8 rounded-md object-cover" />
             <span className="font-display text-lg font-bold">GetMaterial</span>
-            <span className="font-display text-lg font-bold">GetMaterial</span>
           </div>
 
           <p className="text-sm text-muted-foreground text-center">
