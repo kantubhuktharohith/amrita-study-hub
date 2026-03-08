@@ -1,6 +1,8 @@
-import { FileText, Image, File, Download, User } from "lucide-react";
+import { FileText, Image, File, Download, User, Star } from "lucide-react";
 import { Link } from "react-router-dom";
 import { Badge } from "@/components/ui/badge";
+import { useQuery } from "@tanstack/react-query";
+import { supabase } from "@/integrations/supabase/client";
 import type { Tables } from "@/integrations/supabase/types";
 
 export type NoteWithProfile = Tables<"notes"> & { uploader_name?: string };
