@@ -1,4 +1,5 @@
 import { Card, CardContent } from "@/components/ui/card";
+import rohithPhoto from "@/assets/rohith-photo.jpeg";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
 import { Github, Linkedin, Mail, Globe, Code, GraduationCap, MapPin, Sparkles, Heart, Rocket } from "lucide-react";
