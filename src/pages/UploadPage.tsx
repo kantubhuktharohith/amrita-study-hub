@@ -11,15 +11,15 @@ import { toast } from "sonner";
 import { useAuth } from "@/contexts/AuthContext";
 
 const UploadPage = () => {
-
-  if (!user) return <Navigate to="/login" replace />;
-
+  const { user } = useAuth();
   const [title, setTitle] = useState("");
   const [subject, setSubject] = useState("");
   const [department, setDepartment] = useState("");
   const [semester, setSemester] = useState("");
   const [description, setDescription] = useState("");
   const [file, setFile] = useState<File | null>(null);
+
+  if (!user) return <Navigate to="/login" replace />;
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
