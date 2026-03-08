@@ -103,29 +103,6 @@ const Navbar = () => {
         </div>
       </div>
 
-      {mobileOpen && (
-        <div className="border-t bg-card p-4 md:hidden">
-          <div className="flex flex-col gap-1">
-            {links.map((link) => (
-              <Link key={link.to} to={link.to} onClick={() => setMobileOpen(false)} className={`rounded-md px-3 py-2.5 text-sm font-medium transition-colors ${isActive(link.to) ? "bg-primary/10 text-primary" : "text-muted-foreground"}`}>
-                {link.label}
-              </Link>
-            ))}
-            {user ? (
-              <>
-                <Link to="/profile" onClick={() => setMobileOpen(false)} className="rounded-md px-3 py-2.5 text-sm font-medium text-muted-foreground">Profile</Link>
-                <Link to="/upload-exam-paper" onClick={() => setMobileOpen(false)} className="rounded-md px-3 py-2.5 text-sm font-medium text-muted-foreground">Upload Exam Paper</Link>
-                <button onClick={() => { signOut(); setMobileOpen(false); }} className="rounded-md px-3 py-2.5 text-left text-sm font-medium text-destructive">Sign out</button>
-              </>
-            ) : (
-              <>
-                <Link to="/login" onClick={() => setMobileOpen(false)} className="rounded-md px-3 py-2.5 text-sm font-medium text-muted-foreground">Sign in</Link>
-                <Link to="/signup" onClick={() => setMobileOpen(false)} className="rounded-md px-3 py-2.5 text-sm font-medium text-primary">Sign up</Link>
-              </>
-            )}
-          </div>
-        </div>
-      )}
     </nav>
   );
 };
