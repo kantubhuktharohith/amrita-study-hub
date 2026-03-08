@@ -6,6 +6,8 @@ import { Badge } from "@/components/ui/badge";
 import { supabase } from "@/integrations/supabase/client";
 import { fetchExamPaperById } from "@/lib/noteQueries";
 import { EXAM_TYPES } from "@/data/mockData";
+import RatingSection from "@/components/RatingSection";
+import CommentsSection from "@/components/CommentsSection";
 import { toast } from "sonner";
 
 const ExamPaperDetailPage = () => {
