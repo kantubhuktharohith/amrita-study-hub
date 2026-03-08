@@ -16,11 +16,11 @@ export interface Note {
 
 export const DEPARTMENTS = [
   "Computer Science & Engineering",
+  "Computer Science & Engineering (Big Data Analytics)",
   "Electronics & Communication",
   "Electrical & Electronics",
   "Mechanical Engineering",
   "Civil Engineering",
-  
 ] as const;
 
 export const SEMESTERS = [1, 2, 3, 4, 5, 6, 7, 8] as const;
