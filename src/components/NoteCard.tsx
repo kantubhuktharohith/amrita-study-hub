@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { Badge } from "@/components/ui/badge";
 import type { Tables } from "@/integrations/supabase/types";
 
-type NoteRow = Tables<"notes"> & { profiles?: { full_name: string } | null };
+export type NoteWithProfile = Tables<"notes"> & { uploader_name?: string };
 
 const fileIcons: Record<string, typeof FileText> = {
   pdf: FileText,
@@ -11,9 +11,8 @@ const fileIcons: Record<string, typeof FileText> = {
   doc: File,
 };
 
-const NoteCard = ({ note }: { note: NoteRow }) => {
+const NoteCard = ({ note }: { note: NoteWithProfile }) => {
   const Icon = fileIcons[note.file_type] || FileText;
-  const uploaderName = note.profiles?.full_name || "Unknown";
 
   return (
     <Link
@@ -32,22 +31,17 @@ const NoteCard = ({ note }: { note: NoteRow }) => {
       <h3 className="mb-1 font-display text-sm font-semibold leading-tight group-hover:text-primary transition-colors line-clamp-2">
         {note.title}
       </h3>
-
       <p className="mb-3 text-xs text-muted-foreground">{note.subject}</p>
 
       <div className="flex flex-wrap gap-1.5 mb-3">
-        <Badge variant="outline" className="text-[10px] px-1.5 py-0">
-          Sem {note.semester}
-        </Badge>
-        <Badge variant="outline" className="text-[10px] px-1.5 py-0">
-          {note.department.split(" ")[0]}
-        </Badge>
+        <Badge variant="outline" className="text-[10px] px-1.5 py-0">Sem {note.semester}</Badge>
+        <Badge variant="outline" className="text-[10px] px-1.5 py-0">{note.department.split(" ")[0]}</Badge>
       </div>
 
       <div className="flex items-center justify-between text-xs text-muted-foreground">
         <span className="flex items-center gap-1">
           <User className="h-3 w-3" />
-          {uploaderName}
+          {note.uploader_name || "Unknown"}
         </span>
         <span className="flex items-center gap-1">
           <Download className="h-3 w-3" />
