@@ -42,9 +42,9 @@ const AboutPage = () => {
             className="w-full h-[28rem] object-cover object-top"
           />
           {/* Gradient overlay */}
-          <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-transparent" />
-          {/* Text on photo */}
-          <div className="absolute bottom-0 left-0 right-0 p-8 text-white">
+          <div className="absolute inset-0 bg-gradient-to-b from-black/70 via-transparent to-black/40" />
+          {/* Text on top of photo */}
+          <div className="absolute top-0 left-0 right-0 p-8 text-white">
             <motion.div
               animate={{ rotate: [0, 10, -10, 0] }}
               transition={{ repeat: Infinity, duration: 3, ease: "easeInOut" }}
