@@ -29,7 +29,7 @@ const FilterPanel = ({
       </Select>
 
       <Select value={semester} onValueChange={onSemesterChange}>
-        <SelectTrigger className="w-[140px] bg-card">
+        <SelectTrigger className="w-full min-w-[120px] sm:w-[140px] bg-card">
           <SelectValue placeholder="Semester" />
         </SelectTrigger>
         <SelectContent>
