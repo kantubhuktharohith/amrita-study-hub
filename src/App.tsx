@@ -53,6 +53,7 @@ const App = () => (
                </Routes>
              </main>
              <Footer />
+             <MobileUploadFAB />
              <MobileBottomNav />
            </div>
         </BrowserRouter>
