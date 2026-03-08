@@ -1,6 +1,8 @@
-import { FileText, Image, File, Download, User, Calendar } from "lucide-react";
+import { FileText, Image, File, Download, User, Calendar, Star } from "lucide-react";
 import { Link } from "react-router-dom";
 import { Badge } from "@/components/ui/badge";
+import { useQuery } from "@tanstack/react-query";
+import { supabase } from "@/integrations/supabase/client";
 import type { ExamPaperWithProfile } from "@/lib/noteQueries";
 import { EXAM_TYPES } from "@/data/mockData";
 
