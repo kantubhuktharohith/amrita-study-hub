@@ -33,7 +33,7 @@ const Navbar = () => {
 
         <div className="hidden items-center gap-1 md:flex">
           {links.map((link) => (
-            <Link key={link.to} to={link.to} className={`rounded-md px-3 py-2 text-sm font-medium transition-colors ${isActive(link.to) ? "bg-primary/10 text-primary" : "text-muted-foreground hover:text-foreground"}`}>
+            <Link key={link.to} to={link.to} className={`nav-link-orange rounded-md px-3 py-2 text-sm font-medium transition-colors ${isActive(link.to) ? "bg-primary/10 text-primary" : "text-muted-foreground hover:text-foreground"}`}>
               {link.label}
             </Link>
           ))}
