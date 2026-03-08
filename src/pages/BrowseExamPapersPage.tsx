@@ -165,6 +165,7 @@ const BrowseExamPapersPage = () => {
             </motion.div>
           )}
         </AnimatePresence>
+      </div>
 
       {!isLoading && filtered.length > 0 && (
         <p className="mb-4 text-sm text-muted-foreground">{filtered.length} result{filtered.length !== 1 ? "s" : ""}</p>
