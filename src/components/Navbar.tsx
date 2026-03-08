@@ -53,11 +53,6 @@ const Navbar = () => {
                   <DropdownMenuItem asChild><Link to="/upload-exam-paper">Upload Exam Paper</Link></DropdownMenuItem>
                 </DropdownMenuContent>
               </DropdownMenu>
-              <Link to="/about">
-                <Button variant="ghost" size="sm" className="text-muted-foreground hover:text-foreground">
-                  <Info className="mr-1.5 h-4 w-4" /> About Me
-                </Button>
-              </Link>
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
                   <Button variant="ghost" size="icon" className="rounded-full"><User className="h-5 w-5" /></Button>
@@ -68,6 +63,11 @@ const Navbar = () => {
                   <DropdownMenuItem onClick={signOut}><LogOut className="mr-2 h-4 w-4" /> Sign out</DropdownMenuItem>
                 </DropdownMenuContent>
               </DropdownMenu>
+              <Link to="/about">
+                <Button variant="ghost" size="sm" className="text-muted-foreground hover:text-foreground">
+                  <Info className="mr-1.5 h-4 w-4" /> About Me
+                </Button>
+              </Link>
             </>
           ) : (
             <div className="flex gap-2">
