@@ -87,4 +87,25 @@
   .shadow-card-hover {
     box-shadow: var(--card-shadow-hover);
   }
+
+  .nav-link-orange {
+    @apply relative overflow-hidden;
+  }
+
+  .nav-link-orange::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: hsl(var(--primary) / 0.15);
+    border-radius: inherit;
+    transform: scale(0);
+    opacity: 0;
+    transition: transform 0.3s ease, opacity 0.3s ease;
+  }
+
+  .nav-link-orange:active::after {
+    transform: scale(1);
+    opacity: 1;
+    transition: transform 0.15s ease, opacity 0.15s ease;
+  }
 }
