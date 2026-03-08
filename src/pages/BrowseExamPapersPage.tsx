@@ -15,6 +15,8 @@ import { useIsMobile } from "@/hooks/use-mobile";
 type SortOption = "newest" | "oldest" | "most-downloaded" | "title-az" | "title-za" | "top-rated";
 
 const BrowseExamPapersPage = () => {
+  const isMobile = useIsMobile();
+  const [filtersOpen, setFiltersOpen] = useState(false);
   const [search, setSearch] = useState("");
   const [department, setDepartment] = useState("all");
   const [semester, setSemester] = useState("all");
