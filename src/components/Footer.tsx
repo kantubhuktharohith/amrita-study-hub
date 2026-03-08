@@ -1,4 +1,4 @@
-import { BookOpen } from "lucide-react";
+import collegeLogo from "@/assets/college-logo.jpg";
 import { Link } from "react-router-dom";
 
 const Footer = () => {
