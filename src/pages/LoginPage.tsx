@@ -7,7 +7,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Separator } from "@/components/ui/separator";
 import { toast } from "sonner";
-import { BookOpen } from "lucide-react";
+import collegeLogo from "@/assets/college-logo.jpg";
 import { useAuth } from "@/contexts/AuthContext";
 
 const LoginPage = () => {
