@@ -1,7 +1,7 @@
 import { Link, useLocation } from "react-router-dom";
 import { Upload, User, LogOut, Info, Sun, Moon } from "lucide-react";
 import collegeLogo from "@/assets/college-logo.jpg";
-import { useState } from "react";
+import { Button } from "@/components/ui/button";
 import { Button } from "@/components/ui/button";
 import { useAuth } from "@/contexts/AuthContext";
 import { useTheme } from "@/components/ThemeProvider";
