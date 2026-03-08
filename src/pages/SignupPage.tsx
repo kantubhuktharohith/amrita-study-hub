@@ -8,7 +8,7 @@ import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Separator } from "@/components/ui/separator";
 import { toast } from "sonner";
-import { BookOpen } from "lucide-react";
+import collegeLogo from "@/assets/college-logo.jpg";
 import { DEPARTMENTS } from "@/data/mockData";
 import { useAuth } from "@/contexts/AuthContext";
 
