@@ -17,7 +17,7 @@ const FilterPanel = ({
   return (
     <div className="flex flex-wrap gap-3">
       <Select value={department} onValueChange={onDepartmentChange}>
-        <SelectTrigger className="w-[200px] bg-card">
+        <SelectTrigger className="w-full min-w-[140px] sm:w-[200px] bg-card">
           <SelectValue placeholder="Department" />
         </SelectTrigger>
         <SelectContent>
