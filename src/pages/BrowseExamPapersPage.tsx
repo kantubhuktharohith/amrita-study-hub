@@ -96,7 +96,7 @@ const BrowseExamPapersPage = () => {
             </SelectContent>
           </Select>
           <Select value={examYear} onValueChange={setExamYear}>
-            <SelectTrigger className="w-[130px] bg-card"><SelectValue placeholder="Exam Year" /></SelectTrigger>
+            <SelectTrigger className="w-full min-w-[100px] sm:w-[130px] bg-card"><SelectValue placeholder="Exam Year" /></SelectTrigger>
             <SelectContent>
               <SelectItem value="all">All Years</SelectItem>
               {EXAM_YEARS.map((y) => <SelectItem key={y} value={String(y)}>{y}</SelectItem>)}
