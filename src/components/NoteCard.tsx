@@ -16,7 +16,18 @@ const fileIcons: Record<string, typeof FileText> = {
 const NoteCard = ({ note }: { note: NoteWithProfile }) => {
   const Icon = fileIcons[note.file_type] || FileText;
 
-  return (
+  const { data: avgData } = useQuery({
+    queryKey: ["avg-rating", "note", note.id],
+    queryFn: async () => {
+      const { data } = await supabase.rpc("get_average_rating", {
+        _content_type: "note",
+        _content_id: note.id,
+      });
+      return data?.[0] ?? { average_rating: 0, total_ratings: 0 };
+    },
+  });
+
+  const avgRating = Number(avgData?.average_rating ?? 0);
     <Link
       to={`/note/${note.id}`}
       className="group block rounded-lg border bg-card p-4 shadow-card transition-all hover:shadow-card-hover hover:-translate-y-0.5"
