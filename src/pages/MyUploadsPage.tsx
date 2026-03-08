@@ -127,22 +127,24 @@ const MyUploadsPage = () => {
               {examPapers.map((paper) => (
                 <div key={paper.id} className="relative group">
                   <ExamPaperCard paper={paper} />
-                  {paper.status === "pending" && <Badge className="absolute top-2 right-2 bg-warning text-warning-foreground text-[10px]">Pending</Badge>}
-                  <AlertDialog>
-                    <AlertDialogTrigger asChild>
-                      <Button variant="destructive" size="icon" className="absolute bottom-2 right-2 h-8 w-8 opacity-0 group-hover:opacity-100 transition-opacity"><Trash2 className="h-4 w-4" /></Button>
-                    </AlertDialogTrigger>
-                    <AlertDialogContent>
-                      <AlertDialogHeader>
-                        <AlertDialogTitle>Delete this exam paper?</AlertDialogTitle>
-                        <AlertDialogDescription>This will permanently delete "{paper.title}". This cannot be undone.</AlertDialogDescription>
-                      </AlertDialogHeader>
-                      <AlertDialogFooter>
-                        <AlertDialogCancel>Cancel</AlertDialogCancel>
-                        <AlertDialogAction onClick={() => handleDeletePaper(paper.id, paper.file_url)}>Delete</AlertDialogAction>
-                      </AlertDialogFooter>
-                    </AlertDialogContent>
-                  </AlertDialog>
+                   {paper.status === "pending" && <Badge className="absolute top-2 right-2 bg-warning text-warning-foreground text-[10px]">Pending</Badge>}
+                   {isAdmin && (
+                   <AlertDialog>
+                     <AlertDialogTrigger asChild>
+                       <Button variant="destructive" size="icon" className="absolute bottom-2 right-2 h-8 w-8 opacity-0 group-hover:opacity-100 transition-opacity"><Trash2 className="h-4 w-4" /></Button>
+                     </AlertDialogTrigger>
+                     <AlertDialogContent>
+                       <AlertDialogHeader>
+                         <AlertDialogTitle>Delete this exam paper?</AlertDialogTitle>
+                         <AlertDialogDescription>This will permanently delete "{paper.title}". This cannot be undone.</AlertDialogDescription>
+                       </AlertDialogHeader>
+                       <AlertDialogFooter>
+                         <AlertDialogCancel>Cancel</AlertDialogCancel>
+                         <AlertDialogAction onClick={() => handleDeletePaper(paper.id, paper.file_url)}>Delete</AlertDialogAction>
+                       </AlertDialogFooter>
+                     </AlertDialogContent>
+                   </AlertDialog>
+                   )}
                 </div>
               ))}
             </div>
