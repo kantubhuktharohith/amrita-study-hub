@@ -1,4 +1,5 @@
 import { Card, CardContent } from "@/components/ui/card";
+import rohithPhoto from "@/assets/rohith-photo.jpeg";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
 import { Github, Linkedin, Mail, Globe, Code, GraduationCap, MapPin, Sparkles, Heart, Rocket } from "lucide-react";
@@ -70,7 +71,7 @@ const AboutPage = () => {
                 transition={{ type: "spring", stiffness: 300 }}>
                 
                 <Avatar className="h-28 w-28 border-4 border-card shadow-lg ring-2 ring-primary/20">
-                  <AvatarImage src="" />
+                  <AvatarImage src={rohithPhoto} alt="Rohith Kantubhuktha" />
                   <AvatarFallback className="bg-gradient-to-br from-primary to-primary/70 text-3xl font-bold text-primary-foreground">
                     RK
                   </AvatarFallback>
