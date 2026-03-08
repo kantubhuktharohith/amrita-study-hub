@@ -34,38 +34,39 @@ const AboutPage = () => {
     <div className="container max-w-3xl py-10 px-4">
       <motion.div initial="hidden" animate="visible" className="space-y-8">
 
-        {/* Header */}
-        <motion.div variants={fadeUp} custom={0} className="text-center space-y-2">
-          <motion.div
-            animate={{ rotate: [0, 10, -10, 0] }}
-            transition={{ repeat: Infinity, duration: 3, ease: "easeInOut" }}
-            className="inline-block">
-            
-            <Sparkles className="h-8 w-8 text-primary mx-auto" />
-          </motion.div>
-          <h1 className="font-display text-4xl font-bold tracking-tight mx-0">​Hey there, i'm Rohith 
-        </h1>
-          <p className="text-muted-foreground text-sm">The person behind GetMaterial</p>
+        {/* Hero: Photo + Name overlay */}
+        <motion.div variants={fadeUp} custom={0} className="relative rounded-2xl overflow-hidden shadow-lg">
+          <img
+            src={rohithPhoto}
+            alt="Rohith Kantubhuktha"
+            className="w-full h-[28rem] object-cover object-top"
+          />
+          {/* Gradient overlay */}
+          <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-transparent" />
+          {/* Text on photo */}
+          <div className="absolute bottom-0 left-0 right-0 p-8 text-white">
+            <motion.div
+              animate={{ rotate: [0, 10, -10, 0] }}
+              transition={{ repeat: Infinity, duration: 3, ease: "easeInOut" }}
+              className="inline-block mb-2">
+              <Sparkles className="h-6 w-6 text-primary" />
+            </motion.div>
+            <h1 className="font-display text-3xl sm:text-4xl font-bold tracking-tight leading-tight">
+              Hey there, i'm Rohith
+            </h1>
+            <p className="text-white/70 text-base mt-1">
+              A Programmer / Website Developer
+            </p>
+            <p className="text-white/50 text-sm mt-0.5">The person behind GetMaterial</p>
+          </div>
         </motion.div>
 
         {/* Main Card */}
         <motion.div variants={fadeUp} custom={1}>
           <Card className="shadow-card overflow-hidden border-0 ring-1 ring-border/50">
-            {/* Gradient Banner */}
-            <div className="h-36 relative overflow-hidden" style={{ background: "var(--hero-gradient)" }}>
-              <motion.div className="absolute inset-0 opacity-30"
-              style={{
-                backgroundImage: "radial-gradient(circle at 20% 50%, hsl(var(--primary-foreground) / 0.3) 0%, transparent 50%), radial-gradient(circle at 80% 50%, hsl(var(--primary-foreground) / 0.2) 0%, transparent 50%)"
-              }}
-              animate={{ scale: [1, 1.05, 1] }}
-              transition={{ repeat: Infinity, duration: 6, ease: "easeInOut" }} />
-              
-              <div className="absolute bottom-0 left-0 right-0 h-16 bg-gradient-to-t from-card to-transparent" />
-            </div>
-
-            <CardContent className="relative -mt-16 pb-10 px-8">
+            <CardContent className="pb-10 px-8 pt-8">
               {/* Name & Info */}
-              <motion.div variants={fadeUp} custom={2} className="mt-20 space-y-1.5">
+              <motion.div variants={fadeUp} custom={2} className="space-y-1.5">
                 <h2 className="font-display text-2xl font-bold text-foreground">
                   Rohith Kantubhuktha
                 </h2>
@@ -93,20 +94,6 @@ const AboutPage = () => {
                     </p>
                   </div>
                 </div>
-              </motion.div>
-
-              {/* Photo */}
-              <motion.div variants={fadeUp} custom={3.5} className="mt-8">
-                <motion.div
-                  whileHover={{ scale: 1.02 }}
-                  transition={{ type: "spring", stiffness: 300 }}
-                  className="rounded-2xl overflow-hidden border border-border/50 shadow-lg">
-                  <img
-                    src={rohithPhoto}
-                    alt="Rohith Kantubhuktha"
-                    className="w-full h-auto max-h-[28rem] object-cover object-top"
-                  />
-                </motion.div>
               </motion.div>
 
               {/* Skills */}
