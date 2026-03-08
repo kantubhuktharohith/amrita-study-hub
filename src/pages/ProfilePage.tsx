@@ -17,9 +17,11 @@ const ProfilePage = () => {
   const { user, loading: authLoading } = useAuth();
   const queryClient = useQueryClient();
 
+  const fileInputRef = useRef<HTMLInputElement>(null);
   const [fullName, setFullName] = useState("");
   const [department, setDepartment] = useState("");
   const [year, setYear] = useState("");
+  const [uploadingAvatar, setUploadingAvatar] = useState(false);
 
   const { data: profile, isLoading } = useQuery({
     queryKey: ["profile", user?.id],
