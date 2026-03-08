@@ -43,7 +43,7 @@ const AboutPage = () => {
             
             <Sparkles className="h-8 w-8 text-primary mx-auto" />
           </motion.div>
-          <h1 className="font-display text-4xl font-bold tracking-tight mx-0">​Hey there, i'm Rohith. 
+          <h1 className="font-display text-4xl font-bold tracking-tight mx-0">​Hey there, i'm Rohith 
         </h1>
           <p className="text-muted-foreground text-sm">The person behind GetMaterial</p>
         </motion.div>
