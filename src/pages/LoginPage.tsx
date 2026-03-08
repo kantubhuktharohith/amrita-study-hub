@@ -7,7 +7,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Separator } from "@/components/ui/separator";
 import { toast } from "sonner";
-import { BookOpen } from "lucide-react";
+import collegeLogo from "@/assets/college-logo.jpg";
 import { useAuth } from "@/contexts/AuthContext";
 
 const LoginPage = () => {
@@ -42,8 +42,8 @@ const LoginPage = () => {
     <div className="flex min-h-[80vh] items-center justify-center px-4">
       <div className="w-full max-w-sm space-y-6">
         <div className="text-center">
-          <div className="mx-auto mb-3 flex h-12 w-12 items-center justify-center rounded-xl bg-hero-gradient">
-            <BookOpen className="h-6 w-6 text-primary-foreground" />
+          <div className="mx-auto mb-3 flex h-12 w-12 items-center justify-center rounded-xl overflow-hidden">
+            <img src={collegeLogo} alt="College Logo" className="h-full w-full object-cover" />
           </div>
           <h1 className="font-display text-2xl font-bold">Welcome back</h1>
           <p className="text-sm text-muted-foreground">Sign in to your GetMaterial account</p>
