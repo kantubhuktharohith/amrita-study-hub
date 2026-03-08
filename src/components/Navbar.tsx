@@ -9,7 +9,6 @@ import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigge
 
 const Navbar = () => {
   const location = useLocation();
-  const location = useLocation();
   const { user, signOut } = useAuth();
   const { theme, toggle } = useTheme();
 
