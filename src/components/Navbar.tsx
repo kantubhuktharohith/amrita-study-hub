@@ -88,6 +88,7 @@ const Navbar = () => {
             ))}
             {user ? (
               <>
+                <Link to="/profile" onClick={() => setMobileOpen(false)} className="rounded-md px-3 py-2.5 text-sm font-medium text-muted-foreground">Profile</Link>
                 <Link to="/upload-exam-paper" onClick={() => setMobileOpen(false)} className="rounded-md px-3 py-2.5 text-sm font-medium text-muted-foreground">Upload Exam Paper</Link>
                 <button onClick={() => { signOut(); setMobileOpen(false); }} className="rounded-md px-3 py-2.5 text-left text-sm font-medium text-destructive">Sign out</button>
               </>
