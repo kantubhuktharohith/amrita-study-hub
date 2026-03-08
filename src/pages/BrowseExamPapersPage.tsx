@@ -89,7 +89,7 @@ const BrowseExamPapersPage = () => {
         <div className="flex flex-wrap items-center gap-3">
           <FilterPanel department={department} semester={semester} year={year} onDepartmentChange={setDepartment} onSemesterChange={setSemester} onYearChange={setYear} />
           <Select value={examType} onValueChange={setExamType}>
-            <SelectTrigger className="w-[150px] bg-card"><SelectValue placeholder="Exam Type" /></SelectTrigger>
+            <SelectTrigger className="w-full min-w-[120px] sm:w-[150px] bg-card"><SelectValue placeholder="Exam Type" /></SelectTrigger>
             <SelectContent>
               <SelectItem value="all">All Types</SelectItem>
               {EXAM_TYPES.map((t) => <SelectItem key={t.value} value={t.value}>{t.label}</SelectItem>)}
