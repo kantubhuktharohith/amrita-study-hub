@@ -1,5 +1,5 @@
 import { Link, useLocation } from "react-router-dom";
-import { BookOpen, Upload, Menu, X, User, LogOut } from "lucide-react";
+import { BookOpen, Upload, Menu, X, User, LogOut, Info } from "lucide-react";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { useAuth } from "@/contexts/AuthContext";
