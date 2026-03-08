@@ -121,12 +121,33 @@ const ProfilePage = () => {
       <Card className="shadow-card">
         <CardHeader className="pb-4">
           <div className="flex items-center gap-4">
-            <Avatar className="h-16 w-16">
-              <AvatarImage src={profile?.avatar_url || undefined} />
-              <AvatarFallback className="bg-primary/10 text-xl font-semibold text-primary">
-                {fullName.charAt(0).toUpperCase() || "U"}
-              </AvatarFallback>
-            </Avatar>
+            <div className="relative group">
+              <Avatar className="h-16 w-16">
+                <AvatarImage src={profile?.avatar_url || undefined} />
+                <AvatarFallback className="bg-primary/10 text-xl font-semibold text-primary">
+                  {fullName.charAt(0).toUpperCase() || "U"}
+                </AvatarFallback>
+              </Avatar>
+              <button
+                type="button"
+                onClick={() => fileInputRef.current?.click()}
+                disabled={uploadingAvatar}
+                className="absolute inset-0 flex items-center justify-center rounded-full bg-foreground/50 opacity-0 group-hover:opacity-100 transition-opacity"
+              >
+                {uploadingAvatar ? (
+                  <Loader2 className="h-5 w-5 animate-spin text-background" />
+                ) : (
+                  <Camera className="h-5 w-5 text-background" />
+                )}
+              </button>
+              <input
+                ref={fileInputRef}
+                type="file"
+                accept="image/*"
+                className="hidden"
+                onChange={handleAvatarUpload}
+              />
+            </div>
             <div>
               <CardTitle className="text-xl">{fullName || "Student"}</CardTitle>
               <CardDescription className="flex items-center gap-1">
