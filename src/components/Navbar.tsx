@@ -14,7 +14,6 @@ const Navbar = () => {
     { to: "/", label: "Home" },
     { to: "/browse", label: "Notes" },
     { to: "/exam-papers", label: "Exam Papers" },
-    { to: "/about", label: "About Me" },
     ...(user ? [
       { to: "/my-uploads", label: "My Uploads" },
     ] : []),
