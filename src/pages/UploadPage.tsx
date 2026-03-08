@@ -1,6 +1,6 @@
 import { useState } from "react";
-import { Navigate } from "react-router-dom";
-import { Upload, FileText } from "lucide-react";
+import { Navigate, useNavigate } from "react-router-dom";
+import { Upload, FileText, Loader2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
@@ -9,31 +9,73 @@ import { Label } from "@/components/ui/label";
 import { DEPARTMENTS, SEMESTERS } from "@/data/mockData";
 import { toast } from "sonner";
 import { useAuth } from "@/contexts/AuthContext";
+import { supabase } from "@/integrations/supabase/client";
 
 const UploadPage = () => {
   const { user } = useAuth();
+  const navigate = useNavigate();
   const [title, setTitle] = useState("");
   const [subject, setSubject] = useState("");
   const [department, setDepartment] = useState("");
   const [semester, setSemester] = useState("");
   const [description, setDescription] = useState("");
   const [file, setFile] = useState<File | null>(null);
+  const [uploading, setUploading] = useState(false);
 
   if (!user) return <Navigate to="/login" replace />;
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const getFileType = (fileName: string): string => {
+    const ext = fileName.split(".").pop()?.toLowerCase();
+    if (ext === "pdf") return "pdf";
+    if (["png", "jpg", "jpeg", "gif", "webp"].includes(ext || "")) return "image";
+    return "doc";
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!title || !subject || !department || !semester || !file) {
       toast.error("Please fill all required fields and select a file.");
       return;
     }
-    toast.success("Notes uploaded successfully! They will be reviewed by an admin.");
-    setTitle("");
-    setSubject("");
-    setDepartment("");
-    setSemester("");
-    setDescription("");
-    setFile(null);
+
+    setUploading(true);
+    try {
+      // Upload file to storage
+      const fileExt = file.name.split(".").pop();
+      const filePath = `${user.id}/${Date.now()}.${fileExt}`;
+
+      const { error: uploadError } = await supabase.storage
+        .from("notes")
+        .upload(filePath, file);
+
+      if (uploadError) throw uploadError;
+
+      const { data: urlData } = supabase.storage
+        .from("notes")
+        .getPublicUrl(filePath);
+
+      // Insert note record
+      const { error: insertError } = await supabase.from("notes").insert({
+        user_id: user.id,
+        title,
+        subject,
+        department,
+        semester: Number(semester),
+        description: description || null,
+        file_url: urlData.publicUrl,
+        file_name: file.name,
+        file_type: getFileType(file.name),
+      });
+
+      if (insertError) throw insertError;
+
+      toast.success("Notes uploaded successfully!");
+      navigate("/my-uploads");
+    } catch (err: any) {
+      toast.error(err.message || "Upload failed. Please try again.");
+    } finally {
+      setUploading(false);
+    }
   };
 
   return (
@@ -41,7 +83,7 @@ const UploadPage = () => {
       <div className="mb-6">
         <h1 className="font-display text-2xl font-bold mb-1">Upload Notes</h1>
         <p className="text-sm text-muted-foreground">
-          Share your notes with fellow students. Uploads are reviewed before publishing.
+          Share your notes with fellow students.
         </p>
       </div>
 
@@ -60,27 +102,18 @@ const UploadPage = () => {
           <div className="space-y-2">
             <Label>Department *</Label>
             <Select value={department} onValueChange={setDepartment}>
-              <SelectTrigger className="bg-background">
-                <SelectValue placeholder="Select department" />
-              </SelectTrigger>
+              <SelectTrigger className="bg-background"><SelectValue placeholder="Select department" /></SelectTrigger>
               <SelectContent>
-                {DEPARTMENTS.map((d) => (
-                  <SelectItem key={d} value={d}>{d}</SelectItem>
-                ))}
+                {DEPARTMENTS.map((d) => (<SelectItem key={d} value={d}>{d}</SelectItem>))}
               </SelectContent>
             </Select>
           </div>
-
           <div className="space-y-2">
             <Label>Semester *</Label>
             <Select value={semester} onValueChange={setSemester}>
-              <SelectTrigger className="bg-background">
-                <SelectValue placeholder="Select semester" />
-              </SelectTrigger>
+              <SelectTrigger className="bg-background"><SelectValue placeholder="Select semester" /></SelectTrigger>
               <SelectContent>
-                {SEMESTERS.map((s) => (
-                  <SelectItem key={s} value={String(s)}>Semester {s}</SelectItem>
-                ))}
+                {SEMESTERS.map((s) => (<SelectItem key={s} value={String(s)}>Semester {s}</SelectItem>))}
               </SelectContent>
             </Select>
           </div>
@@ -88,13 +121,7 @@ const UploadPage = () => {
 
         <div className="space-y-2">
           <Label htmlFor="description">Description (optional)</Label>
-          <Textarea
-            id="description"
-            value={description}
-            onChange={(e) => setDescription(e.target.value)}
-            placeholder="Brief description of what the notes cover..."
-            rows={3}
-          />
+          <Textarea id="description" value={description} onChange={(e) => setDescription(e.target.value)} placeholder="Brief description of what the notes cover..." rows={3} />
         </div>
 
         <div className="space-y-2">
@@ -108,23 +135,15 @@ const UploadPage = () => {
             ) : (
               <>
                 <Upload className="h-8 w-8 text-muted-foreground" />
-                <span className="text-sm text-muted-foreground">
-                  Click to upload PDF, image, or document
-                </span>
+                <span className="text-sm text-muted-foreground">Click to upload PDF, image, or document</span>
               </>
             )}
-            <input
-              type="file"
-              className="hidden"
-              accept=".pdf,.png,.jpg,.jpeg,.doc,.docx"
-              onChange={(e) => setFile(e.target.files?.[0] || null)}
-            />
+            <input type="file" className="hidden" accept=".pdf,.png,.jpg,.jpeg,.doc,.docx" onChange={(e) => setFile(e.target.files?.[0] || null)} />
           </label>
         </div>
 
-        <Button type="submit" className="w-full bg-hero-gradient text-primary-foreground hover:opacity-90">
-          <Upload className="mr-2 h-4 w-4" />
-          Upload Notes
+        <Button type="submit" className="w-full bg-hero-gradient text-primary-foreground hover:opacity-90" disabled={uploading}>
+          {uploading ? <><Loader2 className="mr-2 h-4 w-4 animate-spin" /> Uploading...</> : <><Upload className="mr-2 h-4 w-4" /> Upload Notes</>}
         </Button>
       </form>
     </div>

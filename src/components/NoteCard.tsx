@@ -1,16 +1,19 @@
-import { FileText, Image, File, Download, Calendar, User } from "lucide-react";
+import { FileText, Image, File, Download, User } from "lucide-react";
 import { Link } from "react-router-dom";
 import { Badge } from "@/components/ui/badge";
-import type { Note } from "@/data/mockData";
+import type { Tables } from "@/integrations/supabase/types";
 
-const fileIcons = {
+type NoteRow = Tables<"notes"> & { profiles?: { full_name: string } | null };
+
+const fileIcons: Record<string, typeof FileText> = {
   pdf: FileText,
   image: Image,
   doc: File,
 };
 
-const NoteCard = ({ note }: { note: Note }) => {
-  const Icon = fileIcons[note.fileType];
+const NoteCard = ({ note }: { note: NoteRow }) => {
+  const Icon = fileIcons[note.file_type] || FileText;
+  const uploaderName = note.profiles?.full_name || "Unknown";
 
   return (
     <Link
@@ -22,7 +25,7 @@ const NoteCard = ({ note }: { note: Note }) => {
           <Icon className="h-5 w-5 text-primary" />
         </div>
         <Badge variant="secondary" className="text-xs">
-          {note.fileType.toUpperCase()}
+          {note.file_type.toUpperCase()}
         </Badge>
       </div>
 
@@ -44,7 +47,7 @@ const NoteCard = ({ note }: { note: Note }) => {
       <div className="flex items-center justify-between text-xs text-muted-foreground">
         <span className="flex items-center gap-1">
           <User className="h-3 w-3" />
-          {note.uploadedBy}
+          {uploaderName}
         </span>
         <span className="flex items-center gap-1">
           <Download className="h-3 w-3" />
