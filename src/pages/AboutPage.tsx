@@ -37,7 +37,7 @@ const AboutPage = () => {
               <Code className="h-4 w-4 text-primary" /> Skills & Technologies
             </h3>
             <div className="flex flex-wrap gap-2">
-              {["React", "TypeScript", "Tailwind CSS", "PostgreSQL", "Node.js", "Python", "Git", "REST APIs"].map((skill) =>
+              {["React", "Tailwind CSS", "Node.js", "Python", "Git", "REST APIs"].map((skill) =>
               <Badge key={skill} variant="secondary" className="text-xs">{skill}</Badge>
               )}
             </div>
