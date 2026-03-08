@@ -5,6 +5,8 @@ import { Badge } from "@/components/ui/badge";
 import { useAuth } from "@/contexts/AuthContext";
 
 const MyUploadsPage = () => {
+  const { user } = useAuth();
+  if (!user) return <Navigate to="/login" replace />;
   // Mock: show all notes as "my uploads"
   const myNotes = mockNotes;
 

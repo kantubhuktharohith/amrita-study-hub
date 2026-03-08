@@ -11,7 +11,9 @@ import { toast } from "sonner";
 import { useAuth } from "@/contexts/AuthContext";
 
 const UploadPage = () => {
-  const { user } = useAuth();
+
+  if (!user) return <Navigate to="/login" replace />;
+
   const [title, setTitle] = useState("");
   const [subject, setSubject] = useState("");
   const [department, setDepartment] = useState("");
