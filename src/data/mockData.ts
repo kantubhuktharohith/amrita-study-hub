@@ -17,6 +17,9 @@ export interface Note {
 export const DEPARTMENTS = [
   "Computer Science & Engineering",
   "Computer Science & Engineering (Big Data Analytics)",
+  "Computer Science & Engineering (AI & ML)",
+  "Computer Science & Engineering (Data Science)",
+  "Computer Science & Engineering (Cyber Security)",
   "Electronics & Communication",
   "Electrical & Electronics",
   "Mechanical Engineering",
