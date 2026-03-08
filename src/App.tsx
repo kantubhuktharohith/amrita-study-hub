@@ -8,6 +8,7 @@ import { ThemeProvider } from "@/components/ThemeProvider";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import MobileBottomNav from "@/components/MobileBottomNav";
+import MobileUploadFAB from "@/components/MobileUploadFAB";
 import HomePage from "./pages/HomePage";
 import BrowsePage from "./pages/BrowsePage";
 import BrowseExamPapersPage from "./pages/BrowseExamPapersPage";
