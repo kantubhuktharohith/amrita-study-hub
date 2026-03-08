@@ -8,7 +8,7 @@ import { useTheme } from "@/components/ThemeProvider";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 
 const Navbar = () => {
-  const [mobileOpen, setMobileOpen] = useState(false);
+  const location = useLocation();
   const location = useLocation();
   const { user, signOut } = useAuth();
   const { theme, toggle } = useTheme();
