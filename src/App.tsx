@@ -15,6 +15,7 @@ import NoteDetailPage from "./pages/NoteDetailPage";
 import ExamPaperDetailPage from "./pages/ExamPaperDetailPage";
 import MyUploadsPage from "./pages/MyUploadsPage";
 import ProfilePage from "./pages/ProfilePage";
+import AboutPage from "./pages/AboutPage";
 import LoginPage from "./pages/LoginPage";
 import SignupPage from "./pages/SignupPage";
 import NotFound from "./pages/NotFound";
