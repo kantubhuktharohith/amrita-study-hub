@@ -1,16 +1,18 @@
-import { FileText, Image, File, Download, Calendar, User } from "lucide-react";
+import { FileText, Image, File, Download, User } from "lucide-react";
 import { Link } from "react-router-dom";
 import { Badge } from "@/components/ui/badge";
-import type { Note } from "@/data/mockData";
+import type { Tables } from "@/integrations/supabase/types";
 
-const fileIcons = {
+export type NoteWithProfile = Tables<"notes"> & { uploader_name?: string };
+
+const fileIcons: Record<string, typeof FileText> = {
   pdf: FileText,
   image: Image,
   doc: File,
 };
 
-const NoteCard = ({ note }: { note: Note }) => {
-  const Icon = fileIcons[note.fileType];
+const NoteCard = ({ note }: { note: NoteWithProfile }) => {
+  const Icon = fileIcons[note.file_type] || FileText;
 
   return (
     <Link
@@ -22,29 +24,24 @@ const NoteCard = ({ note }: { note: Note }) => {
           <Icon className="h-5 w-5 text-primary" />
         </div>
         <Badge variant="secondary" className="text-xs">
-          {note.fileType.toUpperCase()}
+          {note.file_type.toUpperCase()}
         </Badge>
       </div>
 
       <h3 className="mb-1 font-display text-sm font-semibold leading-tight group-hover:text-primary transition-colors line-clamp-2">
         {note.title}
       </h3>
-
       <p className="mb-3 text-xs text-muted-foreground">{note.subject}</p>
 
       <div className="flex flex-wrap gap-1.5 mb-3">
-        <Badge variant="outline" className="text-[10px] px-1.5 py-0">
-          Sem {note.semester}
-        </Badge>
-        <Badge variant="outline" className="text-[10px] px-1.5 py-0">
-          {note.department.split(" ")[0]}
-        </Badge>
+        <Badge variant="outline" className="text-[10px] px-1.5 py-0">Sem {note.semester}</Badge>
+        <Badge variant="outline" className="text-[10px] px-1.5 py-0">{note.department.split(" ")[0]}</Badge>
       </div>
 
       <div className="flex items-center justify-between text-xs text-muted-foreground">
         <span className="flex items-center gap-1">
           <User className="h-3 w-3" />
-          {note.uploadedBy}
+          {note.uploader_name || "Unknown"}
         </span>
         <span className="flex items-center gap-1">
           <Download className="h-3 w-3" />

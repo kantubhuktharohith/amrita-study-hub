@@ -1,8 +1,10 @@
 import { useState, useMemo } from "react";
+import { useQuery } from "@tanstack/react-query";
 import SearchBar from "@/components/SearchBar";
 import FilterPanel from "@/components/FilterPanel";
 import NoteCard from "@/components/NoteCard";
-import { mockNotes } from "@/data/mockData";
+import { fetchNotesWithProfiles } from "@/lib/noteQueries";
+import { Loader2 } from "lucide-react";
 
 const BrowsePage = () => {
   const [search, setSearch] = useState("");
@@ -10,55 +12,40 @@ const BrowsePage = () => {
   const [semester, setSemester] = useState("all");
   const [year, setYear] = useState("all");
 
+  const { data: notes = [], isLoading } = useQuery({
+    queryKey: ["notes"],
+    queryFn: () => fetchNotesWithProfiles({ status: "approved" }),
+  });
+
   const filtered = useMemo(() => {
-    return mockNotes
-      .filter((n) => n.status === "approved")
+    return notes
       .filter((n) => {
-        if (search) {
-          const q = search.toLowerCase();
-          return (
-            n.title.toLowerCase().includes(q) ||
-            n.subject.toLowerCase().includes(q) ||
-            n.description?.toLowerCase().includes(q)
-          );
-        }
-        return true;
+        if (!search) return true;
+        const q = search.toLowerCase();
+        return n.title.toLowerCase().includes(q) || n.subject.toLowerCase().includes(q) || n.description?.toLowerCase().includes(q);
       })
       .filter((n) => department === "all" || n.department === department)
       .filter((n) => semester === "all" || n.semester === Number(semester))
       .filter((n) => year === "all" || n.year === Number(year));
-  }, [search, department, semester, year]);
+  }, [notes, search, department, semester, year]);
 
   return (
     <div className="container py-8">
       <div className="mb-6">
         <h1 className="font-display text-2xl font-bold mb-1">Browse Notes</h1>
-        <p className="text-sm text-muted-foreground">
-          Find notes by subject, semester, or department
-        </p>
+        <p className="text-sm text-muted-foreground">Find notes by subject, semester, or department</p>
       </div>
-
       <div className="mb-6 space-y-4">
         <SearchBar value={search} onChange={setSearch} />
-        <FilterPanel
-          department={department}
-          semester={semester}
-          year={year}
-          onDepartmentChange={setDepartment}
-          onSemesterChange={setSemester}
-          onYearChange={setYear}
-        />
+        <FilterPanel department={department} semester={semester} year={year} onDepartmentChange={setDepartment} onSemesterChange={setSemester} onYearChange={setYear} />
       </div>
-
-      {filtered.length === 0 ? (
-        <div className="py-16 text-center">
-          <p className="text-muted-foreground">No notes found. Try adjusting your filters.</p>
-        </div>
+      {isLoading ? (
+        <div className="py-16 flex justify-center"><Loader2 className="h-8 w-8 animate-spin text-primary" /></div>
+      ) : filtered.length === 0 ? (
+        <div className="py-16 text-center"><p className="text-muted-foreground">No notes found. Try adjusting your filters or upload the first one!</p></div>
       ) : (
         <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-          {filtered.map((note) => (
-            <NoteCard key={note.id} note={note} />
-          ))}
+          {filtered.map((note) => <NoteCard key={note.id} note={note} />)}
         </div>
       )}
     </div>

@@ -14,6 +14,60 @@ export type Database = {
   }
   public: {
     Tables: {
+      notes: {
+        Row: {
+          created_at: string
+          department: string
+          description: string | null
+          downloads: number
+          file_name: string
+          file_type: string
+          file_url: string
+          id: string
+          semester: number
+          status: string
+          subject: string
+          title: string
+          updated_at: string
+          user_id: string
+          year: number
+        }
+        Insert: {
+          created_at?: string
+          department: string
+          description?: string | null
+          downloads?: number
+          file_name: string
+          file_type?: string
+          file_url: string
+          id?: string
+          semester: number
+          status?: string
+          subject: string
+          title: string
+          updated_at?: string
+          user_id: string
+          year?: number
+        }
+        Update: {
+          created_at?: string
+          department?: string
+          description?: string | null
+          downloads?: number
+          file_name?: string
+          file_type?: string
+          file_url?: string
+          id?: string
+          semester?: number
+          status?: string
+          subject?: string
+          title?: string
+          updated_at?: string
+          user_id?: string
+          year?: number
+        }
+        Relationships: []
+      }
       profiles: {
         Row: {
           avatar_url: string | null
