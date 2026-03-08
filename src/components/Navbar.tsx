@@ -1,8 +1,9 @@
 import { Link, useLocation } from "react-router-dom";
-import { BookOpen, Upload, Menu, X, User, LogOut, Info } from "lucide-react";
+import { BookOpen, Upload, Menu, X, User, LogOut, Info, Sun, Moon } from "lucide-react";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { useAuth } from "@/contexts/AuthContext";
+import { useTheme } from "@/components/ThemeProvider";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 
 const Navbar = () => {
