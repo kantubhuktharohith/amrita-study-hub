@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { Navigate } from "react-router-dom";
 import { Upload, FileText } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -7,14 +8,18 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Label } from "@/components/ui/label";
 import { DEPARTMENTS, SEMESTERS } from "@/data/mockData";
 import { toast } from "sonner";
+import { useAuth } from "@/contexts/AuthContext";
 
 const UploadPage = () => {
+  const { user } = useAuth();
   const [title, setTitle] = useState("");
   const [subject, setSubject] = useState("");
   const [department, setDepartment] = useState("");
   const [semester, setSemester] = useState("");
   const [description, setDescription] = useState("");
   const [file, setFile] = useState<File | null>(null);
+
+  if (!user) return <Navigate to="/login" replace />;
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();

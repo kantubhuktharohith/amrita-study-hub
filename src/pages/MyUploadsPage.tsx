@@ -1,8 +1,12 @@
+import { Navigate } from "react-router-dom";
 import { mockNotes } from "@/data/mockData";
 import NoteCard from "@/components/NoteCard";
 import { Badge } from "@/components/ui/badge";
+import { useAuth } from "@/contexts/AuthContext";
 
 const MyUploadsPage = () => {
+  const { user } = useAuth();
+  if (!user) return <Navigate to="/login" replace />;
   // Mock: show all notes as "my uploads"
   const myNotes = mockNotes;
 
