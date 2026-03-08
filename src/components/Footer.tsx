@@ -7,9 +7,8 @@ const Footer = () => {
       <div className="container py-8">
         <div className="flex flex-col items-center gap-4 md:flex-row md:justify-between">
           <div className="flex items-center gap-2">
-            <div className="flex h-8 w-8 items-center justify-center rounded-md bg-hero-gradient">
-              <BookOpen className="h-4 w-4 text-primary-foreground" />
-            </div>
+            <img src={collegeLogo} alt="College Logo" className="h-8 w-8 rounded-md object-cover" />
+            <span className="font-display text-lg font-bold">GetMaterial</span>
             <span className="font-display text-lg font-bold">GetMaterial</span>
           </div>
 
