@@ -28,6 +28,8 @@ const NoteCard = ({ note }: { note: NoteWithProfile }) => {
   });
 
   const avgRating = Number(avgData?.average_rating ?? 0);
+
+  return (
     <Link
       to={`/note/${note.id}`}
       className="group block rounded-lg border bg-card p-4 shadow-card transition-all hover:shadow-card-hover hover:-translate-y-0.5"

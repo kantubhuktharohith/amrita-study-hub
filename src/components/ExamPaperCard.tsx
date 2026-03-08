@@ -28,6 +28,8 @@ const ExamPaperCard = ({ paper }: { paper: ExamPaperWithProfile }) => {
   });
 
   const avgRating = Number(avgData?.average_rating ?? 0);
+
+  return (
     <Link
       to={`/exam-paper/${paper.id}`}
       className="group block rounded-lg border bg-card p-4 shadow-card transition-all hover:shadow-card-hover hover:-translate-y-0.5"
