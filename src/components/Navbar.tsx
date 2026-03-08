@@ -10,6 +10,7 @@ const Navbar = () => {
   const [mobileOpen, setMobileOpen] = useState(false);
   const location = useLocation();
   const { user, signOut } = useAuth();
+  const { theme, toggle } = useTheme();
 
   const links = [
     { to: "/", label: "Home" },
