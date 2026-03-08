@@ -11,6 +11,7 @@ import { supabase } from "@/integrations/supabase/client";
 import { Loader2, Upload, Trash2 } from "lucide-react";
 import { toast } from "sonner";
 import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger } from "@/components/ui/alert-dialog";
+import { useIsAdmin } from "@/hooks/useIsAdmin";
 
 const MyUploadsPage = () => {
   const { user } = useAuth();
