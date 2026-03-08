@@ -55,10 +55,18 @@ const ExamPaperCard = ({ paper }: { paper: ExamPaperWithProfile }) => {
           <User className="h-3 w-3" />
           {paper.uploader_name || "Unknown"}
         </span>
-        <span className="flex items-center gap-1">
-          <Download className="h-3 w-3" />
-          {paper.downloads}
-        </span>
+        <div className="flex items-center gap-2">
+          {avgRating > 0 && (
+            <span className="flex items-center gap-0.5">
+              <Star className="h-3 w-3 fill-warning text-warning" />
+              {avgRating.toFixed(1)}
+            </span>
+          )}
+          <span className="flex items-center gap-1">
+            <Download className="h-3 w-3" />
+            {paper.downloads}
+          </span>
+        </div>
       </div>
     </Link>
   );
