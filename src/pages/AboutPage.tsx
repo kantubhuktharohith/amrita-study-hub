@@ -19,10 +19,10 @@ const AboutPage = () => {
           <div className="mt-4 space-y-1">
             <h2 className="font-display text-2xl font-bold text-secondary-foreground bg-secondary">​Rohith Kantubhuktha </h2>
             <p className="text-muted-foreground flex items-center gap-1.5">
-              <GraduationCap className="h-4 w-4" /> B.Tech, Computer Science & Engineering
+              <GraduationCap className="h-4 w-4" /> B.Tech, Computer Science & Engineering (Big Data Analytics)
             </p>
             <p className="text-muted-foreground flex items-center gap-1.5">
-              <MapPin className="h-4 w-4" /> Your University, Your City
+              <MapPin className="h-4 w-4" /> Amrita Sai Institute of Science and Technology
             </p>
           </div>
 
@@ -37,7 +37,7 @@ const AboutPage = () => {
               <Code className="h-4 w-4 text-primary" /> Skills & Technologies
             </h3>
             <div className="flex flex-wrap gap-2">
-              {["React", "TypeScript", "Tailwind CSS", "PostgreSQL", "Node.js", "Python", "Git", "REST APIs"].map((skill) =>
+              {["React", "Tailwind CSS", "Node.js", "Python", "Git", "REST APIs"].map((skill) =>
               <Badge key={skill} variant="secondary" className="text-xs">{skill}</Badge>
               )}
             </div>
