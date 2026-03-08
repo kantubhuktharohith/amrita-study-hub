@@ -16,7 +16,18 @@ const ExamPaperCard = ({ paper }: { paper: ExamPaperWithProfile }) => {
   const Icon = fileIcons[paper.file_type] || FileText;
   const examLabel = EXAM_TYPES.find((t) => t.value === paper.exam_type)?.label || paper.exam_type;
 
-  return (
+  const { data: avgData } = useQuery({
+    queryKey: ["avg-rating", "exam_paper", paper.id],
+    queryFn: async () => {
+      const { data } = await supabase.rpc("get_average_rating", {
+        _content_type: "exam_paper",
+        _content_id: paper.id,
+      });
+      return data?.[0] ?? { average_rating: 0, total_ratings: 0 };
+    },
+  });
+
+  const avgRating = Number(avgData?.average_rating ?? 0);
     <Link
       to={`/exam-paper/${paper.id}`}
       className="group block rounded-lg border bg-card p-4 shadow-card transition-all hover:shadow-card-hover hover:-translate-y-0.5"
