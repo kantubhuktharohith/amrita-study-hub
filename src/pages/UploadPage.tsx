@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { Navigate } from "react-router-dom";
 import { Upload, FileText } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -7,6 +8,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Label } from "@/components/ui/label";
 import { DEPARTMENTS, SEMESTERS } from "@/data/mockData";
 import { toast } from "sonner";
+import { useAuth } from "@/contexts/AuthContext";
 
 const UploadPage = () => {
   const [title, setTitle] = useState("");
