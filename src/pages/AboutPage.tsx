@@ -42,22 +42,22 @@ const AboutPage = () => {
             className="w-full h-[28rem] object-cover object-top"
           />
           {/* Gradient overlay */}
-          <div className="absolute inset-0 bg-gradient-to-b from-black/70 via-transparent to-black/40" />
-          {/* Text on top of photo */}
-          <div className="absolute top-0 left-0 right-0 p-8 text-white">
+          <div className="absolute inset-0 bg-black/40" />
+          {/* Text centered inside photo */}
+          <div className="absolute inset-0 flex flex-col items-center justify-center text-white text-center px-6">
             <motion.div
               animate={{ rotate: [0, 10, -10, 0] }}
               transition={{ repeat: Infinity, duration: 3, ease: "easeInOut" }}
               className="inline-block mb-2">
               <Sparkles className="h-6 w-6 text-primary" />
             </motion.div>
-            <h1 className="font-display text-3xl sm:text-4xl font-bold tracking-tight leading-tight">
+            <h1 className="font-display text-3xl sm:text-4xl font-bold tracking-tight leading-tight drop-shadow-lg">
               Hey there, i'm Rohith
             </h1>
-            <p className="text-white/70 text-base mt-1">
+            <p className="text-white/80 text-base mt-1 drop-shadow-md">
               A Programmer / Website Developer
             </p>
-            <p className="text-white/50 text-sm mt-0.5">The person behind GetMaterial</p>
+            <p className="text-white/60 text-sm mt-0.5 drop-shadow-md">The person behind GetMaterial</p>
           </div>
         </motion.div>
 
