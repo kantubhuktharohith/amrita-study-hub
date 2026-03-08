@@ -3,7 +3,7 @@ import { useQuery } from "@tanstack/react-query";
 import SearchBar from "@/components/SearchBar";
 import FilterPanel from "@/components/FilterPanel";
 import NoteCard from "@/components/NoteCard";
-import { supabase } from "@/integrations/supabase/client";
+import { fetchNotesWithProfiles } from "@/lib/noteQueries";
 import { Loader2 } from "lucide-react";
 
 const BrowsePage = () => {
@@ -14,29 +14,15 @@ const BrowsePage = () => {
 
   const { data: notes = [], isLoading } = useQuery({
     queryKey: ["notes"],
-    queryFn: async () => {
-      const { data, error } = await supabase
-        .from("notes")
-        .select("*, profiles(full_name)")
-        .eq("status", "approved")
-        .order("created_at", { ascending: false });
-      if (error) throw error;
-      return data;
-    },
+    queryFn: () => fetchNotesWithProfiles({ status: "approved" }),
   });
 
   const filtered = useMemo(() => {
     return notes
       .filter((n) => {
-        if (search) {
-          const q = search.toLowerCase();
-          return (
-            n.title.toLowerCase().includes(q) ||
-            n.subject.toLowerCase().includes(q) ||
-            n.description?.toLowerCase().includes(q)
-          );
-        }
-        return true;
+        if (!search) return true;
+        const q = search.toLowerCase();
+        return n.title.toLowerCase().includes(q) || n.subject.toLowerCase().includes(q) || n.description?.toLowerCase().includes(q);
       })
       .filter((n) => department === "all" || n.department === department)
       .filter((n) => semester === "all" || n.semester === Number(semester))
@@ -49,25 +35,17 @@ const BrowsePage = () => {
         <h1 className="font-display text-2xl font-bold mb-1">Browse Notes</h1>
         <p className="text-sm text-muted-foreground">Find notes by subject, semester, or department</p>
       </div>
-
       <div className="mb-6 space-y-4">
         <SearchBar value={search} onChange={setSearch} />
         <FilterPanel department={department} semester={semester} year={year} onDepartmentChange={setDepartment} onSemesterChange={setSemester} onYearChange={setYear} />
       </div>
-
       {isLoading ? (
-        <div className="py-16 flex justify-center">
-          <Loader2 className="h-8 w-8 animate-spin text-primary" />
-        </div>
+        <div className="py-16 flex justify-center"><Loader2 className="h-8 w-8 animate-spin text-primary" /></div>
       ) : filtered.length === 0 ? (
-        <div className="py-16 text-center">
-          <p className="text-muted-foreground">No notes found. Try adjusting your filters or upload the first one!</p>
-        </div>
+        <div className="py-16 text-center"><p className="text-muted-foreground">No notes found. Try adjusting your filters or upload the first one!</p></div>
       ) : (
         <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-          {filtered.map((note) => (
-            <NoteCard key={note.id} note={note} />
-          ))}
+          {filtered.map((note) => <NoteCard key={note.id} note={note} />)}
         </div>
       )}
     </div>

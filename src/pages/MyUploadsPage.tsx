@@ -4,7 +4,7 @@ import NoteCard from "@/components/NoteCard";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { useAuth } from "@/contexts/AuthContext";
-import { supabase } from "@/integrations/supabase/client";
+import { fetchNotesWithProfiles } from "@/lib/noteQueries";
 import { Loader2, Upload } from "lucide-react";
 
 const MyUploadsPage = () => {
@@ -13,15 +13,7 @@ const MyUploadsPage = () => {
 
   const { data: notes = [], isLoading } = useQuery({
     queryKey: ["my-notes", user.id],
-    queryFn: async () => {
-      const { data, error } = await supabase
-        .from("notes")
-        .select("*, profiles(full_name)")
-        .eq("user_id", user.id)
-        .order("created_at", { ascending: false });
-      if (error) throw error;
-      return data;
-    },
+    queryFn: () => fetchNotesWithProfiles({ userId: user.id }),
   });
 
   return (
@@ -39,15 +31,11 @@ const MyUploadsPage = () => {
       </div>
 
       {isLoading ? (
-        <div className="py-16 flex justify-center">
-          <Loader2 className="h-8 w-8 animate-spin text-primary" />
-        </div>
+        <div className="py-16 flex justify-center"><Loader2 className="h-8 w-8 animate-spin text-primary" /></div>
       ) : notes.length === 0 ? (
         <div className="py-16 text-center">
           <p className="text-muted-foreground mb-4">You haven't uploaded any notes yet.</p>
-          <Link to="/upload">
-            <Button variant="outline">Upload your first notes</Button>
-          </Link>
+          <Link to="/upload"><Button variant="outline">Upload your first notes</Button></Link>
         </div>
       ) : (
         <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
@@ -55,9 +43,7 @@ const MyUploadsPage = () => {
             <div key={note.id} className="relative">
               <NoteCard note={note} />
               {note.status === "pending" && (
-                <Badge className="absolute top-2 right-2 bg-warning text-warning-foreground text-[10px]">
-                  Pending Review
-                </Badge>
+                <Badge className="absolute top-2 right-2 bg-warning text-warning-foreground text-[10px]">Pending Review</Badge>
               )}
             </div>
           ))}
