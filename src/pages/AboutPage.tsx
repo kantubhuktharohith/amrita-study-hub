@@ -1,6 +1,5 @@
 import { Card, CardContent } from "@/components/ui/card";
 import rohithPhoto from "@/assets/rohith-photo.jpeg";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
 import { Github, Linkedin, Mail, Globe, Code, GraduationCap, MapPin, Sparkles, Heart, Rocket } from "lucide-react";
 import { motion } from "framer-motion";
@@ -65,21 +64,8 @@ const AboutPage = () => {
             </div>
 
             <CardContent className="relative -mt-16 pb-10 px-8">
-              {/* Avatar */}
-              <motion.div
-                whileHover={{ scale: 1.05 }}
-                transition={{ type: "spring", stiffness: 300 }}>
-                
-                <Avatar className="h-28 w-28 border-4 border-card shadow-lg ring-2 ring-primary/20">
-                  <AvatarImage src={rohithPhoto} alt="Rohith Kantubhuktha" />
-                  <AvatarFallback className="bg-gradient-to-br from-primary to-primary/70 text-3xl font-bold text-primary-foreground">
-                    RK
-                  </AvatarFallback>
-                </Avatar>
-              </motion.div>
-
               {/* Name & Info */}
-              <motion.div variants={fadeUp} custom={2} className="mt-5 space-y-1.5">
+              <motion.div variants={fadeUp} custom={2} className="mt-20 space-y-1.5">
                 <h2 className="font-display text-2xl font-bold text-foreground">
                   Rohith Kantubhuktha
                 </h2>
@@ -107,6 +93,20 @@ const AboutPage = () => {
                     </p>
                   </div>
                 </div>
+              </motion.div>
+
+              {/* Photo */}
+              <motion.div variants={fadeUp} custom={3.5} className="mt-8">
+                <motion.div
+                  whileHover={{ scale: 1.02 }}
+                  transition={{ type: "spring", stiffness: 300 }}
+                  className="rounded-2xl overflow-hidden border border-border/50 shadow-lg">
+                  <img
+                    src={rohithPhoto}
+                    alt="Rohith Kantubhuktha"
+                    className="w-full h-auto max-h-[28rem] object-cover object-top"
+                  />
+                </motion.div>
               </motion.div>
 
               {/* Skills */}
