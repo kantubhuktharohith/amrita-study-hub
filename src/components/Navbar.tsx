@@ -53,6 +53,11 @@ const Navbar = () => {
                   <DropdownMenuItem asChild><Link to="/upload-exam-paper">Upload Exam Paper</Link></DropdownMenuItem>
                 </DropdownMenuContent>
               </DropdownMenu>
+              <Link to="/about">
+                <Button variant="ghost" size="sm" className="text-muted-foreground hover:text-foreground">
+                  <Info className="mr-1.5 h-4 w-4" /> About Me
+                </Button>
+              </Link>
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
                   <Button variant="ghost" size="icon" className="rounded-full"><User className="h-5 w-5" /></Button>
@@ -60,7 +65,6 @@ const Navbar = () => {
                 <DropdownMenuContent align="end">
                   <DropdownMenuItem className="text-xs text-muted-foreground">{user.email}</DropdownMenuItem>
                   <DropdownMenuItem asChild><Link to="/profile"><User className="mr-2 h-4 w-4" /> Profile</Link></DropdownMenuItem>
-                  <DropdownMenuItem asChild><Link to="/about"><Info className="mr-2 h-4 w-4" /> About Me</Link></DropdownMenuItem>
                   <DropdownMenuItem onClick={signOut}><LogOut className="mr-2 h-4 w-4" /> Sign out</DropdownMenuItem>
                 </DropdownMenuContent>
               </DropdownMenu>
