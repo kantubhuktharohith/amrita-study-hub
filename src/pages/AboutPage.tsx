@@ -49,7 +49,7 @@ const AboutPage = () => {
               <a href="https://github.com" target="_blank" rel="noopener noreferrer" className="flex items-center gap-1.5 rounded-md border px-3 py-2 text-sm text-muted-foreground hover:text-foreground hover:border-foreground/30 transition-colors">
                 <Github className="h-4 w-4" /> GitHub
               </a>
-              <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer" className="flex items-center gap-1.5 rounded-md border px-3 py-2 text-sm text-muted-foreground hover:text-foreground hover:border-foreground/30 transition-colors">
+              <a target="_blank" rel="noopener noreferrer" className="flex items-center gap-1.5 rounded-md border px-3 py-2 text-sm text-muted-foreground hover:text-foreground hover:border-foreground/30 transition-colors" href="https://linkedin.com/in/rohith-kantubhuktha-a3830b365">
                 <Linkedin className="h-4 w-4" /> LinkedIn
               </a>
               <a href="mailto:your@email.com" className="flex items-center gap-1.5 rounded-md border px-3 py-2 text-sm text-muted-foreground hover:text-foreground hover:border-foreground/30 transition-colors">
