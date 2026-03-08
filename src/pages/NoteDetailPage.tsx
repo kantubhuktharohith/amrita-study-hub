@@ -32,9 +32,23 @@ const NoteDetailPage = () => {
   }
 
   const handleDownload = async () => {
-    await supabase.from("notes").update({ downloads: note.downloads + 1 }).eq("id", note.id);
-    window.open(note.file_url, "_blank");
-    toast.success("Download started!");
+    try {
+      toast.info("Starting download...");
+      const response = await fetch(note.file_url);
+      const blob = await response.blob();
+      const url = window.URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = note.file_name || "download";
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      window.URL.revokeObjectURL(url);
+      await supabase.from("notes").update({ downloads: note.downloads + 1 }).eq("id", note.id);
+      toast.success("Download completed!");
+    } catch (err) {
+      toast.error("Download failed. Please try again.");
+    }
   };
 
   return (
