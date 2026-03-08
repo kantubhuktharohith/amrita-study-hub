@@ -19,10 +19,10 @@ const AboutPage = () => {
           <div className="mt-4 space-y-1">
             <h2 className="font-display text-2xl font-bold text-secondary-foreground bg-secondary">​Rohith Kantubhuktha </h2>
             <p className="text-muted-foreground flex items-center gap-1.5">
-              <GraduationCap className="h-4 w-4" /> B.Tech, Computer Science & Engineering
+              <GraduationCap className="h-4 w-4" /> B.Tech, Computer Science & Engineering (Big Data Analytics)
             </p>
             <p className="text-muted-foreground flex items-center gap-1.5">
-              <MapPin className="h-4 w-4" /> Your University, Your City
+              <MapPin className="h-4 w-4" /> Amrita Sai Institute of Science and Technology
             </p>
           </div>
 
