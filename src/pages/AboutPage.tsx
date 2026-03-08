@@ -17,7 +17,7 @@ const AboutPage = () => {
           </Avatar>
 
           <div className="mt-4 space-y-1">
-            <h2 className="font-display text-2xl font-bold">John Doe</h2>
+            <h2 className="font-display text-2xl font-bold text-secondary-foreground bg-secondary">​Rohith Kantubhuktha </h2>
             <p className="text-muted-foreground flex items-center gap-1.5">
               <GraduationCap className="h-4 w-4" /> B.Tech, Computer Science & Engineering
             </p>
@@ -37,9 +37,9 @@ const AboutPage = () => {
               <Code className="h-4 w-4 text-primary" /> Skills & Technologies
             </h3>
             <div className="flex flex-wrap gap-2">
-              {["React", "TypeScript", "Tailwind CSS", "PostgreSQL", "Node.js", "Python", "Git", "REST APIs"].map((skill) => (
-                <Badge key={skill} variant="secondary" className="text-xs">{skill}</Badge>
-              ))}
+              {["React", "TypeScript", "Tailwind CSS", "PostgreSQL", "Node.js", "Python", "Git", "REST APIs"].map((skill) =>
+              <Badge key={skill} variant="secondary" className="text-xs">{skill}</Badge>
+              )}
             </div>
           </div>
 
@@ -62,8 +62,8 @@ const AboutPage = () => {
           </div>
         </CardContent>
       </Card>
-    </div>
-  );
+    </div>);
+
 };
 
 export default AboutPage;
