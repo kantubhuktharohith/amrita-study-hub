@@ -1,14 +1,16 @@
 import { Link, useLocation } from "react-router-dom";
-import { BookOpen, Upload, Menu, X, User, LogOut, Info } from "lucide-react";
+import { BookOpen, Upload, Menu, X, User, LogOut, Info, Sun, Moon } from "lucide-react";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { useAuth } from "@/contexts/AuthContext";
+import { useTheme } from "@/components/ThemeProvider";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 
 const Navbar = () => {
   const [mobileOpen, setMobileOpen] = useState(false);
   const location = useLocation();
   const { user, signOut } = useAuth();
+  const { theme, toggle } = useTheme();
 
   const links = [
     { to: "/", label: "Home" },
@@ -40,6 +42,9 @@ const Navbar = () => {
         </div>
 
         <div className="hidden items-center gap-2 md:flex">
+          <Button variant="ghost" size="icon" className="rounded-full" onClick={toggle} aria-label="Toggle theme">
+            {theme === "light" ? <Moon className="h-5 w-5" /> : <Sun className="h-5 w-5 text-primary" />}
+          </Button>
           {user ? (
             <>
               <DropdownMenu>
@@ -75,9 +80,14 @@ const Navbar = () => {
           )}
         </div>
 
-        <button className="md:hidden" onClick={() => setMobileOpen(!mobileOpen)}>
-          {mobileOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
-        </button>
+        <div className="flex items-center gap-2 md:hidden">
+          <Button variant="ghost" size="icon" className="rounded-full" onClick={toggle} aria-label="Toggle theme">
+            {theme === "light" ? <Moon className="h-5 w-5" /> : <Sun className="h-5 w-5 text-primary" />}
+          </Button>
+          <button onClick={() => setMobileOpen(!mobileOpen)}>
+            {mobileOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
+          </button>
+        </div>
       </div>
 
       {mobileOpen && (
