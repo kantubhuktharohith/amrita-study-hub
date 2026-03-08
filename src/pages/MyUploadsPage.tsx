@@ -90,22 +90,24 @@ const MyUploadsPage = () => {
               {notes.map((note) => (
                 <div key={note.id} className="relative group">
                   <NoteCard note={note} />
-                  {note.status === "pending" && <Badge className="absolute top-2 right-2 bg-warning text-warning-foreground text-[10px]">Pending</Badge>}
-                  <AlertDialog>
-                    <AlertDialogTrigger asChild>
-                      <Button variant="destructive" size="icon" className="absolute bottom-2 right-2 h-8 w-8 opacity-0 group-hover:opacity-100 transition-opacity"><Trash2 className="h-4 w-4" /></Button>
-                    </AlertDialogTrigger>
-                    <AlertDialogContent>
-                      <AlertDialogHeader>
-                        <AlertDialogTitle>Delete this note?</AlertDialogTitle>
-                        <AlertDialogDescription>This will permanently delete "{note.title}". This cannot be undone.</AlertDialogDescription>
-                      </AlertDialogHeader>
-                      <AlertDialogFooter>
-                        <AlertDialogCancel>Cancel</AlertDialogCancel>
-                        <AlertDialogAction onClick={() => handleDeleteNote(note.id, note.file_url)}>Delete</AlertDialogAction>
-                      </AlertDialogFooter>
-                    </AlertDialogContent>
-                  </AlertDialog>
+                   {note.status === "pending" && <Badge className="absolute top-2 right-2 bg-warning text-warning-foreground text-[10px]">Pending</Badge>}
+                   {isAdmin && (
+                   <AlertDialog>
+                     <AlertDialogTrigger asChild>
+                       <Button variant="destructive" size="icon" className="absolute bottom-2 right-2 h-8 w-8 opacity-0 group-hover:opacity-100 transition-opacity"><Trash2 className="h-4 w-4" /></Button>
+                     </AlertDialogTrigger>
+                     <AlertDialogContent>
+                       <AlertDialogHeader>
+                         <AlertDialogTitle>Delete this note?</AlertDialogTitle>
+                         <AlertDialogDescription>This will permanently delete "{note.title}". This cannot be undone.</AlertDialogDescription>
+                       </AlertDialogHeader>
+                       <AlertDialogFooter>
+                         <AlertDialogCancel>Cancel</AlertDialogCancel>
+                         <AlertDialogAction onClick={() => handleDeleteNote(note.id, note.file_url)}>Delete</AlertDialogAction>
+                       </AlertDialogFooter>
+                     </AlertDialogContent>
+                   </AlertDialog>
+                   )}
                 </div>
               ))}
             </div>
