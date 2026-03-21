@@ -16,6 +16,7 @@ export interface Note {
 
 export const DEPARTMENTS = [
   "Computer Science & Engineering",
+  "Computer Science & Engineering (AIDS)",
   "Computer Science & Engineering (Big Data Analytics)",
   "Computer Science & Engineering (AI & ML)",
   "Computer Science & Engineering (Data Science)",
