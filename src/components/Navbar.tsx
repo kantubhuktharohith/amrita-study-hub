@@ -92,9 +92,10 @@ const Navbar = () => {
                 <DropdownMenuItem className="text-xs text-muted-foreground">{user.email}</DropdownMenuItem>
                 <DropdownMenuItem asChild><Link to="/upload">Upload Notes</Link></DropdownMenuItem>
                 <DropdownMenuItem asChild><Link to="/upload-exam-paper">Upload Exam Paper</Link></DropdownMenuItem>
-                <DropdownMenuItem asChild><Link to="/my-uploads">My Uploads</Link></DropdownMenuItem>
-                <DropdownMenuItem asChild><Link to="/about"><Info className="mr-2 h-4 w-4" /> About Me</Link></DropdownMenuItem>
-                <DropdownMenuItem onClick={signOut}><LogOut className="mr-2 h-4 w-4" /> Sign out</DropdownMenuItem>
+                 <DropdownMenuItem asChild><Link to="/my-uploads">My Uploads</Link></DropdownMenuItem>
+                 {isAdmin && <DropdownMenuItem asChild><Link to="/admin"><Shield className="mr-2 h-4 w-4" /> Admin Panel</Link></DropdownMenuItem>}
+                 <DropdownMenuItem asChild><Link to="/about"><Info className="mr-2 h-4 w-4" /> About Me</Link></DropdownMenuItem>
+                 <DropdownMenuItem onClick={signOut}><LogOut className="mr-2 h-4 w-4" /> Sign out</DropdownMenuItem>
               </DropdownMenuContent>
             </DropdownMenu>
           ) : (
