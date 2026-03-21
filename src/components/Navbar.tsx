@@ -11,7 +11,7 @@ const Navbar = () => {
   const location = useLocation();
   const { user, signOut } = useAuth();
   const { theme, toggle } = useTheme();
-
+  const { isAdmin } = useIsAdmin();
   const links = [
     { to: "/", label: "Home" },
     { to: "/browse", label: "Notes" },
