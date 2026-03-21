@@ -1,16 +1,17 @@
 import { Link, useLocation } from "react-router-dom";
-import { Upload, User, LogOut, Info, Sun, Moon } from "lucide-react";
+import { Upload, User, LogOut, Info, Sun, Moon, Shield } from "lucide-react";
 import collegeLogo from "@/assets/college-logo.jpg";
 import { Button } from "@/components/ui/button";
 import { useAuth } from "@/contexts/AuthContext";
 import { useTheme } from "@/components/ThemeProvider";
+import { useIsAdmin } from "@/hooks/useIsAdmin";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 
 const Navbar = () => {
   const location = useLocation();
   const { user, signOut } = useAuth();
   const { theme, toggle } = useTheme();
-
+  const { isAdmin } = useIsAdmin();
   const links = [
     { to: "/", label: "Home" },
     { to: "/browse", label: "Notes" },
@@ -61,7 +62,8 @@ const Navbar = () => {
                 </DropdownMenuTrigger>
                 <DropdownMenuContent align="end">
                   <DropdownMenuItem className="text-xs text-muted-foreground">{user.email}</DropdownMenuItem>
-                  <DropdownMenuItem asChild><Link to="/profile"><User className="mr-2 h-4 w-4" /> Profile</Link></DropdownMenuItem>
+                   <DropdownMenuItem asChild><Link to="/profile"><User className="mr-2 h-4 w-4" /> Profile</Link></DropdownMenuItem>
+                   {isAdmin && <DropdownMenuItem asChild><Link to="/admin"><Shield className="mr-2 h-4 w-4" /> Admin Panel</Link></DropdownMenuItem>}
                   <DropdownMenuItem onClick={signOut}><LogOut className="mr-2 h-4 w-4" /> Sign out</DropdownMenuItem>
                 </DropdownMenuContent>
               </DropdownMenu>
@@ -90,9 +92,10 @@ const Navbar = () => {
                 <DropdownMenuItem className="text-xs text-muted-foreground">{user.email}</DropdownMenuItem>
                 <DropdownMenuItem asChild><Link to="/upload">Upload Notes</Link></DropdownMenuItem>
                 <DropdownMenuItem asChild><Link to="/upload-exam-paper">Upload Exam Paper</Link></DropdownMenuItem>
-                <DropdownMenuItem asChild><Link to="/my-uploads">My Uploads</Link></DropdownMenuItem>
-                <DropdownMenuItem asChild><Link to="/about"><Info className="mr-2 h-4 w-4" /> About Me</Link></DropdownMenuItem>
-                <DropdownMenuItem onClick={signOut}><LogOut className="mr-2 h-4 w-4" /> Sign out</DropdownMenuItem>
+                 <DropdownMenuItem asChild><Link to="/my-uploads">My Uploads</Link></DropdownMenuItem>
+                 {isAdmin && <DropdownMenuItem asChild><Link to="/admin"><Shield className="mr-2 h-4 w-4" /> Admin Panel</Link></DropdownMenuItem>}
+                 <DropdownMenuItem asChild><Link to="/about"><Info className="mr-2 h-4 w-4" /> About Me</Link></DropdownMenuItem>
+                 <DropdownMenuItem onClick={signOut}><LogOut className="mr-2 h-4 w-4" /> Sign out</DropdownMenuItem>
               </DropdownMenuContent>
             </DropdownMenu>
           ) : (
