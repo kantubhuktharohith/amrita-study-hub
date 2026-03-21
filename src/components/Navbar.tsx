@@ -1,9 +1,10 @@
 import { Link, useLocation } from "react-router-dom";
-import { Upload, User, LogOut, Info, Sun, Moon } from "lucide-react";
+import { Upload, User, LogOut, Info, Sun, Moon, Shield } from "lucide-react";
 import collegeLogo from "@/assets/college-logo.jpg";
 import { Button } from "@/components/ui/button";
 import { useAuth } from "@/contexts/AuthContext";
 import { useTheme } from "@/components/ThemeProvider";
+import { useIsAdmin } from "@/hooks/useIsAdmin";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 
 const Navbar = () => {
