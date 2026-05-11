@@ -51,9 +51,8 @@ const SignupPage = () => {
     } else {
       // Update profile with department and year
       const { data: { user } } = await supabase.auth.getUser();
-      if (user) {
+      if (user && (department || year)) {
         await supabase.from("profiles").update({
-          email: email,
           department: department || null,
           year: year ? Number(year) : null,
         }).eq("user_id", user.id);
