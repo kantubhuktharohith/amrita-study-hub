@@ -68,7 +68,7 @@ const Navbar = () => {
                 </DropdownMenuContent>
               </DropdownMenu>
               <Link to="/about" className={`nav-link-orange rounded-md px-3 py-2 text-sm font-medium transition-colors ${isActive("/about") ? "bg-primary/10 text-primary" : "text-muted-foreground hover:text-foreground"}`}>
-                <span className="flex items-center gap-1.5"><Info className="h-4 w-4" /> About Me</span>
+                <span className="flex items-center gap-1.5"><Info className="h-4 w-4" /> About </span>
               </Link>
             </>
           ) : (
