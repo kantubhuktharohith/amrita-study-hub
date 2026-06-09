@@ -131,5 +131,4 @@ This project is licensed under the MIT License. See the LICENSE file for details
 Developed with ❤️ using Lovable, React, TypeScript, and Tailwind CSS.
 
 ---
-
-⭐ If you found this project useful, consider giving it a star on GitHub.
+If you found this project useful, consider giving it a star on GitHub.
