@@ -1,6 +1,6 @@
 # 🚀 Project Name
 
-A modern web application built with React, TypeScript, and Tailwind CSS, powered by Lovable for rapid development and deployment.
+A modern web application built with React, TypeScript, and Tailwind CSS.
 
 ## 📋 Overview
 
