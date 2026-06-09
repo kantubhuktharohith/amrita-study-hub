@@ -8,8 +8,6 @@ This project was created using Lovable and provides a fast, scalable, and mainta
 
 ## ✨ Features
 
-## ✨ Features
-
 ### User Experience
 
 * Clean and modern user interface
