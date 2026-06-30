@@ -144,7 +144,6 @@ Contributions are welcome.
 ```bash
 git checkout -b feature/amazing-feature
 ```
-
 3. Commit your changes.
 
 ```bash
