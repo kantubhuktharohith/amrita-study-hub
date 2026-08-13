@@ -8,7 +8,6 @@ This project was created using Lovable and provides a fast, scalable, and mainta
 ## ✨ Features
 
 ### User Experience
-
 * Clean and modern user interface
 * Fully responsive across desktop, tablet, and mobile devices
 * Fast page loading and smooth navigation
