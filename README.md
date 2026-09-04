@@ -1,6 +1,5 @@
 # 🚀 Project Name
 A modern web application built with React, TypeScript, and Tailwind CSS.
-
 ## 📋 Overview
 This project was created using Lovable and provides a fast, scalable, and maintainable foundation for building modern web applications. It leverages the latest frontend technologies to deliver a responsive and user-friendly experience.
 
