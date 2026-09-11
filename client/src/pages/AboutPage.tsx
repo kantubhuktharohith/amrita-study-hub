@@ -14,28 +14,27 @@ const fadeUp = {
 };
 
 const skills = [
-{ name: "React", color: "bg-primary/15 text-primary border-primary/20" },
-{ name: "Tailwind CSS", color: "bg-accent/15 text-accent border-accent/20" },
-{ name: "Node.js", color: "bg-emerald-500/15 text-emerald-600 border-emerald-500/20" },
-{ name: "Python", color: "bg-yellow-500/15 text-yellow-600 border-yellow-500/20" },
-{ name: "Git", color: "bg-orange-500/15 text-orange-600 border-orange-500/20" },
-{ name: "REST APIs", color: "bg-violet-500/15 text-violet-600 border-violet-500/20" },
-{ name: "JavaScript", color: "bg-amber-500/15 text-amber-600 border-amber-500/20" },
-{ name: "PostgreSQL", color: "bg-blue-500/15 text-blue-600 border-blue-500/20" }];
-
+  { name: "React", color: "bg-primary/15 text-primary border-primary/20" },
+  { name: "Tailwind CSS", color: "bg-accent/15 text-accent border-accent/20" },
+  { name: "Node.js", color: "bg-emerald-500/15 text-emerald-600 border-emerald-500/20" },
+  { name: "Python", color: "bg-yellow-500/15 text-yellow-600 border-yellow-500/20" },
+  { name: "Git", color: "bg-orange-500/15 text-orange-600 border-orange-500/20" },
+  { name: "REST APIs", color: "bg-violet-500/15 text-violet-600 border-violet-500/20" },
+  { name: "JavaScript", color: "bg-amber-500/15 text-amber-600 border-amber-500/20" },
+  { name: "PostgreSQL", color: "bg-blue-500/15 text-blue-600 border-blue-500/20" }
+];
 
 const socials = [
-{ href: "https://github.com", icon: Github, label: "GitHub", hoverColor: "hover:bg-foreground hover:text-background" },
-{ href: "https://linkedin.com/in/rohith-kantubhuktha-a3830b365", icon: Linkedin, label: "LinkedIn", hoverColor: "hover:bg-accent hover:text-accent-foreground" },
-{ href: "mailto:your@email.com", icon: Mail, label: "Email", hoverColor: "hover:bg-primary hover:text-primary-foreground" },
-{ href: "https://yourwebsite.com", icon: Globe, label: "Portfolio", hoverColor: "hover:bg-emerald-500 hover:text-white" }];
-
+  { href: "https://github.com", icon: Github, label: "GitHub", hoverColor: "hover:bg-foreground hover:text-background" },
+  { href: "https://linkedin.com/in/rohith-kantubhuktha-a3830b365", icon: Linkedin, label: "LinkedIn", hoverColor: "hover:bg-accent hover:text-accent-foreground" },
+  { href: "mailto:your@email.com", icon: Mail, label: "Email", hoverColor: "hover:bg-primary hover:text-primary-foreground" },
+  { href: "https://yourwebsite.com", icon: Globe, label: "Portfolio", hoverColor: "hover:bg-emerald-500 hover:text-white" }
+];
 
 const AboutPage = () => {
   return (
     <div className="container max-w-3xl py-10 px-4">
       <motion.div initial="hidden" animate="visible" className="space-y-8">
-
         {/* Hero: Photo + Name side by side */}
         <motion.div variants={fadeUp} custom={0} className="flex flex-col sm:flex-row items-center gap-6 sm:gap-10">
           <div className="rounded-2xl overflow-hidden shadow-lg shrink-0 w-full sm:w-64 h-72 sm:h-80">
@@ -104,19 +103,18 @@ const AboutPage = () => {
                   Skills & Technologies
                 </h3>
                 <div className="flex flex-wrap gap-2">
-                  {skills.map((skill, i) =>
-                  <motion.div
-                    key={skill.name}
-                    initial={{ opacity: 0, scale: 0.8 }}
-                    animate={{ opacity: 1, scale: 1 }}
-                    transition={{ delay: 0.5 + i * 0.08, duration: 0.3 }}
-                    whileHover={{ scale: 1.1, y: -2 }}>
-                    
+                  {skills.map((skill, i) => (
+                    <motion.div
+                      key={skill.name}
+                      initial={{ opacity: 0, scale: 0.8 }}
+                      animate={{ opacity: 1, scale: 1 }}
+                      transition={{ delay: 0.5 + i * 0.08, duration: 0.3 }}
+                      whileHover={{ scale: 1.1, y: -2 }}>
                       <Badge variant="outline" className={`text-xs px-3 py-1 font-medium ${skill.color}`}>
                         {skill.name}
                       </Badge>
                     </motion.div>
-                  )}
+                  ))}
                 </div>
               </motion.div>
 
@@ -127,23 +125,22 @@ const AboutPage = () => {
                   Connect with me
                 </h3>
                 <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
-                  {socials.map((social, i) =>
-                  <motion.a
-                    key={social.label}
-                    href={social.href}
-                    target={social.href.startsWith("mailto") ? undefined : "_blank"}
-                    rel="noopener noreferrer"
-                    className={`flex flex-col items-center gap-2 rounded-xl border border-border/60 bg-card p-4 text-muted-foreground transition-all duration-300 ${social.hoverColor} hover:border-transparent hover:shadow-md`}
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: 0.7 + i * 0.1, duration: 0.4 }}
-                    whileHover={{ y: -4 }}
-                    whileTap={{ scale: 0.95 }}>
-                    
+                  {socials.map((social, i) => (
+                    <motion.a
+                      key={social.label}
+                      href={social.href}
+                      target={social.href.startsWith("mailto") ? undefined : "_blank"}
+                      rel="noopener noreferrer"
+                      className={`flex flex-col items-center gap-2 rounded-xl border border-border/60 bg-card p-4 text-muted-foreground transition-all duration-300 ${social.hoverColor} hover:border-transparent hover:shadow-md`}
+                      initial={{ opacity: 0, y: 20 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ delay: 0.7 + i * 0.1, duration: 0.4 }}
+                      whileHover={{ y: -4 }}
+                      whileTap={{ scale: 0.95 }}>
                       <social.icon className="h-5 w-5" />
                       <span className="text-xs font-medium">{social.label}</span>
                     </motion.a>
-                  )}
+                  ))}
                 </div>
               </motion.div>
             </CardContent>
@@ -155,13 +152,11 @@ const AboutPage = () => {
           variants={fadeUp}
           custom={6}
           className="text-center text-xs text-muted-foreground">
-          
           Built with <span className="text-primary">♥</span> for students, by a student
         </motion.p>
-
       </motion.div>
-    </div>);
-
+    </div>
+  );
 };
 
 export default AboutPage;

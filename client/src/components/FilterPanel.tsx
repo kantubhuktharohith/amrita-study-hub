@@ -1,5 +1,5 @@
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { DEPARTMENTS, SEMESTERS, YEARS } from "@/data/mockData";
+import { DEPARTMENTS, SEMESTERS, YEARS } from "@/data/academicConstants";
 
 interface FilterPanelProps {
   department: string;

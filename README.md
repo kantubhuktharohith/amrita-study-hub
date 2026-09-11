@@ -2,34 +2,38 @@
 
 ## Overview
 
-**Amrita Study Hub** is a collaborative, open-source knowledge-sharing platform specifically designed for the students of **Amrita Sai Institute of Science & Technology**. The platform serves as a centralized repository where seniors and faculty can upload study materials, and juniors can easily access them. 
+**Amrita Study Hub** is a collaborative academic knowledge-sharing platform specifically designed for the students and faculty of **Amrita Sai Institute of Science & Technology**. The platform serves as a centralized repository where seniors and faculty can upload study materials, and juniors can easily discover, browse, and download them.
 
-The goal is to foster a shared academic culture, ensuring that high-quality, relevant study materials (notes, exam papers, etc.) are easily discoverable and accessible to everyone.
+---
 
 ## Features
 
-- **Collaborative Uploads**: Students and faculty can seamlessly upload notes, past exam papers, and other academic documents (PDFs, images).
-- **Advanced Search & Filtering**: Find materials quickly by filtering through subject, semester, department, or specific keywords.
-- **Quality Assurance**: An admin review system ensures that only high-quality, relevant, and appropriate content is approved and published on the platform.
-- **Dedicated Sections**: Separate browsing experiences for general study notes and past exam papers.
-- **User Profiles & Upload Management**: Users can track their own uploads, view their approval status, and manage their shared content.
-- **Responsive & Modern UI**: Built with a mobile-first approach, featuring dark/light mode support, smooth animations, and an intuitive user experience.
+- **Decoupled Client-Server Architecture**: Independent frontend (`client/`) and backend API (`server/`).
+- **Academic Notes Sharing**: Upload and download lecture notes, handwritten summaries, and lab manuals.
+- **Past Exam Question Papers**: Categorized by Mid-1, Mid-2, Semester End, and Supplementary across years.
+- **Peer Learning Community**: Student Q&A and doubt resolution platform organized by branches (`r/cse`, `r/aiml`, `r/ece`, `r/placements`, etc.).
+- **Career & Placement Guidance**: 4-year engineering roadmaps, high-demand skills, project ideas, certifications, and GATE prep for every branch.
+- **Quality Assurance**: Admin review workflow for approving and monitoring uploads.
+- **Responsive & Modern UI**: Mobile-first design, dark/light theme support, and smooth animations.
+
+---
 
 ## Tech Stack
 
-The application is built using a modern, scalable web development stack:
-
 ### Frontend (`client/`)
-- **Framework**: [React](https://reactjs.org/) + [Vite](https://vitejs.dev/) with **TypeScript**
+- **Framework**: [React 18](https://reactjs.org/) + [Vite](https://vitejs.dev/) with **TypeScript**
 - **Styling**: [Tailwind CSS](https://tailwindcss.com/) & [shadcn/ui](https://ui.shadcn.com/)
 - **Animations**: [Framer Motion](https://www.framer.com/motion/)
 - **Data Fetching**: [TanStack React Query](https://tanstack.com/query/latest)
-- **API Proxy**: Automatically proxies `/api` requests to the Express backend server on port 5000.
+- **Routing**: [React Router](https://reactrouter.com/)
+- **API Proxy**: Automatic proxying of `/api` requests to backend on port 5000
 
 ### Backend (`server/`)
-- **Runtime & Server**: [Node.js](https://nodejs.org/) + [Express](https://expressjs.com/) with **TypeScript**
-- **API Endpoints**: Modular REST controllers for `/api/notes`, `/api/exam-papers`, `/api/community`, `/api/stats`, and `/api/health`.
-- **Database & Storage**: [Supabase](https://supabase.com/) (PostgreSQL & Cloud Object Storage).
+- **Runtime & Framework**: [Node.js](https://nodejs.org/) + [Express](https://expressjs.com/) with **TypeScript**
+- **Architecture**: Modular RESTful APIs (`/api/notes`, `/api/exam-papers`, `/api/community`, `/api/career`, `/api/stats`, `/api/health`)
+- **Database & Storage**: [Supabase](https://supabase.com/) (PostgreSQL & Cloud Object Storage)
+
+---
 
 ## Project Structure
 
@@ -39,6 +43,7 @@ amrita-study-hub/
 │   ├── src/
 │   │   ├── components/        # Reusable UI & shadcn components
 │   │   ├── pages/             # Route pages (Browse, Upload, Community, Career, etc.)
+│   │   ├── data/              # Academic constants (departments, semesters, exam types)
 │   │   ├── lib/api.ts         # Client API connector for Express backend
 │   │   └── integrations/      # Supabase & client utilities
 │   ├── index.html
@@ -56,6 +61,8 @@ amrita-study-hub/
 ├── package.json               # Root monorepo orchestration (npm run dev runs both)
 └── README.md
 ```
+
+---
 
 ## Running the Application
 
@@ -78,60 +85,9 @@ To run only the backend server:
 ```bash
 npm run dev:server
 ```
-│   ├── lib/           # Utility functions and Supabase query helpers (noteQueries.ts)
-│   ├── pages/         # Route components (HomePage, BrowsePage, UploadPage, etc.)
-│   ├── App.tsx        # Main application component & routing setup
-│   └── main.tsx       # Entry point
-├── supabase/          # Supabase configuration and migrations (if applicable)
-├── public/            # Public static assets
-└── package.json       # Project dependencies and scripts
+
+### 3. Production Build
+```bash
+npm run build
 ```
-
-## Getting Started
-
-### Prerequisites
-
-- [Node.js](https://nodejs.org/) (v18 or higher recommended)
-- npm or [Bun](https://bun.sh/) package manager
-
-### Installation
-
-1. **Clone the repository:**
-   ```bash
-   git clone <YOUR_GIT_URL>
-   cd amrita-study-hub
-   ```
-
-2. **Install dependencies:**
-   ```bash
-   npm install
-   # or
-   bun install
-   ```
-
-3. **Environment Setup:**
-   Create a `.env` file in the root directory and add your Supabase credentials:
-   ```env
-   VITE_SUPABASE_URL=your_supabase_project_url
-   VITE_SUPABASE_ANON_KEY=your_supabase_anon_key
-   ```
-
-4. **Start the development server:**
-   ```bash
-   npm run dev
-   # or
-   bun dev
-   ```
-   The application will be available at `http://localhost:8080` (or whichever port Vite assigns).
-
-## Available Scripts
-
-- `npm run dev` - Starts the Vite development server.
-- `npm run build` - Builds the application for production.
-- `npm run lint` - Runs ESLint to check for code quality and style issues.
-- `npm run preview` - Locally previews the production build.
-- `npm run test` - Runs the Vitest test suite.
-
-## Contributing
-
-Contributions are welcome! Whether it's reporting a bug, suggesting a new feature, or submitting a pull request, your input helps make Amrita Study Hub better for everyone.
+Compiles both the Vite production client bundle and the Express TypeScript server.

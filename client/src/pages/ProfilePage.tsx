@@ -11,7 +11,7 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Loader2, User, Mail, Building, GraduationCap, Save, Camera } from "lucide-react";
 import { toast } from "sonner";
-import { DEPARTMENTS } from "@/data/mockData";
+import { DEPARTMENTS } from "@/data/academicConstants";
 
 const ProfilePage = () => {
   const { user, loading: authLoading } = useAuth();

@@ -8,7 +8,7 @@ import { fetchExamPapersWithProfiles } from "@/lib/noteQueries";
 import { supabase } from "@/integrations/supabase/client";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Button } from "@/components/ui/button";
-import { EXAM_TYPES, EXAM_YEARS } from "@/data/mockData";
+import { EXAM_TYPES, EXAM_YEARS } from "@/data/academicConstants";
 import { Loader2, ArrowUpDown, X, SlidersHorizontal } from "lucide-react";
 import { useIsMobile } from "@/hooks/use-mobile";
 

@@ -5,7 +5,7 @@ import {
   CareerPath,
   INTERVIEW_PREP_CHECKLIST,
 } from "@/data/careerData";
-import { DEPARTMENTS } from "@/data/mockData";
+import { DEPARTMENTS } from "@/data/academicConstants";
 import { CareerPathCard } from "@/components/career/CareerPathCard";
 import { CareerDetailModal } from "@/components/career/CareerDetailModal";
 import { CareerQuizModal } from "@/components/career/CareerQuizModal";

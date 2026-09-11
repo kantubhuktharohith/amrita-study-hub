@@ -9,7 +9,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Separator } from "@/components/ui/separator";
 import { toast } from "sonner";
 import collegeLogo from "@/assets/college-logo.jpg";
-import { DEPARTMENTS } from "@/data/mockData";
+import { DEPARTMENTS } from "@/data/academicConstants";
 import { useAuth } from "@/contexts/AuthContext";
 
 const SignupPage = () => {

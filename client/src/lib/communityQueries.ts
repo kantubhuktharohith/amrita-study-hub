@@ -4,19 +4,19 @@ import {
   INITIAL_COMMUNITY_QUESTIONS,
 } from "@/data/communityData";
 
-const STORAGE_KEY = "getmaterial_reddit_community_v2";
+const STORAGE_KEY = "amrita_community_posts_v3";
 
 export const getCommunityQuestions = (): CommunityQuestion[] => {
   try {
     const saved = localStorage.getItem(STORAGE_KEY);
     if (saved) {
-      return JSON.parse(saved);
+      const parsed: CommunityQuestion[] = JSON.parse(saved);
+      return parsed.filter((q) => !["q-1", "q-2", "q-3", "q-4", "q-5", "q-6"].includes(q.id));
     }
   } catch (err) {
     console.error("Error reading community questions from localStorage", err);
   }
-  localStorage.setItem(STORAGE_KEY, JSON.stringify(INITIAL_COMMUNITY_QUESTIONS));
-  return INITIAL_COMMUNITY_QUESTIONS;
+  return [];
 };
 
 const saveCommunityQuestions = (questions: CommunityQuestion[]): void => {

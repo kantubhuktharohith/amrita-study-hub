@@ -17,7 +17,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { DEPARTMENTS, SEMESTERS } from "@/data/mockData";
+import { DEPARTMENTS, SEMESTERS } from "@/data/academicConstants";
 import { createQuestion, CreateQuestionInput } from "@/lib/communityQueries";
 import { useAuth } from "@/contexts/AuthContext";
 import { useQuery } from "@tanstack/react-query";

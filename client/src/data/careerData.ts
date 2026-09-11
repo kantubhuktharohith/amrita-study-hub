@@ -1,4 +1,4 @@
-import { DEPARTMENTS } from "./mockData";
+import { DEPARTMENTS } from "./academicConstants";
 
 export interface YearlyMilestone {
   year: number;

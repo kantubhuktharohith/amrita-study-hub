@@ -4,7 +4,7 @@ import { Badge } from "@/components/ui/badge";
 import { useQuery } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
 import type { ExamPaperWithProfile } from "@/lib/noteQueries";
-import { EXAM_TYPES } from "@/data/mockData";
+import { EXAM_TYPES } from "@/data/academicConstants";
 
 const fileIcons: Record<string, typeof FileText> = {
   pdf: FileText,
