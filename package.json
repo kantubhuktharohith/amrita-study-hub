@@ -3,6 +3,10 @@
   "private": true,
   "version": "1.0.0",
   "description": "Amrita Study Hub - Decoupled Client & Server Architecture",
+  "workspaces": [
+    "client",
+    "server"
+  ],
   "scripts": {
     "dev": "concurrently -n \"CLIENT,SERVER\" -c \"cyan,magenta\" \"npm run dev --prefix client\" \"npm run dev --prefix server\"",
     "dev:client": "npm run dev --prefix client",
