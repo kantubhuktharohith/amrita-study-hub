@@ -55,5 +55,5 @@ export const SUB_COMMUNITIES = [
   { id: "r/general", label: "r/general", desc: "General Campus & Student Life", icon: "🎓" },
 ] as const;
 
-// Community questions created live by students and faculty
+// Real community questions only - populated by active students and faculty
 export const INITIAL_COMMUNITY_QUESTIONS: CommunityQuestion[] = [];

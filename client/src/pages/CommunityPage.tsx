@@ -1,11 +1,18 @@
 import React, { useState, useMemo, useEffect } from "react";
 import { CommunityQuestion } from "@/data/communityData";
-import { getCommunityQuestions, voteOnQuestion } from "@/lib/communityQueries";
+import {
+  getCommunityQuestions,
+  fetchCommunityQuestions,
+  voteOnQuestion,
+  COMMUNITY_QUESTIONS_CONTENT_ID,
+  COMMUNITY_ANSWERS_CONTENT_ID,
+} from "@/lib/communityQueries";
 import { QuestionCard } from "@/components/community/QuestionCard";
 import { AskQuestionModal } from "@/components/community/AskQuestionModal";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { useAuth } from "@/contexts/AuthContext";
+import { supabase } from "@/integrations/supabase/client";
 import {
   Search,
   Plus,
@@ -29,13 +36,41 @@ const CommunityPage: React.FC = () => {
   );
   const [isAskModalOpen, setIsAskModalOpen] = useState(false);
 
-  const loadQuestions = () => {
-    const data = getCommunityQuestions();
-    setQuestions(data);
+  const loadQuestions = async () => {
+    // 1. Instant local render
+    const local = getCommunityQuestions();
+    if (local.length > 0) {
+      setQuestions(local);
+    }
+    // 2. Fetch fresh from Supabase cloud database
+    const remote = await fetchCommunityQuestions();
+    setQuestions(remote);
   };
 
   useEffect(() => {
     loadQuestions();
+
+    // Subscribe to realtime database changes so any post made in another account shows immediately
+    const channel = supabase
+      .channel("community-posts-sync")
+      .on(
+        "postgres_changes",
+        { event: "*", schema: "public", table: "comments" },
+        (payload: any) => {
+          if (
+            payload.new?.content_id === COMMUNITY_QUESTIONS_CONTENT_ID ||
+            payload.new?.content_id === COMMUNITY_ANSWERS_CONTENT_ID ||
+            payload.old?.content_id === COMMUNITY_QUESTIONS_CONTENT_ID
+          ) {
+            fetchCommunityQuestions().then(setQuestions);
+          }
+        }
+      )
+      .subscribe();
+
+    return () => {
+      supabase.removeChannel(channel);
+    };
   }, []);
 
   const handleVote = (id: string, dir: 1 | -1, e: React.MouseEvent) => {
@@ -47,38 +82,55 @@ const CommunityPage: React.FC = () => {
 
   // Filter & Sort
   const filteredQuestions = useMemo(() => {
+    const qTerm = (searchQuery || "").toLowerCase();
     return questions
       .filter((q) => {
+        if (!q) return false;
         // Search query
+        const titleMatch = (q.title || "").toLowerCase().includes(qTerm);
+        const contentMatch = (q.content || "").toLowerCase().includes(qTerm);
+        const subjectMatch = (q.subject || "").toLowerCase().includes(qTerm);
+        const deptMatch = (q.department || "").toLowerCase().includes(qTerm);
+        const tagsMatch =
+          Array.isArray(q.tags) &&
+          q.tags.some((t) => (t || "").toLowerCase().includes(qTerm));
+
         const matchesSearch =
-          q.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-          q.content.toLowerCase().includes(searchQuery.toLowerCase()) ||
-          q.subject.toLowerCase().includes(searchQuery.toLowerCase()) ||
-          q.department.toLowerCase().includes(searchQuery.toLowerCase()) ||
-          q.tags.some((t) =>
-            t.toLowerCase().includes(searchQuery.toLowerCase()),
-          );
+          !qTerm ||
+          titleMatch ||
+          contentMatch ||
+          subjectMatch ||
+          deptMatch ||
+          tagsMatch;
 
         // Unanswered filter
         let matchesUnanswered = true;
         if (sortTab === "unanswered") {
-          matchesUnanswered = q.answers.length === 0;
+          matchesUnanswered = (q.answers || []).length === 0;
         }
 
         return matchesSearch && matchesUnanswered;
       })
       .sort((a, b) => {
+        const aUp = a.upvotes || 0;
+        const aDown = a.downvotes || 0;
+        const bUp = b.upvotes || 0;
+        const bDown = b.downvotes || 0;
+        const aAns = (a.answers || []).length;
+        const bAns = (b.answers || []).length;
+
         if (sortTab === "top") {
-          return b.upvotes - b.downvotes - (a.upvotes - a.downvotes);
+          return bUp - bDown - (aUp - aDown);
         }
         if (sortTab === "new") {
           return (
-            new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
+            new Date(b.createdAt || 0).getTime() -
+            new Date(a.createdAt || 0).getTime()
           );
         }
         // Hot sort: score + answer activity
-        const aScore = a.upvotes - a.downvotes + a.answers.length * 3;
-        const bScore = b.upvotes - b.downvotes + b.answers.length * 3;
+        const aScore = aUp - aDown + aAns * 3;
+        const bScore = bUp - bDown + bAns * 3;
         return bScore - aScore;
       });
   }, [questions, searchQuery, sortTab]);

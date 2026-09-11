@@ -22,9 +22,10 @@ import { SUB_COMMUNITIES } from "@/data/communityData";
 import { createQuestion, CreateQuestionInput } from "@/lib/communityQueries";
 import { useAuth } from "@/contexts/AuthContext";
 import { useQuery } from "@tanstack/react-query";
-import { supabase } from "@/integrations/supabase/client";
-import { MessageSquarePlus, Code2, Sparkles } from "lucide-react";
+import { MessageSquarePlus, Code2, Sparkles, Lock } from "lucide-react";
+import { Link } from "react-router-dom";
 import { toast } from "sonner";
+import { supabase } from "@/integrations/supabase/client";
 
 interface AskQuestionModalProps {
   isOpen: boolean;
@@ -75,7 +76,9 @@ export const AskQuestionModal: React.FC<AskQuestionModalProps> = ({
   });
 
   const [title, setTitle] = useState("");
-  const [subCommunity, setSubCommunity] = useState<string>(initialSubCommunity || "r/all");
+  const [subCommunity, setSubCommunity] = useState<string>(
+    initialSubCommunity || "r/all",
+  );
   const [department, setDepartment] = useState<string>(DEPARTMENTS[0]);
   const [semester, setSemester] = useState<string>("3");
   const [subject, setSubject] = useState("");
@@ -96,7 +99,7 @@ export const AskQuestionModal: React.FC<AskQuestionModalProps> = ({
       const match = DEPARTMENTS.find(
         (d) =>
           d.toLowerCase() === profile.department?.toLowerCase() ||
-          d.toLowerCase().includes(profile.department?.toLowerCase() || "")
+          d.toLowerCase().includes(profile.department?.toLowerCase() || ""),
       );
       if (match) {
         setDepartment(match);
@@ -113,9 +116,11 @@ export const AskQuestionModal: React.FC<AskQuestionModalProps> = ({
   const authorDepartment = profile?.department || department || DEPARTMENTS[0];
   const deptShort = getDepartmentShort(authorDepartment);
   const authorFlair =
-    authorYear >= 3 ? `${deptShort} • Senior Mentor ⭐` : `${deptShort} • Year ${authorYear}`;
+    authorYear >= 3
+      ? `${deptShort} • Senior Mentor ⭐`
+      : `${deptShort} • Year ${authorYear}`;
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
     if (!title.trim() || !content.trim()) {
@@ -140,7 +145,9 @@ export const AskQuestionModal: React.FC<AskQuestionModalProps> = ({
         codeSnippet: codeSnippet.trim() ? codeSnippet.trim() : undefined,
         subCommunity: subCommunity || "r/all",
         department,
-        subject: subject.trim() || (semester === "none" ? "General Programming" : department),
+        subject:
+          subject.trim() ||
+          (semester === "none" ? "General Programming" : department),
         semester: semester === "none" ? 0 : Number(semester) || 1,
         tags: tags.length > 0 ? tags : ["general"],
         authorUsername: `u/${cleanUname}`,
@@ -150,7 +157,12 @@ export const AskQuestionModal: React.FC<AskQuestionModalProps> = ({
         authorId: user?.id,
       };
 
-      createQuestion(input);
+      const res = await createQuestion(input);
+      if (!res.success) {
+        toast.error(res.error || "Failed to publish post to database");
+        return;
+      }
+
       toast.success(`Post published to ${subCommunity || "r/all"}!`);
 
       setTitle("");
@@ -162,9 +174,9 @@ export const AskQuestionModal: React.FC<AskQuestionModalProps> = ({
 
       onQuestionCreated();
       onClose();
-    } catch (err) {
+    } catch (err: any) {
       console.error("Failed to publish post:", err);
-      toast.error("Failed to publish post");
+      toast.error(err.message || "Failed to publish post");
     } finally {
       setIsSubmitting(false);
     }
@@ -175,17 +187,35 @@ export const AskQuestionModal: React.FC<AskQuestionModalProps> = ({
       <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto p-4 sm:p-6">
         <DialogHeader className="mb-2">
           <div className="inline-flex items-center gap-1.5 rounded-full border bg-primary/10 px-3 py-1 text-xs font-semibold text-primary w-fit mb-1">
-            <MessageSquarePlus className="h-3.5 w-3.5" /> Create a Post / Ask a Doubt
+            <MessageSquarePlus className="h-3.5 w-3.5" /> Create a Post / Ask a
+            Doubt
           </div>
           <DialogTitle className="text-xl sm:text-2xl font-bold">
             Post to Amrita Student Community
           </DialogTitle>
           <DialogDescription className="text-xs sm:text-sm">
-            Share code questions, exam prep doubts, or placement advice with fellow students.
+            Share code questions, exam prep doubts, or placement advice with
+            fellow students.
           </DialogDescription>
         </DialogHeader>
 
         <form onSubmit={handleSubmit} className="space-y-4 text-xs sm:text-sm">
+          {!user && (
+            <div className="flex items-center justify-between gap-3 p-3 rounded-xl border border-amber-500/30 bg-amber-500/10 text-amber-700 dark:text-amber-400">
+              <div className="flex items-center gap-2">
+                <Lock className="h-4 w-4 shrink-0" />
+                <span className="text-xs">
+                  Please sign in to publish your post so it stores in the community database.
+                </span>
+              </div>
+              <Link to="/login" onClick={onClose}>
+                <Button size="sm" type="button" className="h-7 text-xs bg-amber-600 hover:bg-amber-700 text-white shrink-0">
+                  Sign In
+                </Button>
+              </Link>
+            </div>
+          )}
+
           {/* Title */}
           <div>
             <Label htmlFor="post-title" className="text-xs font-semibold">
@@ -228,7 +258,9 @@ export const AskQuestionModal: React.FC<AskQuestionModalProps> = ({
           {/* Subcommunity & Department */}
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
             <div>
-              <Label className="text-xs font-semibold">Community Channel *</Label>
+              <Label className="text-xs font-semibold">
+                Community Channel *
+              </Label>
               <Select value={subCommunity} onValueChange={setSubCommunity}>
                 <SelectTrigger className="mt-1 text-xs">
                   <SelectValue placeholder="Select Channel" />
@@ -236,7 +268,8 @@ export const AskQuestionModal: React.FC<AskQuestionModalProps> = ({
                 <SelectContent>
                   {SUB_COMMUNITIES.map((sub) => (
                     <SelectItem key={sub.id} value={sub.id} className="text-xs">
-                      <span className="mr-1.5">{sub.icon}</span> {sub.label} — {sub.desc}
+                      <span className="mr-1.5">{sub.icon}</span> {sub.label} —{" "}
+                      {sub.desc}
                     </SelectItem>
                   ))}
                 </SelectContent>
@@ -264,10 +297,7 @@ export const AskQuestionModal: React.FC<AskQuestionModalProps> = ({
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
             <div>
               <Label className="text-xs font-semibold">Semester</Label>
-              <Select
-                value={semester}
-                onValueChange={setSemester}
-              >
+              <Select value={semester} onValueChange={setSemester}>
                 <SelectTrigger className="mt-1 text-xs">
                   <SelectValue placeholder="Semester" />
                 </SelectTrigger>
@@ -402,7 +432,8 @@ export const AskQuestionModal: React.FC<AskQuestionModalProps> = ({
               size="sm"
               className="bg-hero-gradient text-white text-xs gap-1.5"
             >
-              <Sparkles className="h-3.5 w-3.5" /> {isSubmitting ? "Publishing..." : "Publish Post"}
+              <Sparkles className="h-3.5 w-3.5" />{" "}
+              {isSubmitting ? "Publishing..." : "Publish Post"}
             </Button>
           </div>
         </form>

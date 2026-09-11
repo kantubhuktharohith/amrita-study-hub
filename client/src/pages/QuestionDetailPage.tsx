@@ -2,11 +2,13 @@ import React, { useState, useEffect } from "react";
 import { useParams, Link, useNavigate } from "react-router-dom";
 import {
   getQuestionById,
+  fetchQuestionById,
   createAnswer,
   voteOnQuestion,
   voteOnAnswer,
   acceptAnswer,
   incrementQuestionViews,
+  COMMUNITY_ANSWERS_CONTENT_ID,
 } from "@/lib/communityQueries";
 import { CommunityQuestion } from "@/data/communityData";
 import { AnswerItem } from "@/components/community/AnswerItem";
@@ -64,20 +66,60 @@ const QuestionDetailPage: React.FC = () => {
   const [showCommentCode, setShowCommentCode] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const loadQuestion = () => {
+  const [isLoadingQuestion, setIsLoadingQuestion] = useState(true);
+
+  const loadQuestion = async () => {
     if (id) {
+      // 1. Instant local render
       const q = getQuestionById(id);
-      setQuestion(q ? { ...q } : null);
+      if (q) {
+        setQuestion({ ...q });
+        setIsLoadingQuestion(false);
+      }
+      // 2. Fresh fetch from Supabase
+      const remote = await fetchQuestionById(id);
+      if (remote) {
+        setQuestion({ ...remote });
+      }
+      setIsLoadingQuestion(false);
     }
   };
 
   useEffect(() => {
     if (id) {
       incrementQuestionViews(id);
-      const q = getQuestionById(id);
-      setQuestion(q ? { ...q } : null);
+      loadQuestion();
+
+      // Realtime listener for new answers/comments posted by any user
+      const channel = supabase
+        .channel(`question-${id}-sync`)
+        .on(
+          "postgres_changes",
+          { event: "*", schema: "public", table: "comments" },
+          (payload: any) => {
+            if (payload.new?.content_id === COMMUNITY_ANSWERS_CONTENT_ID) {
+              fetchQuestionById(id).then((fresh) => {
+                if (fresh) setQuestion({ ...fresh });
+              });
+            }
+          }
+        )
+        .subscribe();
+
+      return () => {
+        supabase.removeChannel(channel);
+      };
     }
   }, [id]);
+
+  if (isLoadingQuestion && !question) {
+    return (
+      <div className="container py-20 flex flex-col items-center justify-center gap-3">
+        <div className="h-8 w-8 animate-spin rounded-full border-2 border-primary border-t-transparent" />
+        <p className="text-xs text-muted-foreground">Loading community discussion...</p>
+      </div>
+    );
+  }
 
   if (!question) {
     return (
@@ -119,8 +161,14 @@ const QuestionDetailPage: React.FC = () => {
     }
   };
 
-  const handlePostComment = (e: React.FormEvent) => {
+  const handlePostComment = async (e: React.FormEvent) => {
     e.preventDefault();
+
+    if (!user) {
+      toast.error("Please sign in to post your comment or solution.");
+      return;
+    }
+
     if (!commentText.trim()) {
       toast.error("Please enter your comment/solution");
       return;
@@ -130,7 +178,7 @@ const QuestionDetailPage: React.FC = () => {
     try {
       const cleanUname = authorName.replace(/^u\//, "");
 
-      createAnswer({
+      const res = await createAnswer({
         questionId: question.id,
         content: commentText.trim(),
         codeSnippet: commentCode.trim() ? commentCode.trim() : undefined,
@@ -141,16 +189,21 @@ const QuestionDetailPage: React.FC = () => {
           Number(authorYear) >= 3
             ? "Senior Mentor ⭐"
             : `${(profile?.department || question.department).slice(0, 4)} Year ${authorYear}`,
-        authorId: user?.id,
+        authorId: user.id,
       });
+
+      if (!res.success) {
+        toast.error(res.error || "Failed to post comment");
+        return;
+      }
 
       toast.success("Comment posted!");
       setCommentText("");
       setCommentCode("");
       setShowCommentCode(false);
       loadQuestion();
-    } catch (err) {
-      toast.error("Failed to post comment");
+    } catch (err: any) {
+      toast.error(err.message || "Failed to post comment");
     } finally {
       setIsSubmitting(false);
     }
@@ -387,7 +440,23 @@ const QuestionDetailPage: React.FC = () => {
             </div>
 
             {/* "Comment as u/username" Input Box */}
-            <div className="rounded-xl border bg-card p-5 shadow-xs">
+            {!user ? (
+              <div className="rounded-xl border border-dashed bg-card/60 p-6 text-center shadow-xs">
+                <MessageSquare className="h-6 w-6 text-muted-foreground mx-auto mb-2 opacity-60" />
+                <h4 className="text-sm font-semibold text-foreground mb-1">
+                  Join the Discussion
+                </h4>
+                <p className="text-xs text-muted-foreground mb-4 max-w-sm mx-auto">
+                  Sign in to your student account to post solutions, share code snippets, and answer doubts.
+                </p>
+                <Link to="/login">
+                  <Button size="sm" className="bg-hero-gradient text-white text-xs">
+                    Sign in to Comment
+                  </Button>
+                </Link>
+              </div>
+            ) : (
+              <div className="rounded-xl border bg-card p-5 shadow-xs">
               <div className="flex items-center gap-2 mb-3 text-xs text-muted-foreground">
                 <div className="h-6 w-6 rounded-full bg-primary/10 text-primary flex items-center justify-center font-bold text-xs shrink-0">
                   {authorName.charAt(0).toUpperCase()}
@@ -409,7 +478,6 @@ const QuestionDetailPage: React.FC = () => {
               </div>
 
               <form onSubmit={handlePostComment} className="space-y-3">
-
                 <Textarea
                   placeholder="What are your thoughts or solution to this problem? Explain step-by-step..."
                   value={commentText}
@@ -474,6 +542,7 @@ const QuestionDetailPage: React.FC = () => {
                 </div>
               </form>
             </div>
+          )}
 
             {/* Comments Thread */}
             <div className="space-y-3">
