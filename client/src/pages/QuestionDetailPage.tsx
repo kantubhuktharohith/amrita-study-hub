@@ -110,6 +110,7 @@ const QuestionDetailPage: React.FC = () => {
         supabase.removeChannel(channel);
       };
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [id]);
 
   if (isLoadingQuestion && !question) {
