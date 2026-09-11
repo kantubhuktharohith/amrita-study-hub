@@ -9,12 +9,12 @@ import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Loader2, User, Mail, Building, GraduationCap, Save, Camera } from "lucide-react";
+import { Loader2, User, Mail, Building, GraduationCap, Save, Camera, LogOut } from "lucide-react";
 import { toast } from "sonner";
 import { DEPARTMENTS } from "@/data/academicConstants";
 
 const ProfilePage = () => {
-  const { user, loading: authLoading } = useAuth();
+  const { user, loading: authLoading, signOut } = useAuth();
   const queryClient = useQueryClient();
 
   const fileInputRef = useRef<HTMLInputElement>(null);
@@ -116,7 +116,9 @@ const ProfilePage = () => {
 
   return (
     <div className="container max-w-2xl py-8">
-      <h1 className="font-display text-3xl font-bold mb-6">My Profile</h1>
+      <div className="flex items-center justify-between mb-6">
+        <h1 className="font-display text-3xl font-bold">My Profile</h1>
+      </div>
 
       <Card className="shadow-card">
         <CardHeader className="pb-4">
@@ -218,6 +220,20 @@ const ProfilePage = () => {
             )}
             Save Changes
           </Button>
+
+          <div className="pt-2 border-t">
+            <Button
+              type="button"
+              variant="outline"
+              className="w-full border-destructive/30 text-destructive hover:bg-destructive/10 hover:text-destructive gap-2"
+              onClick={async () => {
+                await signOut();
+                toast.success("Signed out successfully");
+              }}
+            >
+              <LogOut className="h-4 w-4" /> Log Out
+            </Button>
+          </div>
         </CardContent>
       </Card>
     </div>

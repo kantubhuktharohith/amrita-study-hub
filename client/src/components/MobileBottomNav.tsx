@@ -1,12 +1,11 @@
 import { Link, useLocation } from "react-router-dom";
-import { Home, BookOpen, FileText, Compass, User } from "lucide-react";
+import { Home, Compass, Users, User } from "lucide-react";
 import { useAuth } from "@/contexts/AuthContext";
 
 const tabs = [
   { to: "/", icon: Home, label: "Home" },
-  { to: "/browse", icon: BookOpen, label: "Notes" },
-  { to: "/exam-papers", icon: FileText, label: "Papers" },
   { to: "/career-guidance", icon: Compass, label: "Career" },
+  { to: "/community", icon: Users, label: "Community" },
   { to: "/profile", icon: User, label: "Profile" },
 ];
 
@@ -19,19 +18,18 @@ const MobileBottomNav = () => {
     return location.pathname.startsWith(path);
   };
 
-  // Get the profile link - redirect to login if not authenticated
   const getProfileLink = () => (user ? "/profile" : "/login");
 
   return (
     <nav className="fixed bottom-0 left-0 right-0 z-50 border-t bg-card/95 backdrop-blur-md md:hidden safe-area-bottom">
       <div className="flex items-center justify-around h-14">
         {tabs.map((tab) => {
-          const to = tab.to === "/profile" ? getProfileLink() : tab.to;
+          const targetTo = tab.to === "/profile" ? getProfileLink() : tab.to;
           const active = isActive(tab.to === "/profile" ? (user ? "/profile" : "/login") : tab.to);
           return (
             <Link
               key={tab.label}
-              to={to}
+              to={targetTo}
               className={`flex flex-1 flex-col items-center justify-center gap-0.5 py-1.5 text-[10px] font-medium transition-colors ${
                 active ? "text-primary" : "text-muted-foreground"
               }`}

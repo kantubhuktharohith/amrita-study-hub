@@ -56,8 +56,8 @@ export const CAREER_CATEGORIES = [
   "Government & Higher Studies",
 ] as const;
 
-export const YEARLY_ROADMAPS_BY_STREAM: Record<string, YearlyMilestone[]> = {
-  "Computer Science & IT Streams": [
+export const YEARLY_ROADMAPS_BY_BRANCH: Record<string, YearlyMilestone[]> = {
+  "Computer Science & Engineering": [
     {
       year: 1,
       title: "Year 1: Foundation & Algorithmic Thinking",
@@ -137,11 +137,293 @@ export const YEARLY_ROADMAPS_BY_STREAM: Record<string, YearlyMilestone[]> = {
       ],
     },
   ],
-  "Electronics & Electrical Streams": [
+  "Computer Science & Engineering (AI & ML)": [
+    {
+      year: 1,
+      title: "Year 1: Mathematical Foundations & Python for AI",
+      focusArea: "Linear Algebra, Multivariable Calculus, Probability, Python & NumPy",
+      academicGoals: [
+        "Master Engineering Mathematics (Linear Algebra & Matrix Decompositions)",
+        "Score > 8.0 CGPA in Python and Discrete Mathematics",
+      ],
+      technicalSkills: ["Python", "NumPy & Pandas", "Matplotlib & Seaborn", "Linux & Git"],
+      certifications: ["Mathematics for Machine Learning (Coursera)", "Python for Data Science (IBM)"],
+      projectsAndActivities: [
+        "Interactive Data Visualizer for campus statistics",
+        "Matrix Operations & Linear Regression from scratch in NumPy",
+      ],
+      placementPrep: [
+        "Create GitHub portfolio showcasing Python notebooks",
+        "Explore Kaggle dataset exploratory data analysis (EDA)",
+      ],
+    },
+    {
+      year: 2,
+      title: "Year 2: Classical Machine Learning & Feature Engineering",
+      focusArea: "Scikit-Learn, Supervised/Unsupervised Algorithms, Data Preprocessing & SQL",
+      academicGoals: [
+        "Deep understanding of Optimization Algorithms, Loss Functions & Cost Analysis",
+        "Excel in Design & Analysis of Algorithms and DBMS",
+      ],
+      technicalSkills: ["Scikit-Learn", "SQL Querying", "Exploratory Data Analysis", "Feature Selection & PCA"],
+      certifications: ["Machine Learning Specialization by Andrew Ng", "Google Data Analytics Certificate"],
+      projectsAndActivities: [
+        "Predictive real-estate price model with cross-validation",
+        "Customer churn prediction pipeline with precision/recall trade-off",
+      ],
+      placementPrep: [
+        "Solve 100+ LeetCode DSA problems (Trees, Graphs, Sorting)",
+        "Participate in 3+ Kaggle tabular competitions",
+      ],
+    },
+    {
+      year: 3,
+      title: "Year 3: Deep Learning, NLP & Generative AI",
+      focusArea: "Neural Networks, PyTorch, Transformers, Computer Vision, MLOps",
+      academicGoals: [
+        "Deep dive into Neural Networks, Deep Learning and Natural Language Processing",
+        "Pre-final year Mini Project using PyTorch or HuggingFace",
+      ],
+      technicalSkills: ["PyTorch / TensorFlow", "CNNs & YOLO (Computer Vision)", "Hugging Face & LLMs", "FastAPI / Docker for ML serving"],
+      certifications: ["Deep Learning Specialization (DeepLearning.AI)", "AWS Certified Machine Learning – Specialty"],
+      projectsAndActivities: [
+        "Retrieval-Augmented Generation (RAG) assistant for university syllabus",
+        "Real-time object detection and tracking using YOLOv8",
+      ],
+      placementPrep: [
+        "Target AI/ML internship roles (Amazon, Google, NVIDIA, AI Startups)",
+        "Prepare for ML system design and math theory interviews",
+      ],
+    },
+    {
+      year: 4,
+      title: "Year 4: Production MLOps, Capstone & AI Campus Placements",
+      focusArea: "MLflow, Model Deployment, Large Scale AI Systems & Placement Drives",
+      academicGoals: [
+        "Major Capstone Project in Generative AI or Computer Vision",
+        "Publish research paper in IEEE / Springer conference",
+      ],
+      technicalSkills: ["MLflow & DVC", "Kubeflow / AWS SageMaker", "Vector Databases (Pinecone/Chroma)", "Model Quantization & TensorRT"],
+      certifications: ["TensorFlow Developer Certificate", "Databricks Certified Machine Learning Associate"],
+      projectsAndActivities: [
+        "Autonomous drone navigation or medical image anomaly detection",
+        "Multi-modal AI assistant deployed on cloud with CI/CD",
+      ],
+      placementPrep: [
+        "Company-specific AI coding assessments (TCS Digital, Microsoft, Infosys AI Labs)",
+        "Deep revision of DSA, ML theory, Probability, and System Design",
+      ],
+    },
+  ],
+  "Computer Science & Engineering (AIDS)": [
+    {
+      year: 1,
+      title: "Year 1: AI & Data Science Scientific Foundations",
+      focusArea: "Descriptive Statistics, Probability, Python, Data Wrangling & Linux",
+      academicGoals: [
+        "Strong foundation in Probability Theory, Statistics and Discrete Math",
+        "High proficiency in Python scripting and algorithm basics",
+      ],
+      technicalSkills: ["Python", "NumPy, Pandas", "Git & GitHub", "Linux Environment"],
+      certifications: ["Google Data Analytics Professional Certificate", "Intro to Python (DataCamp)"],
+      projectsAndActivities: [
+        "COVID/Economic trends data analysis dashboard",
+        "Interactive CLI data cleaner and summarizer",
+      ],
+      placementPrep: [
+        "Establish active GitHub and Kaggle profiles",
+        "Practice general aptitude and quantitative reasoning",
+      ],
+    },
+    {
+      year: 2,
+      title: "Year 2: Data Structures, Advanced SQL & Machine Learning",
+      focusArea: "Relational Databases, Big Data foundations, Data Mining & Scikit-Learn",
+      academicGoals: [
+        "Database Management Systems, Data Warehousing and Data Structures",
+        "Supervised and Unsupervised Learning algorithms",
+      ],
+      technicalSkills: ["Advanced SQL (Joins, CTEs, Window functions)", "Data Structures & Algorithms", "Scikit-Learn", "Tableau / Power BI"],
+      certifications: ["IBM Data Science Professional Certificate", "Microsoft PL-300: Power BI Analyst"],
+      projectsAndActivities: [
+        "Sales forecasting and executive BI dashboard",
+        "Credit card fraud detection using ensemble classifiers",
+      ],
+      placementPrep: [
+        "Target 100+ LeetCode DSA and 50+ LeetCode SQL challenges",
+        "Build portfolio of clean data visualizations on LinkedIn",
+      ],
+    },
+    {
+      year: 3,
+      title: "Year 3: Big Data Engines, Deep Learning & Applied AI",
+      focusArea: "PySpark, Hadoop/Cloud Data Warehouses, Neural Networks & AI Pipelines",
+      academicGoals: [
+        "Big Data Architectures, Deep Learning, Cloud Computing electives",
+        "Applied Data Science industrial internship drive",
+      ],
+      technicalSkills: ["PySpark / Apache Spark", "Cloud Data Warehouses (Snowflake / BigQuery)", "PyTorch basics", "REST APIs for Data"],
+      certifications: ["Databricks Certified Associate Developer for Apache Spark", "AWS Certified Data Analytics"],
+      projectsAndActivities: [
+        "Streaming clickstream analytics pipeline with Kafka and Spark",
+        "Sentiment analysis on consumer reviews using fine-tuned BERT",
+      ],
+      placementPrep: [
+        "Apply for Data Analyst, Business Analyst, and Junior ML Engineer internships",
+        "Resume building focusing on measurable business impacts",
+      ],
+    },
+    {
+      year: 4,
+      title: "Year 4: Enterprise AI/Data Capstone & Campus Placement",
+      focusArea: "End-to-end Data Lakehouse, Scalable AI Deployment & Job Offers",
+      academicGoals: [
+        "Complete enterprise-grade Capstone Project in AI/Data Science",
+        "Maintain zero backlogs and top graduation GPA",
+      ],
+      technicalSkills: ["dbt (data build tool)", "Airflow orchestrator", "Model monitoring & Drift detection", "Scalable ML architectures"],
+      certifications: ["Snowflake SnowPro Core Certification", "Google Cloud Professional Data Engineer"],
+      projectsAndActivities: [
+        "Real-time recommendation system for e-commerce with vector search",
+        "Automated ETL pipeline moving 1M+ rows to cloud warehouse",
+      ],
+      placementPrep: [
+        "Company tests for Analytics firms (Mu Sigma, Fractal, Tiger Analytics, Tier-1 Tech)",
+        "Mock case study rounds, SQL speed tests, and behavioral interviews",
+      ],
+    },
+  ],
+  "Computer Science & Engineering (Data Science)": [
+    {
+      year: 1,
+      title: "Year 1: Foundations of Data Exploration & Python",
+      focusArea: "Python for Data Analysis, Linear Algebra, Probability & Statistics",
+      academicGoals: ["Distinction in Mathematics (Probability & Statistics)", "Master Python and Jupyter ecosystem"],
+      technicalSkills: ["Python", "Pandas", "Matplotlib", "Seaborn", "Git"],
+      certifications: ["Python for Data Science by University of Michigan (Coursera)", "Data Analysis with Python (freeCodeCamp)"],
+      projectsAndActivities: ["Exploratory Data Analysis (EDA) on public datasets", "Automated Excel report generation tool"],
+      placementPrep: ["Build strong fundamentals in quantitative aptitude", "Document projects on GitHub and Medium"],
+    },
+    {
+      year: 2,
+      title: "Year 2: Data Warehousing, SQL Mastery & Predictive Modeling",
+      focusArea: "Advanced SQL, Dimensional Modeling, Tableau, Power BI & Scikit-Learn",
+      academicGoals: ["Master Relational Database Systems, Data Mining and DAA"],
+      technicalSkills: ["Complex SQL", "Tableau / Power BI", "Regression & Classification algorithms", "Hypothesis Testing"],
+      certifications: ["Tableau Desktop Specialist", "Microsoft Certified: Power BI Data Analyst Associate (PL-300)"],
+      projectsAndActivities: ["Interactive HR Analytics dashboard in Power BI", "Loan default risk prediction model"],
+      placementPrep: ["Solve 100+ SQL interview challenges on LeetCode / StrataScratch", "Participate in Kaggle analytics hackathons"],
+    },
+    {
+      year: 3,
+      title: "Year 3: Big Data Pipelines, Cloud Analytics & Internships",
+      focusArea: "Snowflake, BigQuery, PySpark, Time-Series Forecasting, Internships",
+      academicGoals: ["Cloud Data Architecture & Advanced Predictive Analytics courses"],
+      technicalSkills: ["Snowflake / BigQuery", "PySpark", "Time-Series (ARIMA/Prophet)", "A/B Testing Methodologies"],
+      certifications: ["AWS Certified Data Analytics – Specialty", "SnowPro Core Certification"],
+      projectsAndActivities: ["End-to-end data pipeline from API to cloud warehouse", "Supply chain demand forecasting system"],
+      placementPrep: ["Summer internship at analytics consultancy or product company", "Technical case study preparation and communication skills"],
+    },
+    {
+      year: 4,
+      title: "Year 4: Enterprise Analytics Capstone & Data Scientist Hiring",
+      focusArea: "Production Analytics, MLOps, Business Case Studies & Placement Drives",
+      academicGoals: ["High-impact Capstone Project solving real industry business problem"],
+      technicalSkills: ["MLflow", "dbt (Data Build Tool)", "Docker for Data Apps", "Streamlit / Dash web apps"],
+      certifications: ["Google Cloud Certified Professional Data Engineer"],
+      projectsAndActivities: ["Production churn & retention recommendation engine with live web app"],
+      placementPrep: ["Campus recruitment for Deloitte, EY, Tiger Analytics, Fractal, Amazon", "A/B testing, SQL, and business intuition rounds"],
+    },
+  ],
+  "Computer Science & Engineering (Cyber Security)": [
+    {
+      year: 1,
+      title: "Year 1: Computing Foundations, Linux & Networking",
+      focusArea: "Linux Command Line, TCP/IP, Python Scripting & Computer Architecture",
+      academicGoals: ["Master Computer Fundamentals & Discrete Mathematics", "Maintain high GPA"],
+      technicalSkills: ["Linux CLI & Bash", "Python Scripting", "Networking (TCP/UDP, DNS, HTTP, Wireshark)", "Git"],
+      certifications: ["Cisco Introduction to Cybersecurity (Free)", "Linux Essentials (NDG / Cisco)"],
+      projectsAndActivities: ["Packet sniffing and traffic analyzer in Python", "Home lab setup with virtual machines (VirtualBox/VMware)"],
+      placementPrep: ["Start playing beginner CTFs (OverTheWire Bandit, PicoCTF)", "Build networking basics portfolio"],
+    },
+    {
+      year: 2,
+      title: "Year 2: Cryptography, Web Security & Ethical Hacking",
+      focusArea: "Classical & Modern Cryptography, OWASP Top 10, Port Scanning & Metasploit",
+      academicGoals: ["Score high in Cryptography & Network Security, Operating Systems, DBMS"],
+      technicalSkills: ["Kali Linux", "Burp Suite basics", "Nmap & Metasploit", "OWASP Top 10 vulnerabilities"],
+      certifications: ["CompTIA Security+", "eJPT (Junior Penetration Tester)"],
+      projectsAndActivities: ["Vulnerable web application security audit report", "Keylogger detector & automated port scanner in Python"],
+      placementPrep: ["Active participation in TryHackMe & HackTheBox (Top 10% ranking)", "DSA practice in C++/Python"],
+    },
+    {
+      year: 3,
+      title: "Year 3: Penetration Testing, SOC Operations & Reverse Engineering",
+      focusArea: "SIEM (Splunk/Wazuh), Malware Analysis basics, Cloud Security & Internships",
+      academicGoals: ["Cyber Forensics, Information Security Management, Pre-final Mini Project"],
+      technicalSkills: ["SIEM (Splunk / Elastic / Wazuh)", "Burp Suite Professional", "Reverse Engineering (Ghidra)", "Cloud Security (AWS IAM)"],
+      certifications: ["Certified Ethical Hacker (CEH)", "Certified SOC Analyst (CSA)"],
+      projectsAndActivities: ["Enterprise SIEM deployment and log analysis lab", "Automated vulnerability scanner for campus servers"],
+      placementPrep: ["Summer security internship at CyberSOC, bank, or IT consulting firm", "Mock technical interviews on protocols and attack vectors"],
+    },
+    {
+      year: 4,
+      title: "Year 4: Capstone Defense/Attack Simulation & Campus Placement",
+      focusArea: "Red Team/Blue Team Exercises, Incident Response & Placement Drives",
+      academicGoals: ["Capstone Security Architecture Project", "Complete degree with strong standing"],
+      technicalSkills: ["Threat Hunting & Incident Response", "Active Directory Penetration Testing", "Security Compliance (ISO 27001/SOC 2)"],
+      certifications: ["OffSec Certified Professional (OSCP - aspirational)", "AWS Certified Security – Specialty"],
+      projectsAndActivities: ["Comprehensive Red-Team penetration test with remediation roadmap"],
+      placementPrep: ["Placement interviews for CrowdStrike, Palo Alto, Cisco, Quick Heal, Big 4 Cyber teams", "Scenario-based incident response tests"],
+    },
+  ],
+  "Computer Science & Engineering (Big Data Analytics)": [
+    {
+      year: 1,
+      title: "Year 1: Programming Foundations & Scalable Thinking",
+      focusArea: "Java / Python, Linux Systems, Discrete Math & Computer Architecture",
+      academicGoals: ["Strong foundation in Object-Oriented Programming and Data Structures"],
+      technicalSkills: ["Java & Python", "Linux Shell Scripting", "Git", "Basic SQL"],
+      certifications: ["Java Programming (Coursera / Oracle)", "Linux for Developers"],
+      projectsAndActivities: ["Multi-threaded log file parser in Java", "CLI data processor for multi-gigabyte CSVs"],
+      placementPrep: ["DSA problem solving in Java/C++", "Aptitude and logic practice"],
+    },
+    {
+      year: 2,
+      title: "Year 2: Distributed Systems, Advanced Databases & Hadoop",
+      focusArea: "Hadoop HDFS, MapReduce, NoSQL (MongoDB, Cassandra), Relational Scale",
+      academicGoals: ["Advanced DBMS, Distributed Computing, Algorithms"],
+      technicalSkills: ["Hadoop & HDFS", "NoSQL (Cassandra / MongoDB)", "Advanced SQL Query Optimization", "Kafka basics"],
+      certifications: ["Cloudera Certified Associate", "MongoDB Developer Certificate"],
+      projectsAndActivities: ["Distributed document indexer using MapReduce", "Social media data ingestion pipeline into MongoDB"],
+      placementPrep: ["Target 120+ LeetCode DSA questions", "Deep dive into database indexing and execution plans"],
+    },
+    {
+      year: 3,
+      title: "Year 3: Real-Time Stream Processing & Cloud Data Platforms",
+      focusArea: "Apache Spark, Apache Kafka, Apache Flink, AWS EMR & Internships",
+      academicGoals: ["Big Data Analytics, Cloud Computing, High Performance Computing"],
+      technicalSkills: ["Apache Spark (PySpark/Scala)", "Apache Kafka", "AWS EMR / S3", "Snowflake"],
+      certifications: ["Databricks Certified Associate Developer for Apache Spark", "AWS Certified Data Engineer"],
+      projectsAndActivities: ["Real-time IoT sensor telemetry processing using Kafka and Spark Streaming", "Cloud Data Lakehouse pipeline"],
+      placementPrep: ["Big Data Engineer / Data Platform internships at Tier-1 tech or FinTech", "System design rounds for distributed storage"],
+    },
+    {
+      year: 4,
+      title: "Year 4: Petabyte-Scale Architecture Capstone & Placements",
+      focusArea: "Enterprise Data Lakehouses, Fault Tolerance, Cost Optimization & Hiring",
+      academicGoals: ["Complete Capstone Distributed Big Data Project"],
+      technicalSkills: ["Data Lakehouse Architecture (Delta Lake / Iceberg)", "Airflow / Prefect orchestration", "Kubernetes for data pipelines"],
+      certifications: ["Google Professional Data Engineer"],
+      projectsAndActivities: ["Production streaming analytics engine handling 10,000+ events/sec"],
+      placementPrep: ["Campus recruitment for Amazon, Walmart Labs, Flipkart, Target, TCS Analytics", "Concurrency, distributed algorithms and system design interviews"],
+    },
+  ],
+  "Electronics & Communication": [
     {
       year: 1,
       title: "Year 1: Circuit Foundations & C Programming",
-      focusArea: "Basic Electrical, Engineering Physics, Mathematics & C/Embedded C",
+      focusArea: "Network Analysis, Semiconductor Physics, Mathematics & C/Embedded C",
       academicGoals: ["Master Network Analysis & Semiconductor Physics", "Maintain CGPA > 8.0"],
       technicalSkills: ["C Programming", "Circuit Simulation (Multisim/Proteus)", "MATLAB basics"],
       certifications: ["Introduction to Electronics (Coursera)", "MATLAB Onramp (MathWorks - Free)"],
@@ -173,13 +455,55 @@ export const YEARLY_ROADMAPS_BY_STREAM: Record<string, YearlyMilestone[]> = {
       title: "Year 4: Core Placement, GATE & Capstone Hardware",
       focusArea: "Campus Placement, GATE Exam, Capstone Project & Core Engineering Careers",
       academicGoals: ["Capstone hardware/firmware design and testing", "Graduation with top honors"],
-      technicalSkills: ["High-speed PCB routing", "SoC Design", "Industrial Automation & PLC/SCADA (EEE)"],
+      technicalSkills: ["High-speed PCB routing", "SoC Design", "Industrial Automation & PLC/SCADA"],
       certifications: ["IPC PCB Standards Certification or Certified Automation Professional"],
       projectsAndActivities: ["Industrial IoT / Smart Grid / EV Battery Management System Capstone"],
       placementPrep: ["Attend campus interviews for Core & IT roles", "GATE exam revision and PSU applications"],
     },
   ],
-  "Mechanical & Civil Engineering Streams": [
+  "Electrical & Electronics": [
+    {
+      year: 1,
+      title: "Year 1: Electrical Sciences, Circuit Theory & Computing",
+      focusArea: "Ohm's & Kirchhoff's Laws, AC Circuits, Engineering Physics, C & MATLAB",
+      academicGoals: ["Master Electric Circuit Theory & Magnetic Circuits", "Maintain CGPA > 8.0"],
+      technicalSkills: ["C Programming", "MATLAB & Simulink", "Multisim / LTspice simulation", "Electrical workshop tooling"],
+      certifications: ["Electric Circuits (MIT OpenCourseWare / edX)", "MATLAB Fundamentals"],
+      projectsAndActivities: ["Regulated DC power supply circuit design", "Household wiring & energy audit study"],
+      placementPrep: ["Aptitude fundamentals and logic building", "Join college electrical society (IEEE PES)"],
+    },
+    {
+      year: 2,
+      title: "Year 2: Electrical Machines, Power Generation & Analog Circuits",
+      focusArea: "DC/AC Machines, Transformers, Power Generation & Analog Electronics",
+      academicGoals: ["Deep understanding of Induction Motors, Synchronous Machines, Analog ICs"],
+      technicalSkills: ["Simulink Power Systems", "Embedded C (Arduino/PIC)", "LabVIEW basics", "Motor control circuits"],
+      certifications: ["Electrical Machines (NPTEL / IIT)", "Introduction to Power Electronics"],
+      projectsAndActivities: ["Speed control of DC motor using PWM and H-Bridge", "Solar PV battery charger circuit"],
+      placementPrep: ["Practice circuit analysis puzzles and technical aptitude", "GATE Electrical syllabus initial review"],
+    },
+    {
+      year: 3,
+      title: "Year 3: Power Electronics, Control Systems & EV Powertrains",
+      focusArea: "Inverters, Converters, Microgrids, PLC/SCADA, Electric Vehicle Tech",
+      academicGoals: ["Excellence in Power System Analysis, Control Systems, Power Electronics"],
+      technicalSkills: ["Power Electronics Design (Inverters/Choppers)", "PLC & SCADA programming", "Battery Management Systems (BMS)", "Microcontroller interfacing"],
+      certifications: ["Certified Industrial Automation Engineer (PLC/SCADA)", "Electric Vehicles Specialization (Coursera)"],
+      projectsAndActivities: ["Grid-tied solar inverter with MPPT algorithm", "BMS prototype with temperature & overvoltage protection"],
+      placementPrep: ["Summer internship at Power grid, manufacturing plant, or EV startup", "Core interview prep for Schneider, ABB, L&T, Tata Power"],
+    },
+    {
+      year: 4,
+      title: "Year 4: Smart Grid Capstone, GATE / PSU & Core Hiring",
+      focusArea: "Smart Grid Integration, Protection Relays, High Voltage & Placements",
+      academicGoals: ["High-voltage Capstone Project completion", "Top rank in GATE EE examination"],
+      technicalSkills: ["ETAP (Power System Analysis)", "Smart Grid Communication protocols", "High-voltage engineering safety"],
+      certifications: ["Certified Energy Auditor / Manager (BEE)", "PMP Foundation"],
+      projectsAndActivities: ["Smart grid distribution network simulation with fault detection in ETAP", "Dual-axis solar tracking EV station"],
+      placementPrep: ["Campus recruitment for L&T, Schneider Electric, Siemens, BHEL, NTPC, IOCL", "GATE and PSU technical revision"],
+    },
+  ],
+  "Mechanical Engineering": [
     {
       year: 1,
       title: "Year 1: Engineering Mechanics & 2D Drafting",
@@ -187,41 +511,87 @@ export const YEARLY_ROADMAPS_BY_STREAM: Record<string, YearlyMilestone[]> = {
       academicGoals: ["Strong foundation in Statics, Dynamics & Calculus", "Maintain CGPA > 8.0"],
       technicalSkills: ["AutoCAD (2D Drafting)", "Basic Python for numerical calculations", "Engineering Drawing standards"],
       certifications: ["Autodesk Certified User (AutoCAD)", "Engineering Mechanics on Coursera/NPTEL"],
-      projectsAndActivities: ["Drafting building blueprints or standard machine elements in AutoCAD", "Hands-on workshop tooling & fabrication"],
+      projectsAndActivities: ["Drafting machine elements in AutoCAD", "Hands-on workshop tooling & fabrication"],
       placementPrep: ["Explore GATE / PSU / Core private sectors and software hybrid roles"],
     },
     {
       year: 2,
-      title: "Year 2: 3D Modeling & Solid Mechanics / Structural Analysis",
-      focusArea: "SolidWorks / CATIA (Mech) or Revit / STAAD.Pro (Civil), Strength of Materials",
-      academicGoals: ["Thermodynamics & Fluid Mechanics (Mech) or Surveying & Fluid Mechanics (Civil)"],
-      technicalSkills: ["SolidWorks / Creo / Fusion 360", "STAAD.Pro / ETABS (Civil)", "Ansys FEA basics", "Excel VBA / Python"],
-      certifications: ["CSWA (Certified SolidWorks Associate)", "Bentley STAAD.Pro Specialist"],
-      projectsAndActivities: ["3D assembly of an internal combustion engine or drone chassis", "Structural analysis of a multi-storey RC frame building"],
-      placementPrep: ["Prepare for Core companies (L&T, Tata Projects, Mahindra, Hyundai, Afcons)", "Start GATE syllabus self-study"],
+      title: "Year 2: 3D Modeling, Thermodynamics & Solid Mechanics",
+      focusArea: "SolidWorks / CATIA, Strength of Materials, Fluid Mechanics, Kinematics",
+      academicGoals: ["Thermodynamics & Fluid Mechanics, Manufacturing Processes"],
+      technicalSkills: ["SolidWorks / Creo / Fusion 360", "Ansys FEA basics", "Excel VBA / Python", "GD&T Standards"],
+      certifications: ["CSWA (Certified SolidWorks Associate)", "Manufacturing Technology (NPTEL)"],
+      projectsAndActivities: ["3D assembly of an internal combustion engine or drone chassis", "Stress analysis of beam structure in ANSYS"],
+      placementPrep: ["Prepare for Core companies (L&T, Tata Motors, Mahindra, Hyundai)", "Start GATE syllabus self-study"],
     },
     {
       year: 3,
-      title: "Year 3: Simulation, BIM & Site/Industrial Internships",
-      focusArea: "Finite Element Analysis (FEA), CFD, BIM, Site/Plant Internships",
-      academicGoals: ["Design of Machine Elements (Mech) or Design of Steel & RC Structures (Civil)"],
-      technicalSkills: ["ANSYS Mechanical / Fluent", "Revit Architecture & BIM 360", "Primavera P6 / MS Project", "Robotics basics"],
-      certifications: ["Autodesk Certified Professional: Revit / Inventor", "Certified Project Management Associate"],
-      projectsAndActivities: ["Aerodynamic analysis of airfoil / drone blade", "BIM 3D modeling and cost estimation for sustainable green building"],
-      placementPrep: ["Summer Industrial Internship at construction sites, manufacturing plants or design firms", "Aptitude, GD, and Technical test prep"],
+      title: "Year 3: Simulation, Heat Transfer & Industrial Internships",
+      focusArea: "Finite Element Analysis (FEA), CFD, Mechatronics, Plant Internships",
+      academicGoals: ["Design of Machine Elements, Heat & Mass Transfer, CAD/CAM"],
+      technicalSkills: ["ANSYS Mechanical & Fluent (CFD)", "MATLAB / Simulink for Mechatronics", "CNC Programming & G-Codes", "Robotics basics"],
+      certifications: ["Autodesk Certified Professional: Inventor", "Six Sigma Green Belt Foundation"],
+      projectsAndActivities: ["Aerodynamic analysis of airfoil / drone blade in ANSYS Fluent", "Automated pick-and-place robotic arm prototype"],
+      placementPrep: ["Summer Industrial Internship at manufacturing plants, automotive OEMs, or design studios", "Aptitude, GD, and Technical test prep"],
     },
     {
       year: 4,
-      title: "Year 4: Core & Tech Placements, GATE / PSU & Capstone",
-      focusArea: "Core & Tech Placements, GATE Examination, Capstone Project & Higher Studies",
+      title: "Year 4: Capstone EV/Robotics Design, GATE & Core Placements",
+      focusArea: "Core & Tech Placements, GATE Examination, Capstone Project & EV Tech",
       academicGoals: ["Complete Comprehensive Capstone Engineering Project", "Clear GATE with top percentile"],
-      technicalSkills: ["Advanced CAE & Multiphysics", "Structural Health Monitoring / EV Powertrain Design"],
-      certifications: ["Six Sigma Green Belt", "PMP Foundation / LEED Green Associate"],
-      projectsAndActivities: ["Solar-powered EV buggy prototype or Earthquake-resistant modular structure model"],
-      placementPrep: ["Attend campus interviews for L&T, Tata Motors, JSW, Tech Mahindra, Capgemini", "Apply for PSU jobs (IOCL, ONGC, NTPC, BHEL)"],
+      technicalSkills: ["Advanced CAE & Multiphysics", "EV Chassis & Powertrain Design", "Additive Manufacturing (3D Printing)"],
+      certifications: ["CSWP (Certified SolidWorks Professional)", "PMP Foundation"],
+      projectsAndActivities: ["Solar-powered EV buggy prototype or All-Terrain Vehicle (Baja SAE)"],
+      placementPrep: ["Attend campus interviews for L&T, Tata Motors, JSW, Tech Mahindra, Capgemini", "Apply for PSU jobs (IOCL, ONGC, NTPC, BHEL, ISRO)"],
+    },
+  ],
+  "Civil Engineering": [
+    {
+      year: 1,
+      title: "Year 1: Engineering Mechanics & Surveying Basics",
+      focusArea: "Engineering Mechanics, Surveying, Engineering Geology, AutoCAD 2D",
+      academicGoals: ["Strong foundation in Statics, Surveying Theory & Mathematics", "Maintain CGPA > 8.0"],
+      technicalSkills: ["AutoCAD (Civil Drafting)", "Total Station & GPS Surveying", "Basic Python/C for calculations"],
+      certifications: ["Autodesk Certified User (AutoCAD Civil)", "Surveying & Geomatics (NPTEL)"],
+      projectsAndActivities: ["Contour mapping and levelling survey of college campus", "Architectural plan & elevation in AutoCAD"],
+      placementPrep: ["Explore Govt/PSU, Infrastructure firms, and BIM pathways"],
+    },
+    {
+      year: 2,
+      title: "Year 2: Solid Mechanics, Fluid Mechanics & 3D BIM",
+      focusArea: "Strength of Materials, Fluid Mechanics, Concrete Technology, Revit",
+      academicGoals: ["High scores in Structural Analysis I, Fluid Mechanics, Soil Mechanics"],
+      technicalSkills: ["Autodesk Revit Architecture", "STAAD.Pro basics", "Concrete Mix Design (IS Codes)", "Excel for structural tables"],
+      certifications: ["Bentley STAAD.Pro Specialist", "Revit Architecture Certified User"],
+      projectsAndActivities: ["3D BIM model of residential G+3 building in Revit", "Concrete compressive strength testing laboratory study"],
+      placementPrep: ["Review GATE Civil Engineering syllabus", "Technical aptitude and structural logic building"],
+    },
+    {
+      year: 3,
+      title: "Year 3: Structural Analysis, Geotechnical & Site Internships",
+      focusArea: "Design of RC & Steel Structures, ETABS, Geotechnical Engg, Site Internships",
+      academicGoals: ["Design of Reinforced Concrete & Steel Structures, Highway & Transportation Engg"],
+      technicalSkills: ["ETABS (High-rise building analysis)", "STAAD.Pro advanced", "Primavera P6 / MS Project", "Soil Testing & Foundation Design"],
+      certifications: ["Autodesk Certified Professional: Revit Structure", "Certified Project Management Associate"],
+      projectsAndActivities: ["Earthquake-resistant multi-storey RC frame analysis in ETABS", "Green building LEED rating audit report"],
+      placementPrep: ["Summer Industrial Internship at construction sites, metro projects, or structural design firms", "GD and technical interview prep"],
+    },
+    {
+      year: 4,
+      title: "Year 4: Mega Infrastructure Capstone, GATE & Core Placements",
+      focusArea: "Major Infrastructure Capstone, Environmental Engg, GATE & PSU Recruitment",
+      academicGoals: ["Complete Comprehensive Capstone Project", "Clear GATE with top percentile"],
+      technicalSkills: ["Advanced BIM 360 & Navisworks (Clash Detection)", "Quantity Surveying & Cost Estimation", "Pavement & Bridge Design"],
+      certifications: ["LEED Green Associate", "Primavera P6 Professional"],
+      projectsAndActivities: ["Smart highway junction redesign or Earthquake-resilient modular hospital structure"],
+      placementPrep: ["Campus interviews for L&T Construction, Tata Projects, Afcons, Shapoorji Pallonji", "Apply for PSU jobs (NHAI, CPWD, DMRC, RITES, IOCL)"],
     },
   ],
 };
+
+// Backwards-compatibility alias
+export const YEARLY_ROADMAPS_BY_STREAM: Record<string, YearlyMilestone[]> = YEARLY_ROADMAPS_BY_BRANCH;
+
 
 export const CAREER_PATHS: CareerPath[] = [
   // 1. Computer Science & Engineering (Core)
@@ -1062,3 +1432,277 @@ export const INTERVIEW_PREP_CHECKLIST = [
     ],
   },
 ];
+
+export interface BranchInterviewPrep {
+  branch: string;
+  shortName: string;
+  topRecruiters: string[];
+  selectionRounds: { round: string; focus: string }[];
+  technicalTopics: { title: string; items: string[] }[];
+  frequentQuestions: { question: string; keyFocus: string }[];
+  portfolioAdvice: string[];
+}
+
+export const BRANCH_INTERVIEW_PREP: Record<string, BranchInterviewPrep> = {
+  "Computer Science & Engineering": {
+    branch: "Computer Science & Engineering",
+    shortName: "CSE (Core)",
+    topRecruiters: ["Google", "Microsoft", "Amazon", "Infosys", "TCS Digital", "Zoho", "Accenture", "Cognizant", "Oracle"],
+    selectionRounds: [
+      { round: "Round 1: Online Assessment (OA)", focus: "90-min coding test (2-3 DSA problems) + Quantitative Aptitude & CS Fundamentals MCQs" },
+      { round: "Round 2: Technical Interview 1", focus: "Live DSA coding (CoderPad), time & space complexity, edge-case analysis and optimization" },
+      { round: "Round 3: Technical Interview 2", focus: "Operating Systems, DBMS, Computer Networks, OOPs and High/Low-Level System Design" },
+      { round: "Round 4: HR & Cultural Fit", focus: "STAR method behavioral questions, willingness to learn, teamwork, relocation adaptability" },
+    ],
+    technicalTopics: [
+      { title: "Data Structures & Algorithms", items: ["Arrays, Two Pointers & Sliding Window techniques", "HashMaps, Stacks, Queues & Monotonic Stacks", "Trees, Binary Search Trees & Tries (BFS / DFS)", "Graphs (Dijkstra, BFS, Cycle Detection) & Dynamic Programming", "Big-O Time and Space Complexity analysis"] },
+      { title: "Operating Systems & Concurrency", items: ["Paging, Virtual Memory & Page Replacement algorithms", "Deadlock conditions, Prevention & Banker's Algorithm", "Process vs Thread, Multi-threading & Context Switching", "CPU Scheduling algorithms (Round Robin, SJF, Priority)"] },
+      { title: "DBMS & SQL Querying", items: ["SQL Joins (INNER, LEFT, RIGHT, FULL) & Subqueries", "Database Normalization (1NF through BCNF)", "ACID properties & Transaction Isolation levels", "B+ Tree Indexing & Query Execution Plans"] },
+      { title: "Computer Networks & OOPs", items: ["OSI 7-Layer Model & TCP/IP stack protocols", "TCP 3-Way Handshake vs UDP connectionless transfer", "DNS resolution, HTTP vs HTTPS (TLS/SSL encryption)", "Four pillars of OOPs: Polymorphism, Inheritance, Encapsulation, Abstraction"] },
+    ],
+    frequentQuestions: [
+      { question: "What happens when you type a URL in the browser and press Enter?", keyFocus: "DNS lookup -> TCP 3-way handshake -> TLS negotiation -> HTTP GET -> Server processing -> DOM rendering." },
+      { question: "Explain the difference between optimistic and pessimistic locking in databases.", keyFocus: "Optimistic checks version on commit; pessimistic locks rows immediately (SELECT FOR UPDATE)." },
+      { question: "What is the difference between a process and a thread, and how does IPC work?", keyFocus: "Processes have separate memory space; threads share process memory. IPC via pipes, shared memory, and sockets." },
+      { question: "How would you design a scalable URL shortener like TinyURL?", keyFocus: "Base62 hashing, collision resolution, database schema, Redis caching layer, and load balancing." },
+    ],
+    portfolioAdvice: [
+      "Pin 2-3 production-ready GitHub repositories with live demo links and clean architecture diagrams.",
+      "Solve at least 150-200 LeetCode problems (focus on the Blind 75 / NeetCode 150 roadmap).",
+      "Highlight competitive programming ratings (LeetCode contest rating, CodeChef, Hackathon wins).",
+    ],
+  },
+  "Computer Science & Engineering (AI & ML)": {
+    branch: "Computer Science & Engineering (AI & ML)",
+    shortName: "CSE (AI & ML)",
+    topRecruiters: ["Google DeepMind", "Microsoft Research", "NVIDIA", "Amazon AWS", "IBM Research", "TCS AI Labs", "Fractal Analytics"],
+    selectionRounds: [
+      { round: "Round 1: OA & Math Screening", focus: "DSA problem solving + Linear Algebra, Probability, Calculus & ML theory MCQs" },
+      { round: "Round 2: Machine Learning Technical", focus: "Loss functions, gradient descent variants, regularization, evaluation metrics (ROC-AUC, F1)" },
+      { round: "Round 3: Deep Learning & MLOps Live Coding", focus: "PyTorch/TensorFlow, Transformers, fine-tuning, RAG pipelines, model deployment" },
+      { round: "Round 4: Techno-Managerial / HR", focus: "Research paper walkthrough, problem intuition, ethics of AI, behavioral questions" },
+    ],
+    technicalTopics: [
+      { title: "Mathematics for Machine Learning", items: ["Linear Algebra: Eigenvalues, Eigenvectors, SVD, Matrix Decompositions", "Multivariable Calculus: Gradients, Jacobians, Hessians, Chain rule", "Probability & Statistics: Bayes' Theorem, Gaussian distributions, Maximum Likelihood Estimation"] },
+      { title: "Classical Machine Learning", items: ["Linear & Logistic Regression, Decision Trees, Random Forests", "Support Vector Machines (Kernel trick), k-Means, PCA Dimensionality Reduction", "Bias-Variance Tradeoff, L1/L2 Regularization, Cross-Validation strategies"] },
+      { title: "Deep Learning & Generative AI", items: ["Backpropagation & Optimizers (Adam, RMSProp, SGD with momentum)", "CNNs (ResNet, YOLO), RNNs/LSTMs, Transformer Multi-Head Self-Attention", "Large Language Models (LLMs), RAG pipelines, Vector Databases (Pinecone, ChromaDB)"] },
+    ],
+    frequentQuestions: [
+      { question: "How does the self-attention mechanism work in Transformer models?", keyFocus: "Q, K, V calculation, Softmax(QK^T / sqrt(d_k)) * V, multi-head parallel attention projections." },
+      { question: "Explain the mathematical difference between L1 (Lasso) and L2 (Ridge) regularization.", keyFocus: "L1 adds absolute weights penalty causing sparsity/feature selection; L2 adds squared penalty shrinking weights toward zero." },
+      { question: "What is the vanishing gradient problem and how do ResNets and ReLU solve it?", keyFocus: "Gradients shrink in deep layers; solved via ReLU constant derivative, skip/residual connections, and batch norm." },
+      { question: "How does Retrieval-Augmented Generation (RAG) mitigate LLM hallucinations?", keyFocus: "External knowledge retrieval via embedding semantic search injected into context prompt before LLM generation." },
+    ],
+    portfolioAdvice: [
+      "Host a live HuggingFace Space or Streamlit app demonstrating your trained model.",
+      "Maintain public Kaggle notebooks showcasing clean EDA and model evaluation.",
+      "If you authored a research paper or preprint, prepare a concise 3-minute executive summary.",
+    ],
+  },
+  "Computer Science & Engineering (AIDS)": {
+    branch: "Computer Science & Engineering (AIDS)",
+    shortName: "CSE (AIDS)",
+    topRecruiters: ["Tiger Analytics", "Mu Sigma", "Fractal", "Amazon", "Deloitte", "EY", "Infosys", "Wipro"],
+    selectionRounds: [
+      { round: "Round 1: Aptitude & SQL/DSA Assessment", focus: "Complex SQL queries, probability questions, Python data manipulation and analytical logic" },
+      { round: "Round 2: Technical Interview 1", focus: "Pandas/NumPy wrangling, SQL Window functions, statistical significance testing, ML algorithms" },
+      { round: "Round 3: Business Analytics Case Study", focus: "Metric identification (ROI, CAC, LTV), business problem framing, end-to-end data pipelines" },
+      { round: "Round 4: HR & Behavioral Round", focus: "Stakeholder communication, adaptability, teamwork, scenario questions" },
+    ],
+    technicalTopics: [
+      { title: "SQL & Data Manipulation", items: ["Advanced SQL: Window functions (RANK, DENSE_RANK, LEAD, LAG), CTEs, Joins", "Pandas & NumPy: GroupBy, Merging, Pivoting, Vectorized transformations", "Data Cleaning: Imputation, Outlier detection, Handling missing data"] },
+      { title: "Applied Statistics & A/B Testing", items: ["Hypothesis Testing: p-values, t-test, Chi-square test, Z-test", "A/B Testing: Sample size determination, Randomization, Statistical significance", "Correlation vs Causation & Regression diagnostics"] },
+      { title: "Big Data & Machine Learning", items: ["PySpark basics for distributed datasets", "Tableau / Power BI interactive dashboards", "Supervised classification (XGBoost, LightGBM) and clustering"] },
+    ],
+    frequentQuestions: [
+      { question: "What is the difference between RANK(), DENSE_RANK(), and ROW_NUMBER() in SQL?", keyFocus: "ROW_NUMBER assigns unique numbers; RANK skips ranks on ties; DENSE_RANK leaves no gaps." },
+      { question: "How do you design and evaluate an A/B test for a new campus portal feature?", keyFocus: "Define Null/Alt hypothesis, compute sample size, ensure randomized cohorts, track p-value < 0.05." },
+      { question: "How do you handle severe class imbalance in a dataset (e.g. fraud detection)?", keyFocus: "SMOTE oversampling, focal loss, class weights, evaluating PR-AUC / F1 instead of Accuracy." },
+    ],
+    portfolioAdvice: [
+      "Publish an interactive dashboard on Tableau Public or Power BI web viewer.",
+      "Showcase an end-to-end data pipeline: Raw Data -> SQL Warehouse -> ML Model -> Dashboard.",
+    ],
+  },
+  "Computer Science & Engineering (Data Science)": {
+    branch: "Computer Science & Engineering (Data Science)",
+    shortName: "CSE (Data Science)",
+    topRecruiters: ["Deloitte", "Fractal Analytics", "Amazon", "Flipkart", "PwC", "KPMG", "Accenture AI", "Target"],
+    selectionRounds: [
+      { round: "Round 1: Online Screening", focus: "SQL speed test, Python data wrangling, Statistics MCQs and Probability" },
+      { round: "Round 2: Data Modeling Technical", focus: "Feature selection, ML algorithms, time-series forecasting, SQL window functions" },
+      { round: "Round 3: Case Study & Intuition", focus: "Interpreting ambiguous business questions, building KPI dashboards, tradeoff analysis" },
+      { round: "Round 4: Fitment & HR Round", focus: "STAR interview, presenting findings to non-technical stakeholders" },
+    ],
+    technicalTopics: [
+      { title: "Statistical & Probability Mastery", items: ["Probability distributions (Normal, Poisson, Binomial)", "Central Limit Theorem and Confidence Intervals", "Hypothesis testing & ANOVA"] },
+      { title: "Data Warehousing & SQL", items: ["Star and Snowflake schema design", "Partitioning, Clustering, Indexing optimizations in SQL", "ETL/ELT concepts using dbt and cloud warehouses"] },
+      { title: "Time Series & Advanced Modeling", items: ["ARIMA, SARIMA, Prophet, LSTM for sequential data", "Tree Ensembles (Random Forest, Gradient Boosting, XGBoost)", "Clustering techniques (k-Means, DBSCAN, Hierarchical)"] },
+    ],
+    frequentQuestions: [
+      { question: "What is Central Limit Theorem and why is it important in Data Science?", keyFocus: "Sample means distribution approaches normal distribution as sample size increases regardless of population distribution." },
+      { question: "Explain the difference between Correlation and Causation.", keyFocus: "Correlation implies simultaneous movement; causation proves one event is the direct result of the other. Confirmed via A/B testing." },
+      { question: "How do you evaluate time-series forecasting models?", keyFocus: "MAPE (Mean Absolute Percentage Error), RMSE, MAE, using time-based rolling window validation (no future leakage)." },
+    ],
+    portfolioAdvice: [
+      "Write clean Kaggle notebook walkthroughs with clear Markdown explanations.",
+      "Prepare to explain your end-to-end projects within 2 minutes: Context, Problem, Technique, Business Value.",
+    ],
+  },
+  "Computer Science & Engineering (Cyber Security)": {
+    branch: "Computer Science & Engineering (Cyber Security)",
+    shortName: "CSE (Cyber Security)",
+    topRecruiters: ["Palo Alto Networks", "CrowdStrike", "Cisco", "Deloitte Cyber", "PwC", "Wipro CyberSOC", "Quick Heal", "KPMG"],
+    selectionRounds: [
+      { round: "Round 1: Technical OA & CTF", focus: "Networking, Linux commands, cryptography, port numbers, security principles" },
+      { round: "Round 2: Technical Interview 1", focus: "OWASP Top 10, network protocols (TCP/UDP, SSL/TLS, DNS), live log analysis" },
+      { round: "Round 3: Practical Scenario / Lab", focus: "Penetration testing methodology, Incident response walkthrough, SIEM triage" },
+      { round: "Round 4: HR & Behavioral Round", focus: "Ethics, integrity, NDA compliance, handling pressure during security breaches" },
+    ],
+    technicalTopics: [
+      { title: "Network & Infrastructure Security", items: ["TCP 3-Way Handshake, TCP Flags (SYN, ACK, FIN, RST)", "Firewalls, IDS/IPS (Snort), VPNs, DMZ architecture", "SSL/TLS handshake, Public Key Infrastructure (PKI), Certificates"] },
+      { title: "Web & Application Security", items: ["OWASP Top 10 (SQL Injection, XSS, CSRF, IDOR, SSRF)", "Burp Suite: Intercepting, Repeater, Intruder, Decoders", "Authentication mechanisms (OAuth 2.0, JWT, SAML, Multi-Factor)"] },
+      { title: "SOC & Incident Response", items: ["SIEM tools (Splunk, Elastic, Wazuh), Log parsing & query language", "MITRE ATT&CK Framework, Cyber Kill Chain", "Malware analysis basics: Static vs Dynamic analysis"] },
+    ],
+    frequentQuestions: [
+      { question: "Walk through an SQL Injection attack and how to prevent it.", keyFocus: "Input tampering bypassing authentication (' OR '1'='1); prevented via Parameterized Queries (Prepared Statements) & ORMs." },
+      { question: "How does an SSL/TLS handshake work between client and server?", keyFocus: "ClientHello -> ServerHello (with Certificate & Public Key) -> Client verifies CA -> Pre-master secret -> Symmetric key exchange." },
+      { question: "What is Cross-Site Scripting (XSS) and what are its types?", keyFocus: "Stored XSS (saved on server), Reflected XSS (immediate in response), DOM-based XSS (client JS manipulation)." },
+      { question: "What steps would you take if a server in the company is hit with Ransomware?", keyFocus: "Isolate host from network immediately -> Preserve memory snapshot -> Triage logs -> Identify entry vector -> Restore from clean offline backup." },
+    ],
+    portfolioAdvice: [
+      "Showcase rankings or badges on TryHackMe, HackTheBox, or CTF competitions.",
+      "Document CVE vulnerabilities or bug bounty writeups ethically in a clean portfolio.",
+    ],
+  },
+  "Computer Science & Engineering (Big Data Analytics)": {
+    branch: "Computer Science & Engineering (Big Data Analytics)",
+    shortName: "CSE (Big Data)",
+    topRecruiters: ["Amazon", "Walmart Global Tech", "Flipkart", "Target", "TCS", "Accenture", "Cognizant", "PayPal"],
+    selectionRounds: [
+      { round: "Round 1: Coding & Distributed Systems OA", focus: "Medium DSA problems + SQL + Java/Scala/Python distributed concepts" },
+      { round: "Round 2: Big Data Technical Round", focus: "Spark architecture, RDD vs DataFrame, MapReduce, Kafka message queues" },
+      { round: "Round 3: System Design & Pipeline Architecture", focus: "Batch vs Streaming architecture (Lambda/Kappa), Data Lakehouse design, Partitioning" },
+      { round: "Round 4: HR & Behavioral Round", focus: "Teamwork, handling production pipeline failures, communication" },
+    ],
+    technicalTopics: [
+      { title: "Distributed Storage & Processing", items: ["Hadoop HDFS architecture (NameNode, DataNode, Replication)", "Apache Spark: Driver, Executors, Tasks, Transformations vs Actions", "Spark Optimization: Broadcast Joins, Shuffle Partitions, Caching vs Persisting"] },
+      { title: "Streaming & Messaging Systems", items: ["Apache Kafka: Topics, Partitions, Consumer Groups, Offsets", "Stream processing semantics: At-least-once, At-most-once, Exactly-once", "Delta Lake / Apache Iceberg ACID transactions on object stores"] },
+      { title: "Data Pipelines & Orchestration", items: ["Apache Airflow: DAGs, Operators, Sensors, Scheduling", "Cloud Data Warehouses: Snowflake micro-partitioning, BigQuery slots"] },
+    ],
+    frequentQuestions: [
+      { question: "What causes Data Skew in Apache Spark and how do you resolve it?", keyFocus: "Uneven data distribution across partitions; resolved via Salting keys, broadcast joins, or repartitioning." },
+      { question: "Explain the architecture of Apache Kafka and how Consumer Groups work.", keyFocus: "Producers publish to topics divided into partitions; consumer group members read mutually exclusive partitions for horizontal scale." },
+      { question: "What is the difference between Lambda and Kappa architectures?", keyFocus: "Lambda runs parallel batch and stream pipelines; Kappa processes all data through a single streaming log." },
+    ],
+    portfolioAdvice: [
+      "Build a live streaming project on GitHub demonstrating Kafka -> Spark Streaming -> Database.",
+      "Include benchmarks showing pipeline throughput and latency improvements.",
+    ],
+  },
+  "Electronics & Communication": {
+    branch: "Electronics & Communication",
+    shortName: "ECE",
+    topRecruiters: ["Qualcomm", "Texas Instruments", "Intel", "NVIDIA", "Bosch", "MediaTek", "L&T Technology Services", "AMD"],
+    selectionRounds: [
+      { round: "Round 1: Core ECE & Aptitude Assessment", focus: "Digital Electronics, Verilog, C Programming, Signals, Microprocessors" },
+      { round: "Round 2: Technical Interview 1", focus: "Digital Logic Design, Timing analysis (Setup/Hold time), Finite State Machines" },
+      { round: "Round 3: Technical Interview 2", focus: "CMOS Inverter, ASIC/FPGA flow, Embedded C/Microcontrollers, Projects walkthrough" },
+      { round: "Round 4: HR & Behavioral Round", focus: "Aspiration for core silicon/embedded industry, relocation, communication" },
+    ],
+    technicalTopics: [
+      { title: "Digital Design & VLSI", items: ["Setup Time, Hold Time, Clock Jitter, Clock Skew, Timing violations fix", "Finite State Machines: Mealy vs Moore state machines in Verilog", "CMOS Inverter: VTC curve, Noise margins, Sizing ratio (W/L) of PMOS vs NMOS", "Static Timing Analysis (STA) & ASIC Design Flow (Synthesis to GDSII)"] },
+      { title: "Embedded Systems & Microcontrollers", items: ["ARM Cortex-M architecture, Registers, Interrupt Service Routines (ISR)", "Communication Protocols: I2C (Pull-ups, addressing), SPI (4-wire, full duplex), UART", "FreeRTOS: Tasks, Queues, Semaphores, Priority Inversion problem"] },
+      { title: "Analog & Signal Processing", items: ["Operational Amplifiers (Op-Amps): Inverting, Non-inverting, Virtual Ground", "Sampling Theorem, Nyquist Rate, Aliasing, FFT basics"] },
+    ],
+    frequentQuestions: [
+      { question: "What is Setup Time and Hold Time? How do you fix Setup and Hold violations?", keyFocus: "Setup: time input must be stable before clock edge (fix: reduce combinational delay / increase clock period); Hold: time input must remain stable after clock edge (fix: insert buffers/delay)." },
+      { question: "Why is PMOS typically designed twice as wide as NMOS in a CMOS inverter?", keyFocus: "Electron mobility in silicon is ~2.5x higher than hole mobility; sizing balances rise and fall times for symmetric switching." },
+      { question: "Compare I2C and SPI protocols. When would you choose one over the other?", keyFocus: "I2C uses 2 wires (SDA, SCL) with master-slave addressing, slower (~400kHz - 3.4MHz); SPI uses 4 wires, faster (10-50MHz+), full duplex, but requires more pins." },
+      { question: "What is Priority Inversion in RTOS and how does Priority Inheritance solve it?", keyFocus: "Low-priority task holding shared mutex blocks high-priority task while medium task preempts; solved by temporarily elevating low-priority task to high priority." },
+    ],
+    portfolioAdvice: [
+      "Include photos or short video demos of hardware prototypes (FPGA boards, custom PCB designs).",
+      "Upload clean Verilog code with testbenches and simulation waveforms on GitHub.",
+    ],
+  },
+  "Electrical & Electronics": {
+    branch: "Electrical & Electronics",
+    shortName: "EEE",
+    topRecruiters: ["Schneider Electric", "ABB", "Siemens", "L&T Electrical & Automation", "Tata Power", "BHEL", "NTPC", "Alstom"],
+    selectionRounds: [
+      { round: "Round 1: Core EEE OA & Aptitude", focus: "Electrical circuit laws, machines, power systems, power electronics, quantitative aptitude" },
+      { round: "Round 2: Technical Interview 1", focus: "Transformers, induction motors, circuit analysis, power semiconductor switches" },
+      { round: "Round 3: Technical Interview 2", focus: "Substations, protection relays, PLC/SCADA, EV battery charging systems, Projects" },
+      { round: "Round 4: HR & Behavioral Round", focus: "Safety consciousness, plant shift adaptability, core power career goals" },
+    ],
+    technicalTopics: [
+      { title: "Electrical Machines & Transformers", items: ["Transformers: Open/Short circuit tests, Efficiency, Voltage regulation, Parallel operation", "Induction Motors: Torque-Slip characteristics, Starting methods, V/f speed control", "Synchronous Machines: V-curves, Inverted V-curves, Hunting phenomenon"] },
+      { title: "Power Systems & Protection", items: ["Transmission line models (Short, Medium, Long), Ferranti effect, Skin effect", "Circuit Breakers (SF6, Vacuum), Distance and Differential Protection Relays", "Per-unit system and Symmetrical components fault analysis"] },
+      { title: "Power Electronics & EV Drives", items: ["Semiconductors: Thyristors (SCR), MOSFET vs IGBT comparison", "Inverters: PWM techniques, Single/Three-phase VSI", "DC-DC Converters: Buck, Boost, Buck-Boost topologies, MPPT for Solar"] },
+    ],
+    frequentQuestions: [
+      { question: "Why are transformers rated in kVA rather than kW?", keyFocus: "Copper losses depend on current (Amperes) and iron losses depend on voltage (Volts), independent of load power factor." },
+      { question: "What is the Ferranti Effect and how is it mitigated?", keyFocus: "Receiving end voltage exceeds sending end voltage during no-load/light load on long lines; mitigated using shunt reactors." },
+      { question: "Compare MOSFET vs IGBT for power electronic converter designs.", keyFocus: "MOSFET: voltage-controlled, majority carrier, faster switching, ideal for high frequency & lower voltage (<600V); IGBT: minority carrier, higher power & voltage capacity (>600V), lower conduction losses." },
+      { question: "How does regenerative braking work in Electric Vehicles?", keyFocus: "Electric motor functions as a generator during deceleration, converting kinetic energy back into electrical energy stored in the battery." },
+    ],
+    portfolioAdvice: [
+      "Highlight MATLAB / Simulink simulation files and hardware projects (solar charge controllers, inverters).",
+      "Mention familiarity with industrial electrical safety standards (IEEE, IEC, NEC).",
+    ],
+  },
+  "Mechanical Engineering": {
+    branch: "Mechanical Engineering",
+    shortName: "Mechanical",
+    topRecruiters: ["Tata Motors", "Mahindra & Mahindra", "L&T", "Hyundai", "JSW Steel", "Caterpillar", "Maruti Suzuki", "Bosch"],
+    selectionRounds: [
+      { round: "Round 1: Technical & Aptitude Assessment", focus: "Thermodynamics, Strength of Materials, Fluid Mechanics, Engineering Mechanics, CAD basics" },
+      { round: "Round 2: Core Mechanical Interview 1", focus: "Stress-strain curves, Mohr's circle, Otto/Diesel cycles, heat exchangers, gear trains" },
+      { round: "Round 3: Design & Manufacturing Interview 2", focus: "SolidWorks/CATIA 3D modeling walkthrough, FEA analysis, GD&T, manufacturing feasibility" },
+      { round: "Round 4: HR & Behavioral Round", focus: "Shop floor adaptability, hands-on workshop interest, relocation, leadership" },
+    ],
+    technicalTopics: [
+      { title: "Strength of Materials & Machine Design", items: ["Stress-Strain diagram for mild steel (Yield, UTS, Fracture point)", "Mohr's Circle, Theories of Failure (Von Mises, Tresca, Rankine)", "Design of Shafts, Bearings, Keys, and Bolted/Welded joints", "Geometric Dimensioning & Tolerancing (GD&T) datums and symbols"] },
+      { title: "Thermodynamics & Heat Transfer", items: ["Laws of Thermodynamics, Carnot theorem, Entropy concept", "IC Engine cycles: Otto, Diesel, Dual, Rankine, Brayton cycle", "Heat Exchangers: LMTD and NTU methods, Conduction/Convection/Radiation laws"] },
+      { title: "Fluid Mechanics & Manufacturing", items: ["Bernoulli's equation, Boundary Layer theory, Reynolds number", "Casting defects, Welding metallurgy, CNC machining G-codes and M-codes", "Finite Element Analysis (FEA) boundary conditions and meshing"] },
+    ],
+    frequentQuestions: [
+      { question: "Explain the Von Mises theory of failure. When is it preferred over Tresca?", keyFocus: "Based on maximum distortion energy; preferred for ductile materials under multi-axial stress states because it matches experimental data more closely than Tresca." },
+      { question: "Draw and explain the Stress-Strain diagram for Mild Steel under tension.", keyFocus: "Proportional limit -> Elastic limit -> Upper yield point -> Lower yield point -> Ultimate Tensile Strength (UTS) -> Necking -> Fracture point." },
+      { question: "Why are diesel engines more thermally efficient than petrol engines?", keyFocus: "Diesel engines operate at higher compression ratios (15-22:1 compared to 8-12:1 in petrol) without risk of pre-ignition/knocking." },
+      { question: "What is Cavitation in hydraulic pumps/turbines and how do you prevent it?", keyFocus: "Formation and collapse of vapor bubbles when local pressure drops below vapor pressure; prevented by ensuring adequate Net Positive Suction Head (NPSH)." },
+    ],
+    portfolioAdvice: [
+      "Prepare a clean PDF portfolio containing 3D CAD renders, exploded assemblies, and FEA stress contour plots.",
+      "Highlight hands-on fabrication experience (SAE BAJA, Formula Student, robotics competitions, 3D printing).",
+    ],
+  },
+  "Civil Engineering": {
+    branch: "Civil Engineering",
+    shortName: "Civil",
+    topRecruiters: ["L&T Construction", "Tata Projects", "Afcons Infrastructure", "Shapoorji Pallonji", "DLF", "CPWD / PSU", "Sobha Developers"],
+    selectionRounds: [
+      { round: "Round 1: Technical OA & Aptitude", focus: "Structural analysis, Surveying, Soil mechanics, Concrete technology, fluid mechanics" },
+      { round: "Round 2: Technical Interview 1", focus: "Bending moment and shear force diagrams (BMD/SFD), concrete mix design, soil classification" },
+      { round: "Round 3: Practical Site & Design Interview 2", focus: "STAAD.Pro / ETABS model explanation, IS Codes (IS 456, IS 800), site safety, bar bending schedule" },
+      { round: "Round 4: HR & Fitment Round", focus: "Willingness for on-site execution, rotational shifts, team leadership" },
+    ],
+    technicalTopics: [
+      { title: "Structural Engineering & Concrete", items: ["Shear Force & Bending Moment Diagrams for Cantilever, Simply Supported, and Fixed beams", "Limit State Design vs Working Stress Design in reinforced concrete (IS 456:2000)", "Over-reinforced vs Under-reinforced beam sections (ductility importance)", "Steel Structures: Welded vs Bolted joints, Column buckling, IS 800:2007"] },
+      { title: "Geotechnical & Transportation", items: ["Soil Mechanics: Terzaghi's bearing capacity, Consolidation vs Compaction, Liquid/Plastic limits", "Foundation Engineering: Shallow vs Deep (Pile) foundations, settlement calculation", "Highway Engineering: Sight distances (SSD/OSD), Super-elevation calculation in curves"] },
+      { title: "Surveying & Construction Management", items: ["Total Station, GPS, Leveling methods, Contour characteristics", "BIM (Revit Architecture / Structure), Clash Detection in Navisworks", "Project Management: Critical Path Method (CPM), PERT, Bar Bending Schedule (BBS)"] },
+    ],
+    frequentQuestions: [
+      { question: "Why do structural engineers always design under-reinforced concrete beams?", keyFocus: "Steel yields before concrete crushes, providing visible deflection warning signs and ductile failure, preventing sudden catastrophic brittle failure." },
+      { question: "What is the difference between Compaction and Consolidation of soil?", keyFocus: "Compaction is rapid mechanical expulsion of pore air; Consolidation is gradual time-dependent expulsion of pore water under sustained static load." },
+      { question: "Calculate super-elevation on a highway curve. What happens if it is inadequate?", keyFocus: "e + f = v^2 / (127 * R); inadequate super-elevation leads to vehicle overturning or outward skidding due to centrifugal force." },
+      { question: "What are the common tests conducted on fresh and hardened concrete on a construction site?", keyFocus: "Fresh concrete: Slump cone test (workability); Hardened concrete: Compressive strength test on 150mm cubes at 7 and 28 days." },
+    ],
+    portfolioAdvice: [
+      "Showcase STAAD.Pro or ETABS models of multi-storey buildings with load calculations.",
+      "Highlight site internships with photos, bar bending schedules, and quality assurance logs.",
+    ],
+  },
+};
+

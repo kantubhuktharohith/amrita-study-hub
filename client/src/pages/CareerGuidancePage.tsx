@@ -1,7 +1,6 @@
 import React, { useState, useMemo } from "react";
 import {
   CAREER_PATHS,
-  CAREER_CATEGORIES,
   CareerPath,
   INTERVIEW_PREP_CHECKLIST,
 } from "@/data/careerData";
@@ -10,12 +9,11 @@ import { CareerPathCard } from "@/components/career/CareerPathCard";
 import { CareerDetailModal } from "@/components/career/CareerDetailModal";
 import { CareerQuizModal } from "@/components/career/CareerQuizModal";
 import { YearlyRoadmapView } from "@/components/career/YearlyRoadmapView";
-import { Input } from "@/components/ui/input";
+import { BranchInterviewPrepView } from "@/components/career/BranchInterviewPrepView";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import {
-  Search,
   Sparkles,
   Compass,
   GraduationCap,
@@ -29,15 +27,26 @@ import {
 import { motion, AnimatePresence } from "framer-motion";
 import { Link } from "react-router-dom";
 
-const ALL_DEPARTMENTS_FILTER = "All Courses";
+const ALL_DEPARTMENTS_FILTER = "All Branches";
+
+const BRANCH_BUTTONS = [
+  { label: "All Branches", value: ALL_DEPARTMENTS_FILTER },
+  { label: "CSE (Core)", value: "Computer Science & Engineering" },
+  { label: "CSE (AI & ML)", value: "Computer Science & Engineering (AI & ML)" },
+  { label: "CSE (AIDS)", value: "Computer Science & Engineering (AIDS)" },
+  { label: "CSE (Data Science)", value: "Computer Science & Engineering (Data Science)" },
+  { label: "CSE (Cyber Security)", value: "Computer Science & Engineering (Cyber Security)" },
+  { label: "CSE (Big Data)", value: "Computer Science & Engineering (Big Data Analytics)" },
+  { label: "ECE", value: "Electronics & Communication" },
+  { label: "EEE", value: "Electrical & Electronics" },
+  { label: "Mechanical", value: "Mechanical Engineering" },
+  { label: "Civil", value: "Civil Engineering" },
+];
 
 const CareerGuidancePage: React.FC = () => {
-  const [searchQuery, setSearchQuery] = useState("");
   const [selectedDept, setSelectedDept] = useState<string>(
     ALL_DEPARTMENTS_FILTER,
   );
-  const [selectedCategory, setSelectedCategory] =
-    useState<string>("All Categories");
   const [activeTab, setActiveTab] = useState<"roles" | "yearly" | "interview">(
     "roles",
   );
@@ -51,31 +60,17 @@ const CareerGuidancePage: React.FC = () => {
     setIsDetailModalOpen(true);
   };
 
-  // Filter career paths based on search, department, and category
+  // Filter career paths based on selected branch
   const filteredCareers = useMemo(() => {
     return CAREER_PATHS.filter((path) => {
-      const matchesSearch =
-        path.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        path.summary.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        path.primarySkills.some((s) =>
-          s.toLowerCase().includes(searchQuery.toLowerCase()),
-        ) ||
-        path.topRecruiters.some((r) =>
-          r.toLowerCase().includes(searchQuery.toLowerCase()),
-        );
-
-      const matchesDept =
+      const matchesBranch =
         selectedDept === ALL_DEPARTMENTS_FILTER ||
         path.department === selectedDept ||
         path.department === "All Departments";
 
-      const matchesCategory =
-        selectedCategory === "All Categories" ||
-        path.category === selectedCategory;
-
-      return matchesSearch && matchesDept && matchesCategory;
+      return matchesBranch;
     });
-  }, [searchQuery, selectedDept, selectedCategory]);
+  }, [selectedDept]);
 
   return (
     <div className="min-h-screen pb-16">
@@ -187,40 +182,33 @@ const CareerGuidancePage: React.FC = () => {
 
           {/* TAB 1: Role Explorer & Pathways */}
           <TabsContent value="roles" className="space-y-6">
-            {/* Search and Filters Bar */}
-            <div className="rounded-xl border bg-card p-4 sm:p-5 shadow-card space-y-4">
-              <div className="relative">
-                <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-                <Input
-                  type="text"
-                  placeholder="Search by role name, skills (Python, VLSI, React, CAD), or company..."
-                  value={searchQuery}
-                  onChange={(e) => setSearchQuery(e.target.value)}
-                  className="pl-10 text-sm"
-                />
+            {/* Branch Selector (Clean layout matching 4-Year Roadmap and Interview Prep) */}
+            <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 border-b pb-4">
+              <div>
+                <h3 className="text-xl font-bold font-display text-foreground">
+                  Career Pathways by Branch
+                </h3>
+                <p className="text-xs sm:text-sm text-muted-foreground mt-0.5">
+                  Select your branch to view relevant career pathways and course names
+                </p>
               </div>
 
-              {/* Department Selector Filter (Scrollable on mobile) */}
-              
-
-              {/* Category Filter Pills */}
-              <div className="pt-2 border-t flex flex-wrap items-center gap-1.5">
-                <span className="text-xs text-muted-foreground mr-1">
-                  Domain:
-                </span>
-                {CAREER_CATEGORIES.map((cat) => (
-                  <Badge
-                    key={cat}
-                    variant={selectedCategory === cat ? "default" : "outline"}
-                    onClick={() => setSelectedCategory(cat)}
-                    className={`cursor-pointer text-xs py-1 transition-all ${
-                      selectedCategory === cat
-                        ? "bg-primary text-primary-foreground"
-                        : "hover:bg-muted"
+              {/* Branch Buttons */}
+              <div className="flex flex-wrap gap-1.5 sm:gap-2">
+                {BRANCH_BUTTONS.map((b) => (
+                  <Button
+                    key={b.value}
+                    size="sm"
+                    variant={selectedDept === b.value ? "default" : "outline"}
+                    onClick={() => setSelectedDept(b.value)}
+                    className={`text-xs ${
+                      selectedDept === b.value
+                        ? "bg-hero-gradient text-white border-transparent shadow-sm"
+                        : ""
                     }`}
                   >
-                    {cat}
-                  </Badge>
+                    {b.label}
+                  </Button>
                 ))}
               </div>
             </div>
@@ -236,20 +224,14 @@ const CareerGuidancePage: React.FC = () => {
                 {selectedDept !== ALL_DEPARTMENTS_FILTER &&
                   ` for ${selectedDept}`}
               </span>
-              {(searchQuery ||
-                selectedDept !== ALL_DEPARTMENTS_FILTER ||
-                selectedCategory !== "All Categories") && (
+              {selectedDept !== ALL_DEPARTMENTS_FILTER && (
                 <Button
                   variant="ghost"
                   size="sm"
-                  onClick={() => {
-                    setSearchQuery("");
-                    setSelectedDept(ALL_DEPARTMENTS_FILTER);
-                    setSelectedCategory("All Categories");
-                  }}
+                  onClick={() => setSelectedDept(ALL_DEPARTMENTS_FILTER)}
                   className="h-7 text-xs text-primary hover:bg-primary/10"
                 >
-                  Reset filters
+                  Show all branches
                 </Button>
               )}
             </div>
@@ -274,20 +256,15 @@ const CareerGuidancePage: React.FC = () => {
                   No career pathways found
                 </h3>
                 <p className="text-xs text-muted-foreground max-w-sm mx-auto mb-4">
-                  Try adjusting your search query or removing some
-                  category/course filters.
+                  No career pathways found for this branch. Try selecting another branch.
                 </p>
                 <Button
                   variant="outline"
                   size="sm"
-                  onClick={() => {
-                    setSearchQuery("");
-                    setSelectedDept(ALL_DEPARTMENTS_FILTER);
-                    setSelectedCategory("All Categories");
-                  }}
+                  onClick={() => setSelectedDept(ALL_DEPARTMENTS_FILTER)}
                   className="text-xs"
                 >
-                  Clear all filters
+                  Show all branches
                 </Button>
               </div>
             )}
@@ -300,73 +277,7 @@ const CareerGuidancePage: React.FC = () => {
 
           {/* TAB 3: Interview & Placement Prep Hub */}
           <TabsContent value="interview" className="space-y-6">
-            <div className="rounded-xl border bg-card p-6 shadow-card">
-              <div className="flex items-center gap-2 mb-2">
-                <FileCheck className="h-5 w-5 text-primary" />
-                <h3 className="text-xl font-bold font-display text-foreground">
-                  Engineering Campus Placement Master Checklist
-                </h3>
-              </div>
-              <p className="text-xs sm:text-sm text-muted-foreground mb-6">
-                A structured preparation framework for cracking Technical
-                Rounds, Coding Assessments, HR Interviews, and System Design
-                tests.
-              </p>
-
-              <div className="grid gap-6 md:grid-cols-2">
-                {INTERVIEW_PREP_CHECKLIST.map((sec, idx) => (
-                  <div key={idx} className="rounded-lg border bg-muted/20 p-4">
-                    <h4 className="font-semibold text-sm text-foreground mb-3 flex items-center gap-2">
-                      <CheckCircle className="h-4 w-4 text-primary" />
-                      {sec.category}
-                    </h4>
-                    <ul className="space-y-2 text-xs text-muted-foreground">
-                      {sec.items.map((item, itemIdx) => (
-                        <li key={itemIdx} className="flex items-start gap-2">
-                          <span className="text-primary font-bold mt-0.5">
-                            •
-                          </span>
-                          <span>{item}</span>
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-                ))}
-              </div>
-
-              {/* Connection to Study Hub */}
-              <div className="mt-8 rounded-xl bg-hero-gradient p-6 text-white flex flex-col sm:flex-row items-center justify-between gap-4">
-                <div>
-                  <h4 className="font-bold text-base sm:text-lg mb-1">
-                    Need Subject Notes & Previous Year Exam Papers?
-                  </h4>
-                  <p className="text-xs sm:text-sm text-white/90">
-                    Prepare your semester subjects, mid-exams, and semester-end
-                    exams with verified peer notes.
-                  </p>
-                </div>
-                <div className="flex gap-2 shrink-0">
-                  <Link to="/browse">
-                    <Button
-                      variant="secondary"
-                      size="sm"
-                      className="text-xs bg-white text-primary hover:bg-white/90"
-                    >
-                      <BookOpen className="mr-1.5 h-3.5 w-3.5" /> Notes Hub
-                    </Button>
-                  </Link>
-                  <Link to="/exam-papers">
-                    <Button
-                      variant="outline"
-                      size="sm"
-                      className="text-xs border-white/40 text-white hover:bg-white/20"
-                    >
-                      Exam Papers
-                    </Button>
-                  </Link>
-                </div>
-              </div>
-            </div>
+            <BranchInterviewPrepView />
           </TabsContent>
         </Tabs>
       </div>

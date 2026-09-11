@@ -1,8 +1,7 @@
 import React, { useState } from "react";
-import { YEARLY_ROADMAPS_BY_STREAM, YearlyMilestone } from "@/data/careerData";
+import { YEARLY_ROADMAPS_BY_BRANCH, YearlyMilestone } from "@/data/careerData";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import {
   GraduationCap,
   Code,
@@ -14,10 +13,23 @@ import {
 } from "lucide-react";
 import { motion } from "framer-motion";
 
+const BRANCHES = [
+  { label: "CSE (Core)", value: "Computer Science & Engineering" },
+  { label: "CSE (AI & ML)", value: "Computer Science & Engineering (AI & ML)" },
+  { label: "CSE (AIDS)", value: "Computer Science & Engineering (AIDS)" },
+  { label: "CSE (Data Science)", value: "Computer Science & Engineering (Data Science)" },
+  { label: "CSE (Cyber Security)", value: "Computer Science & Engineering (Cyber Security)" },
+  { label: "CSE (Big Data)", value: "Computer Science & Engineering (Big Data Analytics)" },
+  { label: "ECE", value: "Electronics & Communication" },
+  { label: "EEE", value: "Electrical & Electronics" },
+  { label: "Mechanical", value: "Mechanical Engineering" },
+  { label: "Civil", value: "Civil Engineering" },
+];
+
 export const YearlyRoadmapView: React.FC = () => {
-  const streams = Object.keys(YEARLY_ROADMAPS_BY_STREAM);
-  const [selectedStream, setSelectedStream] = useState(streams[0]);
-  const milestones: YearlyMilestone[] = YEARLY_ROADMAPS_BY_STREAM[selectedStream] || [];
+  const [selectedBranch, setSelectedBranch] = useState(BRANCHES[0].value);
+  const milestones: YearlyMilestone[] =
+    YEARLY_ROADMAPS_BY_BRANCH[selectedBranch] || [];
 
   return (
     <div className="space-y-8">
@@ -28,25 +40,25 @@ export const YearlyRoadmapView: React.FC = () => {
             4-Year Engineering College Roadmap
           </h3>
           <p className="text-xs sm:text-sm text-muted-foreground mt-0.5">
-            Year-by-year actionable milestones from Semester 1 to Semester 8
+            Year-by-year actionable milestones from Semester 1 to Semester 8 for every branch
           </p>
         </div>
 
-        {/* Stream Buttons */}
-        <div className="flex flex-wrap gap-2">
-          {streams.map((stream) => (
+        {/* Branch Buttons */}
+        <div className="flex flex-wrap gap-1.5 sm:gap-2">
+          {BRANCHES.map((b) => (
             <Button
-              key={stream}
+              key={b.value}
               size="sm"
-              variant={selectedStream === stream ? "default" : "outline"}
-              onClick={() => setSelectedStream(stream)}
+              variant={selectedBranch === b.value ? "default" : "outline"}
+              onClick={() => setSelectedBranch(b.value)}
               className={`text-xs ${
-                selectedStream === stream
-                  ? "bg-hero-gradient text-white border-transparent"
+                selectedBranch === b.value
+                  ? "bg-hero-gradient text-white border-transparent shadow-sm"
                   : ""
               }`}
             >
-              {stream}
+              {b.label}
             </Button>
           ))}
         </div>
@@ -63,14 +75,18 @@ export const YearlyRoadmapView: React.FC = () => {
             className="rounded-xl border bg-card p-6 shadow-card hover:border-primary/40 transition-all flex flex-col justify-between"
           >
             <div>
-              {/* Card Header */}
-              <div className="flex items-center justify-between gap-2 mb-3">
-                <Badge className="bg-primary/15 text-primary border-primary/20 text-xs px-2.5 py-1">
+              {/* Branch and Year Badges */}
+              <div className="flex flex-wrap items-center justify-between gap-2 mb-3">
+                <Badge
+                  variant="outline"
+                  className="text-xs font-medium border-primary/20 bg-primary/5 text-primary py-0.5 px-2.5"
+                >
+                  <GraduationCap className="h-3.5 w-3.5 mr-1.5 shrink-0" />
+                  {selectedBranch}
+                </Badge>
+                <Badge className="bg-primary/15 text-primary border-primary/20 text-xs px-2.5 py-0.5">
                   Year {m.year} • Sem {m.year * 2 - 1} & {m.year * 2}
                 </Badge>
-                <span className="text-[11px] text-muted-foreground flex items-center gap-1">
-                  <Calendar className="h-3 w-3" /> Duration: 2 Semesters
-                </span>
               </div>
 
               <h4 className="font-display text-lg font-bold text-foreground mb-1">
@@ -85,7 +101,8 @@ export const YearlyRoadmapView: React.FC = () => {
                 {/* Academic Goals */}
                 <div className="rounded-lg bg-muted/30 p-3 border border-border/50">
                   <div className="font-semibold text-foreground mb-1.5 flex items-center gap-1.5 text-xs">
-                    <GraduationCap className="h-3.5 w-3.5 text-primary" /> Academic Goals
+                    <GraduationCap className="h-3.5 w-3.5 text-primary" />{" "}
+                    Academic Goals
                   </div>
                   <ul className="space-y-1 text-muted-foreground">
                     {m.academicGoals.map((g, i) => (
@@ -100,11 +117,16 @@ export const YearlyRoadmapView: React.FC = () => {
                 {/* Technical Skills */}
                 <div>
                   <div className="font-semibold text-foreground mb-1.5 flex items-center gap-1.5 text-xs">
-                    <Code className="h-3.5 w-3.5 text-amber-500" /> Key Skills to Learn
+                    <Code className="h-3.5 w-3.5 text-amber-500" /> Key Skills
+                    to Learn
                   </div>
                   <div className="flex flex-wrap gap-1.5">
                     {m.technicalSkills.map((sk, i) => (
-                      <Badge key={i} variant="secondary" className="text-[11px]">
+                      <Badge
+                        key={i}
+                        variant="secondary"
+                        className="text-[11px]"
+                      >
                         {sk}
                       </Badge>
                     ))}
@@ -114,7 +136,8 @@ export const YearlyRoadmapView: React.FC = () => {
                 {/* Certifications */}
                 <div>
                   <div className="font-semibold text-foreground mb-1.5 flex items-center gap-1.5 text-xs">
-                    <Award className="h-3.5 w-3.5 text-blue-500" /> Recommended Certifications
+                    <Award className="h-3.5 w-3.5 text-blue-500" /> Recommended
+                    Certifications
                   </div>
                   <ul className="space-y-1 text-muted-foreground">
                     {m.certifications.map((cert, i) => (
@@ -129,7 +152,8 @@ export const YearlyRoadmapView: React.FC = () => {
                 {/* Projects & Activities */}
                 <div>
                   <div className="font-semibold text-foreground mb-1.5 flex items-center gap-1.5 text-xs">
-                    <FolderGit2 className="h-3.5 w-3.5 text-purple-500" /> Hands-on Projects
+                    <FolderGit2 className="h-3.5 w-3.5 text-purple-500" />{" "}
+                    Hands-on Projects
                   </div>
                   <ul className="space-y-1 text-muted-foreground">
                     {m.projectsAndActivities.map((proj, i) => (
@@ -144,7 +168,8 @@ export const YearlyRoadmapView: React.FC = () => {
                 {/* Placement Prep */}
                 <div className="rounded-lg bg-primary/5 p-3 border border-primary/20">
                   <div className="font-semibold text-primary mb-1.5 flex items-center gap-1.5 text-xs">
-                    <Briefcase className="h-3.5 w-3.5" /> Placement & Career Readiness
+                    <Briefcase className="h-3.5 w-3.5" /> Placement & Career
+                    Readiness
                   </div>
                   <ul className="space-y-1 text-muted-foreground">
                     {m.placementPrep.map((prep, i) => (

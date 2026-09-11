@@ -1,3 +1,4 @@
+import { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
 import {
   Upload,
@@ -19,12 +20,37 @@ import {
 const Navbar = () => {
   const location = useLocation();
   const { user, signOut } = useAuth();
+  const [isVisible, setIsVisible] = useState(true);
+
+  useEffect(() => {
+    let lastScrollY = window.pageYOffset || document.documentElement.scrollTop;
+
+    const handleScroll = () => {
+      const currentScrollY = window.pageYOffset || document.documentElement.scrollTop;
+      const delta = currentScrollY - lastScrollY;
+
+      // Always show when near the very top of the page
+      if (currentScrollY <= 20) {
+        setIsVisible(true);
+      } else if (delta > 8 && currentScrollY > 40) {
+        // Scrolling DOWN -> hide navbar
+        setIsVisible(false);
+      } else if (delta < -8) {
+        // Scrolling UP -> reveal navbar
+        setIsVisible(true);
+      }
+
+      lastScrollY = Math.max(0, currentScrollY);
+    };
+
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
 
   const links = [
     { to: "/", label: "Home" },
-    { to: "/browse", label: "Notes" },
-    { to: "/exam-papers", label: "Exam Papers" },
     { to: "/career-guidance", label: "Career Guide", isSpecial: true },
+    { to: "/community", label: "Community" },
     ...(user ? [{ to: "/my-uploads", label: "My Uploads" }] : []),
   ];
 
@@ -34,7 +60,11 @@ const Navbar = () => {
   };
 
   return (
-    <nav className="sticky top-0 z-50 border-b bg-card/80 backdrop-blur-md">
+    <nav
+      className={`sticky top-0 z-50 border-b bg-card/80 backdrop-blur-md transition-transform duration-300 ease-in-out ${
+        isVisible ? "translate-y-0" : "-translate-y-full"
+      }`}
+    >
       <div className="container flex h-16 items-center justify-between">
         <Link to="/" className="flex items-center gap-2">
           <img
@@ -137,30 +167,9 @@ const Navbar = () => {
           )}
         </div>
 
-        {/* Mobile menu */}
-        <div className="flex items-center gap-2 md:hidden">
-          {user ? (
-            <DropdownMenu>
-              <DropdownMenuTrigger asChild>
-                <Button variant="ghost" size="icon" className="rounded-full">
-                  <User className="h-5 w-5" />
-                </Button>
-              </DropdownMenuTrigger>
-              <DropdownMenuContent align="end">
-                <DropdownMenuItem className="text-xs text-muted-foreground">
-                  {user.email}
-                </DropdownMenuItem>
-                <DropdownMenuItem asChild>
-                  <Link to="/profile">
-                    <User className="mr-2 h-4 w-4" /> Profile
-                  </Link>
-                </DropdownMenuItem>
-                <DropdownMenuItem onClick={signOut}>
-                  <LogOut className="mr-2 h-4 w-4" /> Sign out
-                </DropdownMenuItem>
-              </DropdownMenuContent>
-            </DropdownMenu>
-          ) : (
+        {/* Mobile menu (sign in button only when logged out; profile is in mobile bottom nav) */}
+        {!user && (
+          <div className="flex items-center gap-2 md:hidden">
             <Link to="/login">
               <Button
                 size="sm"
@@ -169,8 +178,8 @@ const Navbar = () => {
                 Sign in
               </Button>
             </Link>
-          )}
-        </div>
+          </div>
+        )}
       </div>
     </nav>
   );
