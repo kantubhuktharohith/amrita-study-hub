@@ -73,7 +73,8 @@ const QuestionDetailPage: React.FC = () => {
   useEffect(() => {
     if (id) {
       incrementQuestionViews(id);
-      loadQuestion();
+      const q = getQuestionById(id);
+      setQuestion(q ? { ...q } : null);
     }
   }, [id]);
 

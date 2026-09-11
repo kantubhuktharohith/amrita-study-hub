@@ -54,7 +54,7 @@ export const api = {
   /**
    * Generic POST request to backend
    */
-  async post<T>(endpoint: string, body: any): Promise<T> {
+  async post<T>(endpoint: string, body: unknown): Promise<T> {
     const res = await fetch(`${API_BASE}${endpoint.startsWith('/') ? endpoint : `/${endpoint}`}`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
