@@ -101,9 +101,14 @@ export const QuestionCard: React.FC<QuestionCardProps> = ({
             </span>
             <span>•</span>
             <span className="hidden xs:inline">Posted by</span>
-            <span className="font-medium text-foreground hover:underline">
+            <Link
+              to={`/profile/${question.authorId}`}
+              onClick={(e) => e.stopPropagation()}
+              className="font-medium text-foreground hover:text-primary hover:underline transition-colors"
+              title="View student profile"
+            >
               {question.authorUsername}
-            </span>
+            </Link>
             {question.authorFlair && (
               <Badge
                 variant="secondary"
@@ -153,7 +158,9 @@ export const QuestionCard: React.FC<QuestionCardProps> = ({
               {question.department}
             </Badge>
             <Badge variant="secondary" className="text-[9px] sm:text-[10px]">
-              Sem {question.semester} • {question.subject}
+              {question.semester && question.semester > 0
+                ? `Sem ${question.semester} • ${question.subject}`
+                : question.subject || "Programming"}
             </Badge>
             {question.tags.map((tag, idx) => (
               <span

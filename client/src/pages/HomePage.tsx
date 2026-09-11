@@ -94,7 +94,8 @@ const HomePage = () => {
                   variant="outline"
                   className="gap-2 border-primary/30 hover:bg-primary/5"
                 >
-                  <FileText className="h-4 w-4 text-primary" />Exam Papers
+                  <FileText className="h-4 w-4 text-primary" />
+                  Exam Papers
                 </Button>
               </Link>
             </div>

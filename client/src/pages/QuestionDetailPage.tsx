@@ -249,9 +249,13 @@ const QuestionDetailPage: React.FC = () => {
                     </span>
                     <span>•</span>
                     <span className="hidden sm:inline">Posted by</span>
-                    <span className="font-semibold text-foreground truncate max-w-[140px] sm:max-w-none">
+                    <Link
+                      to={`/profile/${question.authorId}`}
+                      className="font-semibold text-foreground hover:text-primary hover:underline transition-colors truncate max-w-[140px] sm:max-w-none"
+                      title="View student profile"
+                    >
                       {question.authorUsername}
-                    </span>
+                    </Link>
                     {question.authorFlair && (
                       <Badge
                         variant="secondary"
@@ -304,7 +308,9 @@ const QuestionDetailPage: React.FC = () => {
                       {question.department}
                     </Badge>
                     <Badge variant="secondary" className="text-xs">
-                      Sem {question.semester} • {question.subject}
+                      {question.semester && question.semester > 0
+                        ? `Sem ${question.semester} • ${question.subject}`
+                        : question.subject || "General / Programming"}
                     </Badge>
                     {question.tags.map((t, idx) => (
                       <span
@@ -512,8 +518,9 @@ const QuestionDetailPage: React.FC = () => {
                   {question.department}
                 </div>
                 <p className="text-muted-foreground">
-                  Semester {question.semester} discussions for{" "}
-                  {question.subject}.
+                  {question.semester && question.semester > 0
+                    ? `Semester ${question.semester} discussions for ${question.subject}.`
+                    : `Discussions and solutions for ${question.subject || "Coding & Programming"}.`}
                 </p>
                 <div className="pt-2 border-t">
                   <Link to="/browse">

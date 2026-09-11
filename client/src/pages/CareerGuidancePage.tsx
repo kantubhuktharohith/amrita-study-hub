@@ -34,9 +34,18 @@ const BRANCH_BUTTONS = [
   { label: "CSE (Core)", value: "Computer Science & Engineering" },
   { label: "CSE (AI & ML)", value: "Computer Science & Engineering (AI & ML)" },
   { label: "CSE (AIDS)", value: "Computer Science & Engineering (AIDS)" },
-  { label: "CSE (Data Science)", value: "Computer Science & Engineering (Data Science)" },
-  { label: "CSE (Cyber Security)", value: "Computer Science & Engineering (Cyber Security)" },
-  { label: "CSE (Big Data)", value: "Computer Science & Engineering (Big Data Analytics)" },
+  {
+    label: "CSE (Data Science)",
+    value: "Computer Science & Engineering (Data Science)",
+  },
+  {
+    label: "CSE (Cyber Security)",
+    value: "Computer Science & Engineering (Cyber Security)",
+  },
+  {
+    label: "CSE (Big Data)",
+    value: "Computer Science & Engineering (Big Data Analytics)",
+  },
   { label: "ECE", value: "Electronics & Communication" },
   { label: "EEE", value: "Electrical & Electronics" },
   { label: "Mechanical", value: "Mechanical Engineering" },
@@ -189,7 +198,8 @@ const CareerGuidancePage: React.FC = () => {
                   Career Pathways by Branch
                 </h3>
                 <p className="text-xs sm:text-sm text-muted-foreground mt-0.5">
-                  Select your branch to view relevant career pathways and course names
+                  Select your branch to view relevant career pathways and course
+                  names
                 </p>
               </div>
 
@@ -256,7 +266,8 @@ const CareerGuidancePage: React.FC = () => {
                   No career pathways found
                 </h3>
                 <p className="text-xs text-muted-foreground max-w-sm mx-auto mb-4">
-                  No career pathways found for this branch. Try selecting another branch.
+                  No career pathways found for this branch. Try selecting
+                  another branch.
                 </p>
                 <Button
                   variant="outline"

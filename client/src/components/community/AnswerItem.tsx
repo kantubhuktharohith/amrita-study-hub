@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import { CommunityAnswer } from "@/data/communityData";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -73,12 +74,18 @@ export const AnswerItem: React.FC<AnswerItemProps> = ({
 
         {/* Comment Author info */}
         <div className="flex flex-wrap items-center gap-1.5 text-xs text-muted-foreground mb-2">
-          <div className="h-5 w-5 rounded-full bg-primary/20 text-primary flex items-center justify-center font-bold text-[10px]">
-            {answer.authorUsername.replace("u/", "").charAt(0).toUpperCase()}
-          </div>
-          <span className="font-semibold text-foreground hover:underline cursor-pointer">
-            {answer.authorUsername}
-          </span>
+          <Link
+            to={`/profile/${answer.authorId}`}
+            className="inline-flex items-center gap-1.5 hover:text-primary transition-colors group"
+            title="View student profile"
+          >
+            <div className="h-5 w-5 rounded-full bg-primary/20 text-primary flex items-center justify-center font-bold text-[10px] group-hover:bg-primary group-hover:text-primary-foreground transition-colors">
+              {answer.authorUsername.replace("u/", "").charAt(0).toUpperCase()}
+            </div>
+            <span className="font-semibold text-foreground group-hover:underline">
+              {answer.authorUsername}
+            </span>
+          </Link>
           {answer.authorFlair && (
             <Badge variant="secondary" className="text-[10px] px-1.5 py-0 h-4 bg-muted">
               {answer.authorFlair}

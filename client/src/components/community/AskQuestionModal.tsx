@@ -77,7 +77,7 @@ export const AskQuestionModal: React.FC<AskQuestionModalProps> = ({
   const [title, setTitle] = useState("");
   const [subCommunity, setSubCommunity] = useState<string>(initialSubCommunity || "r/all");
   const [department, setDepartment] = useState<string>(DEPARTMENTS[0]);
-  const [semester, setSemester] = useState<number>(3);
+  const [semester, setSemester] = useState<string>("3");
   const [subject, setSubject] = useState("");
   const [content, setContent] = useState("");
   const [codeSnippet, setCodeSnippet] = useState("");
@@ -140,8 +140,8 @@ export const AskQuestionModal: React.FC<AskQuestionModalProps> = ({
         codeSnippet: codeSnippet.trim() ? codeSnippet.trim() : undefined,
         subCommunity: subCommunity || "r/all",
         department,
-        subject: subject.trim() || department,
-        semester: Number(semester) || 1,
+        subject: subject.trim() || (semester === "none" ? "General Programming" : department),
+        semester: semester === "none" ? 0 : Number(semester) || 1,
         tags: tags.length > 0 ? tags : ["general"],
         authorUsername: `u/${cleanUname}`,
         authorDepartment,
@@ -265,13 +265,19 @@ export const AskQuestionModal: React.FC<AskQuestionModalProps> = ({
             <div>
               <Label className="text-xs font-semibold">Semester</Label>
               <Select
-                value={String(semester)}
-                onValueChange={(val) => setSemester(Number(val))}
+                value={semester}
+                onValueChange={setSemester}
               >
                 <SelectTrigger className="mt-1 text-xs">
                   <SelectValue placeholder="Semester" />
                 </SelectTrigger>
                 <SelectContent>
+                  <SelectItem
+                    value="none"
+                    className="text-xs font-semibold text-primary"
+                  >
+                    None (Coding / Programs / General)
+                  </SelectItem>
                   {SEMESTERS.map((sem) => (
                     <SelectItem
                       key={sem}
@@ -287,11 +293,15 @@ export const AskQuestionModal: React.FC<AskQuestionModalProps> = ({
 
             <div>
               <Label htmlFor="post-subject" className="text-xs font-semibold">
-                Subject
+                Subject / Topic
               </Label>
               <Input
                 id="post-subject"
-                placeholder="e.g. Data Structures"
+                placeholder={
+                  semester === "none"
+                    ? "e.g. Python, Java, LeetCode, DSA, React"
+                    : "e.g. Data Structures, DBMS, Operating Systems"
+                }
                 value={subject}
                 onChange={(e) => setSubject(e.target.value)}
                 className="mt-1 text-xs"
