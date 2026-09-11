@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   Dialog,
   DialogContent,
@@ -18,6 +18,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { DEPARTMENTS, SEMESTERS } from "@/data/academicConstants";
+import { SUB_COMMUNITIES } from "@/data/communityData";
 import { createQuestion, CreateQuestionInput } from "@/lib/communityQueries";
 import { useAuth } from "@/contexts/AuthContext";
 import { useQuery } from "@tanstack/react-query";
@@ -29,12 +30,29 @@ interface AskQuestionModalProps {
   isOpen: boolean;
   onClose: () => void;
   onQuestionCreated: () => void;
+  initialSubCommunity?: string;
 }
+
+const getDepartmentShort = (dept: string): string => {
+  if (!dept) return "Eng";
+  if (dept.includes("Cyber Security")) return "CyberSec";
+  if (dept.includes("AI & ML") || dept.includes("AIML")) return "AI/ML";
+  if (dept.includes("Data Science")) return "DataSci";
+  if (dept.includes("Big Data")) return "BigData";
+  if (dept.includes("AIDS")) return "AIDS";
+  if (dept.includes("Computer Science")) return "CSE";
+  if (dept.includes("Electronics & Communication")) return "ECE";
+  if (dept.includes("Electrical & Electronics")) return "EEE";
+  if (dept.includes("Mechanical")) return "MECH";
+  if (dept.includes("Civil")) return "CIVIL";
+  return dept.slice(0, 4);
+};
 
 export const AskQuestionModal: React.FC<AskQuestionModalProps> = ({
   isOpen,
   onClose,
   onQuestionCreated,
+  initialSubCommunity = "r/all",
 }) => {
   const { user } = useAuth();
 
@@ -42,17 +60,22 @@ export const AskQuestionModal: React.FC<AskQuestionModalProps> = ({
     queryKey: ["profile", user?.id],
     queryFn: async () => {
       if (!user) return null;
-      const { data } = await supabase
+      const { data, error } = await supabase
         .from("profiles")
         .select("*")
         .eq("user_id", user.id)
         .maybeSingle();
+      if (error) {
+        console.warn("Could not fetch profile:", error.message);
+        return null;
+      }
       return data;
     },
     enabled: !!user,
   });
 
   const [title, setTitle] = useState("");
+  const [subCommunity, setSubCommunity] = useState<string>(initialSubCommunity || "r/all");
   const [department, setDepartment] = useState<string>(DEPARTMENTS[0]);
   const [semester, setSemester] = useState<number>(3);
   const [subject, setSubject] = useState("");
@@ -62,27 +85,45 @@ export const AskQuestionModal: React.FC<AskQuestionModalProps> = ({
   const [showCodeField, setShowCodeField] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
 
-  React.useEffect(() => {
+  useEffect(() => {
+    if (initialSubCommunity) {
+      setSubCommunity(initialSubCommunity);
+    }
+  }, [initialSubCommunity]);
+
+  useEffect(() => {
     if (profile?.department) {
-      setDepartment(profile.department);
+      const match = DEPARTMENTS.find(
+        (d) =>
+          d.toLowerCase() === profile.department?.toLowerCase() ||
+          d.toLowerCase().includes(profile.department?.toLowerCase() || "")
+      );
+      if (match) {
+        setDepartment(match);
+      }
     }
   }, [profile]);
 
-  const authorName =
+  const rawAuthorName =
     profile?.full_name ||
     user?.user_metadata?.full_name ||
     (user?.email ? user.email.split("@")[0] : "student");
-  const authorYear = profile?.year || 2;
-  const authorDepartment = profile?.department || department;
+  const authorName = (rawAuthorName || "student").trim() || "student";
+  const authorYear = profile?.year ? Number(profile.year) : 2;
+  const authorDepartment = profile?.department || department || DEPARTMENTS[0];
+  const deptShort = getDepartmentShort(authorDepartment);
+  const authorFlair =
+    authorYear >= 3 ? `${deptShort} • Senior Mentor ⭐` : `${deptShort} • Year ${authorYear}`;
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
 
     if (!title.trim() || !content.trim()) {
-      toast.error("Please provide a Title and explanation");
+      toast.error("Please provide a Title and question details");
       return;
     }
 
+    if (isSubmitting) return;
     setIsSubmitting(true);
 
     try {
@@ -91,26 +132,26 @@ export const AskQuestionModal: React.FC<AskQuestionModalProps> = ({
         .map((t) => t.trim().replace(/^#/, ""))
         .filter((t) => t.length > 0);
 
-      const cleanUname = authorName.replace(/^u\//, "");
+      const cleanUname = authorName.replace(/^u\//, "").trim() || "student";
 
       const input: CreateQuestionInput = {
         title: title.trim(),
         content: content.trim(),
         codeSnippet: codeSnippet.trim() ? codeSnippet.trim() : undefined,
-        subCommunity: "r/all",
+        subCommunity: subCommunity || "r/all",
         department,
         subject: subject.trim() || department,
-        semester: Number(semester),
+        semester: Number(semester) || 1,
         tags: tags.length > 0 ? tags : ["general"],
         authorUsername: `u/${cleanUname}`,
         authorDepartment,
-        authorYear: Number(authorYear),
-        authorFlair: `${authorDepartment.slice(0, 4)} '2${8 - Number(authorYear)}`,
+        authorYear: Number(authorYear) || 2,
+        authorFlair,
         authorId: user?.id,
       };
 
       createQuestion(input);
-      toast.success("Post published to r/all community!");
+      toast.success(`Post published to ${subCommunity || "r/all"}!`);
 
       setTitle("");
       setContent("");
@@ -122,6 +163,7 @@ export const AskQuestionModal: React.FC<AskQuestionModalProps> = ({
       onQuestionCreated();
       onClose();
     } catch (err) {
+      console.error("Failed to publish post:", err);
       toast.error("Failed to publish post");
     } finally {
       setIsSubmitting(false);
@@ -130,18 +172,16 @@ export const AskQuestionModal: React.FC<AskQuestionModalProps> = ({
 
   return (
     <Dialog open={isOpen} onOpenChange={(open) => !open && onClose()}>
-      <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto p-6">
+      <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto p-4 sm:p-6">
         <DialogHeader className="mb-2">
           <div className="inline-flex items-center gap-1.5 rounded-full border bg-primary/10 px-3 py-1 text-xs font-semibold text-primary w-fit mb-1">
-            <MessageSquarePlus className="h-3.5 w-3.5" /> Create a Post / Ask a
-            Doubt
+            <MessageSquarePlus className="h-3.5 w-3.5" /> Create a Post / Ask a Doubt
           </div>
           <DialogTitle className="text-xl sm:text-2xl font-bold">
             Post to Amrita Student Community
           </DialogTitle>
           <DialogDescription className="text-xs sm:text-sm">
-            Share code questions, exam prep doubts, or placement advice with
-            fellow students.
+            Share code questions, exam prep doubts, or placement advice with fellow students.
           </DialogDescription>
         </DialogHeader>
 
@@ -157,7 +197,7 @@ export const AskQuestionModal: React.FC<AskQuestionModalProps> = ({
               value={title}
               onChange={(e) => setTitle(e.target.value)}
               required
-              className="mt-1"
+              className="mt-1 text-xs sm:text-sm"
             />
           </div>
 
@@ -179,11 +219,30 @@ export const AskQuestionModal: React.FC<AskQuestionModalProps> = ({
                   • {authorDepartment}
                 </span>
               )}
+              <span className="text-[10px] text-muted-foreground bg-muted px-1.5 py-0.5 rounded">
+                Flair: {authorFlair}
+              </span>
             </div>
           </div>
 
-          {/* Department, Semester & Subject */}
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+          {/* Subcommunity & Department */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+            <div>
+              <Label className="text-xs font-semibold">Community Channel *</Label>
+              <Select value={subCommunity} onValueChange={setSubCommunity}>
+                <SelectTrigger className="mt-1 text-xs">
+                  <SelectValue placeholder="Select Channel" />
+                </SelectTrigger>
+                <SelectContent>
+                  {SUB_COMMUNITIES.map((sub) => (
+                    <SelectItem key={sub.id} value={sub.id} className="text-xs">
+                      <span className="mr-1.5">{sub.icon}</span> {sub.label} — {sub.desc}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+            </div>
+
             <div>
               <Label className="text-xs font-semibold">Department *</Label>
               <Select value={department} onValueChange={setDepartment}>
@@ -199,7 +258,10 @@ export const AskQuestionModal: React.FC<AskQuestionModalProps> = ({
                 </SelectContent>
               </Select>
             </div>
+          </div>
 
+          {/* Semester & Subject */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
             <div>
               <Label className="text-xs font-semibold">Semester</Label>
               <Select
@@ -330,7 +392,7 @@ export const AskQuestionModal: React.FC<AskQuestionModalProps> = ({
               size="sm"
               className="bg-hero-gradient text-white text-xs gap-1.5"
             >
-              <Sparkles className="h-3.5 w-3.5" /> Publish Post
+              <Sparkles className="h-3.5 w-3.5" /> {isSubmitting ? "Publishing..." : "Publish Post"}
             </Button>
           </div>
         </form>
