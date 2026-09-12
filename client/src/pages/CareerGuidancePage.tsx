@@ -117,15 +117,7 @@ const CareerGuidancePage: React.FC = () => {
                 <Compass className="mr-2 h-4 w-4" /> Find My Ideal Career Path
                 Quiz
               </Button>
-              <Button
-                variant="outline"
-                size="lg"
-                onClick={() => setActiveTab("yearly")}
-                className="text-xs sm:text-sm"
-              >
-                <GraduationCap className="mr-2 h-4 w-4" /> View 4-Year
-                Milestones
-              </Button>
+              
             </div>
 
             {/* Key stats */}
