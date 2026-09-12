@@ -94,7 +94,7 @@ const CareerGuidancePage: React.FC = () => {
             className="max-w-3xl mx-auto text-center"
           >
             <div className="mb-3 inline-flex items-center gap-2 rounded-full border bg-primary/10 px-3.5 py-1 text-xs font-semibold text-primary">
-              <Sparkles className="h-3.5 w-3.5" /> Amrita Career Guidance &
+              <Sparkles className="h-3.5 w-3.5" /> Amrita Sai Career Guidance &
               Roadmaps
             </div>
             <h1 className="mb-3 font-display text-3xl font-bold tracking-tight sm:text-4xl md:text-5xl">
@@ -201,25 +201,6 @@ const CareerGuidancePage: React.FC = () => {
                   Select your branch to view relevant career pathways and course
                   names
                 </p>
-              </div>
-
-              {/* Branch Buttons */}
-              <div className="flex flex-wrap gap-1.5 sm:gap-2">
-                {BRANCH_BUTTONS.map((b) => (
-                  <Button
-                    key={b.value}
-                    size="sm"
-                    variant={selectedDept === b.value ? "default" : "outline"}
-                    onClick={() => setSelectedDept(b.value)}
-                    className={`text-xs ${
-                      selectedDept === b.value
-                        ? "bg-hero-gradient text-white border-transparent shadow-sm"
-                        : ""
-                    }`}
-                  >
-                    {b.label}
-                  </Button>
-                ))}
               </div>
             </div>
 

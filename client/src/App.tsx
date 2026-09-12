@@ -24,6 +24,8 @@ import CommunityPage from "./pages/CommunityPage";
 import QuestionDetailPage from "./pages/QuestionDetailPage";
 import LoginPage from "./pages/LoginPage";
 import SignupPage from "./pages/SignupPage";
+import TechNewsPage from "./pages/TechNewsPage";
+import AdminPanelPage from "./pages/AdminPanelPage";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -52,10 +54,13 @@ const App = () => (
                   <Route path="/profile/:userId" element={<ProfilePage />} />
                   <Route path="/career-guidance" element={<CareerGuidancePage />} />
                   <Route path="/career" element={<CareerGuidancePage />} />
+                  <Route path="/tech-news" element={<TechNewsPage />} />
+                  <Route path="/news" element={<TechNewsPage />} />
                   <Route path="/community" element={<CommunityPage />} />
                   <Route path="/community/:id" element={<QuestionDetailPage />} />
                   <Route path="/discuss" element={<CommunityPage />} />
                   <Route path="/about" element={<AboutPage />} />
+                  <Route path="/admin" element={<AdminPanelPage />} />
                   <Route path="/login" element={<LoginPage />} />
                   <Route path="/signup" element={<SignupPage />} />
                   <Route path="*" element={<NotFound />} />

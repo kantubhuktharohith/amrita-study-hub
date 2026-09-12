@@ -2,7 +2,7 @@
   "name": "amrita-study-hub",
   "private": true,
   "version": "1.0.0",
-  "description": "Amrita Study Hub - Decoupled Client & Server Architecture",
+  "description": "Amrita Sai Study Hub - Decoupled Client & Server Architecture",
   "workspaces": [
     "client",
     "server"

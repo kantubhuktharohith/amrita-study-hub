@@ -1,15 +1,10 @@
 import { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
-import {
-  Upload,
-  User,
-  LogOut,
-  Info,
-  Sparkles,
-} from "lucide-react";
+import { Upload, User, LogOut, Info, Sparkles, Shield } from "lucide-react";
 import collegeLogo from "@/assets/college-logo.jpg";
 import { Button } from "@/components/ui/button";
 import { useAuth } from "@/contexts/AuthContext";
+import { useIsAdmin } from "@/hooks/useIsAdmin";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -20,13 +15,15 @@ import {
 const Navbar = () => {
   const location = useLocation();
   const { user, signOut } = useAuth();
+  const { isAdmin } = useIsAdmin();
   const [isVisible, setIsVisible] = useState(true);
 
   useEffect(() => {
     let lastScrollY = window.pageYOffset || document.documentElement.scrollTop;
 
     const handleScroll = () => {
-      const currentScrollY = window.pageYOffset || document.documentElement.scrollTop;
+      const currentScrollY =
+        window.pageYOffset || document.documentElement.scrollTop;
       const delta = currentScrollY - lastScrollY;
 
       // Always show when near the very top of the page
@@ -49,6 +46,7 @@ const Navbar = () => {
 
   const links = [
     { to: "/", label: "Home" },
+    { to: "/tech-news", label: "Tech News", badge: "Daily" },
     { to: "/career-guidance", label: "Career Guide", isSpecial: true },
     { to: "/community", label: "Community" },
     ...(user ? [{ to: "/my-uploads", label: "My Uploads" }] : []),
@@ -88,6 +86,11 @@ const Navbar = () => {
               }`}
             >
               {link.label}
+              {link.badge && (
+                <span className="inline-flex items-center rounded-full bg-orange-500/15 text-orange-600 dark:text-orange-400 px-1.5 py-0.5 text-[9px] font-bold uppercase tracking-wider">
+                  {link.badge}
+                </span>
+              )}
               {link.isSpecial && (
                 <span className="inline-flex items-center gap-0.5 rounded-full bg-primary/20 text-primary px-1.5 py-0.2 text-[10px] font-semibold">
                   <Sparkles className="h-2.5 w-2.5" />
@@ -134,6 +137,17 @@ const Navbar = () => {
                       <User className="mr-2 h-4 w-4" /> Profile
                     </Link>
                   </DropdownMenuItem>
+                  {isAdmin && (
+                    <DropdownMenuItem asChild>
+                      <Link
+                        to="/admin"
+                        className="text-primary font-medium flex items-center"
+                      >
+                        <Shield className="mr-2 h-4 w-4 text-primary" /> Admin
+                        Panel
+                      </Link>
+                    </DropdownMenuItem>
+                  )}
                   <DropdownMenuItem onClick={signOut}>
                     <LogOut className="mr-2 h-4 w-4" /> Sign out
                   </DropdownMenuItem>

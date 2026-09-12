@@ -43,7 +43,7 @@ app.use('/api/career', careerRouter);
 // Root route
 app.get('/', (_req: Request, res: Response) => {
   res.json({
-    message: 'Welcome to Amrita Study Hub Backend API',
+    message: 'Welcome to Amrita Sai Study Hub Backend API',
     endpoints: {
       health: '/api/health',
       stats: '/api/stats',
@@ -75,7 +75,7 @@ app.use((err: any, _req: Request, res: Response, _next: NextFunction) => {
 
 app.listen(PORT, () => {
   console.log(`=========================================`);
-  console.log(`🚀 Amrita Study Hub Backend Server running`);
+  console.log(`🚀 Amrita Sai Study Hub Backend Server running`);
   console.log(`📡 Port: ${PORT}`);
   console.log(`🔗 Health: http://localhost:${PORT}/api/health`);
   console.log(`🌐 Allowed Client: ${CLIENT_URL}`);

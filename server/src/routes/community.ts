@@ -27,7 +27,7 @@ router.get('/info', (_req: Request, res: Response) => {
   res.json({
     success: true,
     data: {
-      name: 'Amrita Peer Learning Community',
+      name: 'Amrita Sai Peer Learning Community',
       subCommunitiesCount: SUB_COMMUNITIES.length,
       rules: [
         'Be respectful and constructive in discussions',

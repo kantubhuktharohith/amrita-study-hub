@@ -1,9 +1,10 @@
 import { Link, useLocation } from "react-router-dom";
-import { Home, Compass, Users, User } from "lucide-react";
+import { Home, Compass, Users, User, Newspaper } from "lucide-react";
 import { useAuth } from "@/contexts/AuthContext";
 
 const tabs = [
   { to: "/", icon: Home, label: "Home" },
+  { to: "/tech-news", icon: Newspaper, label: "Tech News" },
   { to: "/career-guidance", icon: Compass, label: "Career" },
   { to: "/community", icon: Users, label: "Community" },
   { to: "/profile", icon: User, label: "Profile" },

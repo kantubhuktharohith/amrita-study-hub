@@ -191,7 +191,7 @@ export const AskQuestionModal: React.FC<AskQuestionModalProps> = ({
             Doubt
           </div>
           <DialogTitle className="text-xl sm:text-2xl font-bold">
-            Post to Amrita Student Community
+            Post to Amrita Sai Student Community
           </DialogTitle>
           <DialogDescription className="text-xs sm:text-sm">
             Share code questions, exam prep doubts, or placement advice with

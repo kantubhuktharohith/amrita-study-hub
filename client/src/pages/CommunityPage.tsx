@@ -149,7 +149,7 @@ const CommunityPage: React.FC = () => {
                 r/all Community
               </h1>
               <p className="text-[11px] text-muted-foreground">
-                Amrita Student Doubt Clarification
+                Amrita Sai Student Doubt Clarification
               </p>
             </div>
           </div>
@@ -307,7 +307,7 @@ const CommunityPage: React.FC = () => {
                   <div>
                     <h4 className="font-bold text-sm text-foreground">r/all</h4>
                     <p className="text-[11px] text-muted-foreground">
-                      Amrita Student Community
+                      Amrita Sai Student Community
                     </p>
                   </div>
                 </div>

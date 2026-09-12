@@ -53,7 +53,7 @@ import {
   CheckCircle2,
   Sparkles,
   ArrowLeft,
-  Pencil,
+  Settings,
   Eye,
   ShieldCheck,
   Share2,
@@ -240,7 +240,6 @@ const ProfilePage: React.FC = () => {
           <div className="h-24 sm:h-32 bg-hero-gradient relative">
             <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(255,255,255,0.2),transparent)]" />
             <div className="absolute top-3 right-3 flex items-center gap-2">
-              
               <Button
                 variant="secondary"
                 size="sm"
@@ -461,14 +460,14 @@ const ProfilePage: React.FC = () => {
   return (
     <div className="container max-w-3xl py-8">
       {/* Clean Header */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6">
+      <div className="flex items-start justify-between gap-3 mb-6">
         <div>
-          <h1 className="font-display text-3xl font-bold">
-            {activeTab === "preview" ? "Public Profile" : "Edit Profile"}
+          <h1 className="font-display text-2xl sm:text-3xl font-bold">
+            {activeTab === "preview" ? "Public Profile" : "Settings"}
           </h1>
           <p className="text-xs text-muted-foreground mt-0.5">
             {activeTab === "preview"
-              ? "This is your public student profile visible to the Amrita community."
+              ? "This is your public student profile visible to the Amrita Sai community."
               : "Update your details, bio, and social profile links visible to other students."}
           </p>
         </div>
@@ -476,20 +475,22 @@ const ProfilePage: React.FC = () => {
         {activeTab === "preview" ? (
           <Button
             variant="outline"
-            size="sm"
+            size="icon"
             onClick={() => setActiveTab("edit")}
-            className="gap-1.5 text-xs h-8 bg-card shadow-2xs hover:bg-muted font-semibold"
+            className="h-9 w-9 shrink-0 bg-card shadow-2xs hover:bg-primary hover:text-primary-foreground transition-colors"
+            title="Settings"
+            aria-label="Settings"
           >
-            <Pencil className="h-3.5 w-3.5" /> Edit Profile
+            <Settings className="h-4 w-4" />
           </Button>
         ) : (
           <Button
             variant="outline"
             size="sm"
             onClick={() => setActiveTab("preview")}
-            className="gap-1.5 text-xs h-8"
+            className="gap-1.5 text-xs h-9 shrink-0"
           >
-            <ArrowLeft className="h-3.5 w-3.5" /> Cancel / View Profile
+            <ArrowLeft className="h-3.5 w-3.5" /> Back to Profile
           </Button>
         )}
       </div>
