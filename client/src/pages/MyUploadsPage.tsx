@@ -33,14 +33,23 @@ const MyUploadsPage = () => {
 
   const handleDeleteNote = async (noteId: string, fileUrl: string) => {
     try {
-      const urlParts = fileUrl.split("/notes/");
-      if (urlParts[1]) await supabase.storage.from("notes").remove([decodeURIComponent(urlParts[1])]);
-      const { error } = await supabase.from("notes").delete().eq("id", noteId);
+      try {
+        const urlParts = fileUrl.split("/notes/");
+        if (urlParts[1]) await supabase.storage.from("notes").remove([decodeURIComponent(urlParts[1])]);
+      } catch (storageErr) {
+        console.warn("Storage deletion warning:", storageErr);
+      }
+
+      const { data, error } = await supabase.from("notes").delete().eq("id", noteId).select();
       if (error) throw error;
+      if (!data || data.length === 0) {
+        throw new Error("Database blocked deletion. Please run the SQL migration in Supabase SQL Editor to allow deleting your own uploads.");
+      }
+
       queryClient.invalidateQueries({ queryKey: ["my-notes"] });
       queryClient.invalidateQueries({ queryKey: ["notes"] });
       queryClient.invalidateQueries({ queryKey: ["top-notes"] });
-      toast.success("Note deleted.");
+      toast.success("Note deleted successfully.");
     } catch (err: unknown) {
       const error = err as Error;
       toast.error(error.message || "Failed to delete.");
@@ -49,13 +58,22 @@ const MyUploadsPage = () => {
 
   const handleDeletePaper = async (paperId: string, fileUrl: string) => {
     try {
-      const urlParts = fileUrl.split("/exam-papers/");
-      if (urlParts[1]) await supabase.storage.from("exam-papers").remove([decodeURIComponent(urlParts[1])]);
-      const { error } = await supabase.from("exam_papers").delete().eq("id", paperId);
+      try {
+        const urlParts = fileUrl.split("/exam-papers/");
+        if (urlParts[1]) await supabase.storage.from("exam-papers").remove([decodeURIComponent(urlParts[1])]);
+      } catch (storageErr) {
+        console.warn("Storage deletion warning:", storageErr);
+      }
+
+      const { data, error } = await supabase.from("exam_papers").delete().eq("id", paperId).select();
       if (error) throw error;
+      if (!data || data.length === 0) {
+        throw new Error("Database blocked deletion. Please run the SQL migration in Supabase SQL Editor to allow deleting your own uploads.");
+      }
+
       queryClient.invalidateQueries({ queryKey: ["my-exam-papers"] });
       queryClient.invalidateQueries({ queryKey: ["exam-papers"] });
-      toast.success("Exam paper deleted.");
+      toast.success("Exam paper deleted successfully.");
     } catch (err: unknown) {
       const error = err as Error;
       toast.error(error.message || "Failed to delete.");

@@ -63,8 +63,12 @@ const NoteDetailPage = () => {
         {note.description && <p className="mb-6 text-sm text-foreground/80 leading-relaxed">{note.description}</p>}
         <div className="mb-6 flex flex-wrap gap-2">
           <Badge variant="outline">{note.department}</Badge>
-          <Badge variant="outline">Semester {note.semester}</Badge>
-          <Badge variant="outline">Year {note.year}</Badge>
+          {note.semester && note.semester > 0 ? (
+            <Badge variant="outline">Semester {note.semester}</Badge>
+          ) : (
+            <Badge variant="secondary" className="bg-primary/10 text-primary font-semibold">Skill / Non-Syllabus</Badge>
+          )}
+          {note.year && note.year > 0 && <Badge variant="outline">Year {note.year}</Badge>}
         </div>
         <div className="mb-6 flex flex-wrap gap-4 text-sm text-muted-foreground">
           <span className="flex items-center gap-1.5"><User className="h-4 w-4" /> {note.uploader_name}</span>

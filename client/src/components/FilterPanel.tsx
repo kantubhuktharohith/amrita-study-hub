@@ -34,6 +34,7 @@ const FilterPanel = ({
         </SelectTrigger>
         <SelectContent>
           <SelectItem value="all">All Semesters</SelectItem>
+          <SelectItem value="0">Skill / Non-Syllabus</SelectItem>
           {SEMESTERS.map((s) => (
             <SelectItem key={s} value={String(s)}>Semester {s}</SelectItem>
           ))}

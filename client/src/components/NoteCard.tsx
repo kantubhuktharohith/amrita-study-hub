@@ -51,8 +51,14 @@ const NoteCard = ({ note, rating }: { note: NoteWithProfile; rating?: number }) 
       <p className="mb-3 text-xs text-muted-foreground">{note.subject}</p>
 
       <div className="flex flex-wrap gap-1.5 mb-3">
-        <Badge variant="outline" className="text-[10px] px-1.5 py-0">Sem {note.semester}</Badge>
-        <Badge variant="outline" className="text-[10px] px-1.5 py-0">{note.department.split(" ")[0]}</Badge>
+        {note.semester && note.semester > 0 ? (
+          <Badge variant="outline" className="text-[10px] px-1.5 py-0">Sem {note.semester}</Badge>
+        ) : (
+          <Badge variant="secondary" className="text-[10px] px-1.5 py-0 bg-primary/10 text-primary font-medium">Skill / Tech</Badge>
+        )}
+        <Badge variant="outline" className="text-[10px] px-1.5 py-0">
+          {note.department === "Programming & Tech" ? "Programming" : note.department.split(" ")[0]}
+        </Badge>
       </div>
 
       <div className="flex items-center justify-between text-xs text-muted-foreground">
