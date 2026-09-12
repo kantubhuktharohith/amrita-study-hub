@@ -50,21 +50,25 @@ const SignupPage = () => {
 
   const handleSignup = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!email || !password || !fullName) {
+    const cleanEmail = email.trim().toLowerCase();
+    const cleanFullName = fullName.trim();
+    const cleanPassword = password;
+
+    if (!cleanEmail || !cleanPassword || !cleanFullName) {
       toast.error("Please fill in all required fields.");
       return;
     }
-    if (password.length < 6) {
+    if (cleanPassword.length < 6) {
       toast.error("Password must be at least 6 characters.");
       return;
     }
     setLoading(true);
     const { error } = await supabase.auth.signUp({
-      email,
-      password,
+      email: cleanEmail,
+      password: cleanPassword,
       options: {
-        emailRedirectTo: window.location.origin,
-        data: { full_name: fullName },
+        emailRedirectTo: `${window.location.origin}/`,
+        data: { full_name: cleanFullName },
       },
     });
     setLoading(false);
@@ -79,7 +83,7 @@ const SignupPage = () => {
           year: year ? Number(year) : null,
         }).eq("user_id", user.id);
       }
-      toast.success("Account created! Check your email to confirm.");
+      toast.success("Account created successfully!");
       navigate("/");
     }
   };
@@ -115,15 +119,38 @@ const SignupPage = () => {
           <form onSubmit={handleSignup} className="space-y-4">
             <div className="space-y-2">
               <Label htmlFor="name">Full Name *</Label>
-              <Input id="name" value={fullName} onChange={(e) => setFullName(e.target.value)} placeholder="Your full name" />
+              <Input
+                id="name"
+                value={fullName}
+                onChange={(e) => setFullName(e.target.value)}
+                placeholder="Your full name"
+                autoComplete="name"
+              />
             </div>
             <div className="space-y-2">
               <Label htmlFor="email">Email *</Label>
-              <Input id="email" type="email" value={email} onChange={(e) => setEmail(e.target.value)} placeholder="you@example.com" />
+              <Input
+                id="email"
+                type="email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                placeholder="you@example.com"
+                autoCapitalize="none"
+                autoCorrect="off"
+                spellCheck={false}
+                autoComplete="email"
+              />
             </div>
             <div className="space-y-2">
               <Label htmlFor="password">Password *</Label>
-              <Input id="password" type="password" value={password} onChange={(e) => setPassword(e.target.value)} placeholder="At least 6 characters" />
+              <Input
+                id="password"
+                type="password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                placeholder="At least 6 characters"
+                autoComplete="new-password"
+              />
             </div>
             <div className="space-y-2">
               <Label>Department</Label>

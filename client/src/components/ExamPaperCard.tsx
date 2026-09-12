@@ -12,7 +12,7 @@ const fileIcons: Record<string, typeof FileText> = {
   doc: File,
 };
 
-const ExamPaperCard = ({ paper }: { paper: ExamPaperWithProfile }) => {
+const ExamPaperCard = ({ paper, rating }: { paper: ExamPaperWithProfile; rating?: number }) => {
   const Icon = fileIcons[paper.file_type] || FileText;
   const examLabel = EXAM_TYPES.find((t) => t.value === paper.exam_type)?.label || paper.exam_type;
 
@@ -25,9 +25,11 @@ const ExamPaperCard = ({ paper }: { paper: ExamPaperWithProfile }) => {
       });
       return data?.[0] ?? { average_rating: 0, total_ratings: 0 };
     },
+    enabled: rating === undefined,
+    staleTime: 10 * 60 * 1000,
   });
 
-  const avgRating = Number(avgData?.average_rating ?? 0);
+  const avgRating = rating !== undefined ? rating : Number(avgData?.average_rating ?? 0);
 
   return (
     <Link

@@ -28,7 +28,16 @@ import TechNewsPage from "./pages/TechNewsPage";
 import AdminPanelPage from "./pages/AdminPanelPage";
 import NotFound from "./pages/NotFound";
 
-const queryClient = new QueryClient();
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      staleTime: 5 * 60 * 1000, // 5 minutes in-memory cache to prevent spamming database
+      gcTime: 10 * 60 * 1000, // Keep unused data in memory for 10 minutes
+      refetchOnWindowFocus: false, // Prevent re-fetching when students switch tabs
+      retry: 1, // Single retry on transient network errors
+    },
+  },
+});
 
 const App = () => (
   <ThemeProvider>

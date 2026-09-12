@@ -13,7 +13,7 @@ const fileIcons: Record<string, typeof FileText> = {
   doc: File,
 };
 
-const NoteCard = ({ note }: { note: NoteWithProfile }) => {
+const NoteCard = ({ note, rating }: { note: NoteWithProfile; rating?: number }) => {
   const Icon = fileIcons[note.file_type] || FileText;
 
   const { data: avgData } = useQuery({
@@ -25,9 +25,11 @@ const NoteCard = ({ note }: { note: NoteWithProfile }) => {
       });
       return data?.[0] ?? { average_rating: 0, total_ratings: 0 };
     },
+    enabled: rating === undefined,
+    staleTime: 10 * 60 * 1000,
   });
 
-  const avgRating = Number(avgData?.average_rating ?? 0);
+  const avgRating = rating !== undefined ? rating : Number(avgData?.average_rating ?? 0);
 
   return (
     <Link

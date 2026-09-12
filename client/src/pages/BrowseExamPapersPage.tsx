@@ -177,7 +177,9 @@ const BrowseExamPapersPage = () => {
         <div className="py-16 text-center"><p className="text-muted-foreground">No exam papers found. Upload the first one!</p></div>
       ) : (
         <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-          {filtered.map((paper) => <ExamPaperCard key={paper.id} paper={paper} />)}
+          {filtered.map((paper) => (
+            <ExamPaperCard key={paper.id} paper={paper} rating={ratingsMap[paper.id]} />
+          ))}
         </div>
       )}
     </div>

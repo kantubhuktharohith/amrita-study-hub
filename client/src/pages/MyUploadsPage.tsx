@@ -69,10 +69,6 @@ const MyUploadsPage = () => {
           <h1 className="font-display text-2xl font-bold mb-1">My Uploads</h1>
           <p className="text-sm text-muted-foreground">Manage your uploaded notes and exam papers</p>
         </div>
-        <div className="flex gap-2">
-          <Link to="/upload"><Button size="sm" className="bg-hero-gradient text-primary-foreground hover:opacity-90"><Upload className="mr-1.5 h-4 w-4" /> Notes</Button></Link>
-          <Link to="/upload-exam-paper"><Button size="sm" variant="outline"><Upload className="mr-1.5 h-4 w-4" /> Exam Paper</Button></Link>
-        </div>
       </div>
 
       <Tabs defaultValue="notes">

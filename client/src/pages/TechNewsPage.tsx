@@ -16,7 +16,6 @@ import {
   RefreshCw,
   Newspaper,
   Bookmark,
-  SlidersHorizontal,
 } from "lucide-react";
 import { toast } from "sonner";
 
@@ -143,7 +142,14 @@ export const TechNewsPage: React.FC = () => {
 
           {/* Saved Filter Button */}
           <div className="flex items-center gap-2 shrink-0">
-            
+            <Button
+              size="sm"
+              variant={!showSavedOnly ? "default" : "outline"}
+              onClick={() => setShowSavedOnly(false)}
+              className="h-9 text-xs"
+            >
+              All Articles ({newsList.length})
+            </Button>
 
             <Button
               size="sm"
@@ -156,8 +162,6 @@ export const TechNewsPage: React.FC = () => {
             </Button>
           </div>
         </div>
-
-        
 
         {/* Normal Responsive Grid of News Cards (1 col mobile, 2 col tablet, 3 col desktop) */}
         {filteredNews.length > 0 ? (

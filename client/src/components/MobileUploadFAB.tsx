@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import { Plus, FileText, BookOpen, X } from "lucide-react";
+import { Plus, FileText, BookOpen, FolderUp, X } from "lucide-react";
 import { useAuth } from "@/contexts/AuthContext";
 import { Button } from "@/components/ui/button";
 import { AnimatePresence, motion } from "framer-motion";
@@ -20,22 +20,15 @@ const MobileUploadFAB = () => {
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 16, scale: 0.9 }}
             transition={{ duration: 0.2 }}
-            className="mb-3 flex flex-col gap-2"
+            className="mb-3 flex flex-col gap-2 min-w-[150px]"
           >
-            <Link to="/upload" onClick={() => setOpen(false)}>
+            
+            <Link to="/my-uploads" onClick={() => setOpen(false)}>
               <Button
                 size="sm"
-                className="w-full gap-2 bg-card text-foreground shadow-lg border hover:bg-accent"
+                className="w-full gap-2 bg-card text-foreground shadow-lg border hover:bg-accent justify-start text-xs"
               >
-                <BookOpen className="h-4 w-4 text-primary" /> Upload Notes
-              </Button>
-            </Link>
-            <Link to="/upload-exam-paper" onClick={() => setOpen(false)}>
-              <Button
-                size="sm"
-                className="w-full gap-2 bg-card text-foreground shadow-lg border hover:bg-accent"
-              >
-                <FileText className="h-4 w-4 text-primary" /> Upload Paper
+                <FolderUp className="h-4 w-4 text-primary shrink-0" /> My Uploads
               </Button>
             </Link>
           </motion.div>

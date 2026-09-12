@@ -156,7 +156,9 @@ const BrowsePage = () => {
         <div className="py-16 text-center"><p className="text-muted-foreground">No notes found. Try adjusting your filters or upload the first one!</p></div>
       ) : (
         <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-          {filtered.map((note) => <NoteCard key={note.id} note={note} />)}
+          {filtered.map((note) => (
+            <NoteCard key={note.id} note={note} rating={ratingsMap[note.id]} />
+          ))}
         </div>
       )}
     </div>
