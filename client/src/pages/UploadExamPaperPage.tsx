@@ -18,7 +18,7 @@ const UploadExamPaperPage = () => {
   const [subject, setSubject] = useState("");
   const [department, setDepartment] = useState("");
   const [semester, setSemester] = useState("");
-  const [examType, setExamType] = useState("");
+  const [examType, setExamType] = useState("regular");
   const [examYear, setExamYear] = useState("");
   const [description, setDescription] = useState("");
   const [file, setFile] = useState<File | null>(null);
@@ -35,7 +35,7 @@ const UploadExamPaperPage = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!title || !subject || !department || !semester || !examType || !examYear || !file) {
+    if (!title || !subject || !department || !semester || !examYear || !file) {
       toast.error("Please fill all required fields and select a file.");
       return;
     }
@@ -91,13 +91,7 @@ const UploadExamPaperPage = () => {
         </div>
 
         <div className="grid gap-4 sm:grid-cols-2">
-          <div className="space-y-2">
-            <Label>Department *</Label>
-            <Select value={department} onValueChange={setDepartment}>
-              <SelectTrigger className="bg-background"><SelectValue placeholder="Select department" /></SelectTrigger>
-              <SelectContent>{DEPARTMENTS.map((d) => <SelectItem key={d} value={d}>{d}</SelectItem>)}</SelectContent>
-            </Select>
-          </div>
+          
           <div className="space-y-2">
             <Label>Semester *</Label>
             <Select value={semester} onValueChange={setSemester}>
@@ -108,13 +102,6 @@ const UploadExamPaperPage = () => {
         </div>
 
         <div className="grid gap-4 sm:grid-cols-2">
-          <div className="space-y-2">
-            <Label>Exam Type *</Label>
-            <Select value={examType} onValueChange={setExamType}>
-              <SelectTrigger className="bg-background"><SelectValue placeholder="Select exam type" /></SelectTrigger>
-              <SelectContent>{EXAM_TYPES.map((t) => <SelectItem key={t.value} value={t.value}>{t.label}</SelectItem>)}</SelectContent>
-            </Select>
-          </div>
           <div className="space-y-2">
             <Label>Exam Year *</Label>
             <Select value={examYear} onValueChange={setExamYear}>

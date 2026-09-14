@@ -43,6 +43,7 @@ const ExamPaperCard = ({ paper, rating }: { paper: ExamPaperWithProfile; rating?
         <Badge variant="secondary" className="text-xs">{examLabel}</Badge>
       </div>
 
+
       <h3 className="mb-1 font-display text-sm font-semibold leading-tight group-hover:text-accent transition-colors line-clamp-2">
         {paper.title}
       </h3>
@@ -77,3 +78,5 @@ const ExamPaperCard = ({ paper, rating }: { paper: ExamPaperWithProfile; rating?
 };
 
 export default ExamPaperCard;
+
+

@@ -2,6 +2,7 @@ import { FileText, Image, File, Download, User, Star } from "lucide-react";
 import { Link } from "react-router-dom";
 import { Badge } from "@/components/ui/badge";
 import { useQuery } from "@tanstack/react-query";
+
 import { supabase } from "@/integrations/supabase/client";
 import type { Tables } from "@/integrations/supabase/types";
 
@@ -84,3 +85,5 @@ const NoteCard = ({ note, rating }: { note: NoteWithProfile; rating?: number }) 
 };
 
 export default NoteCard;
+
+

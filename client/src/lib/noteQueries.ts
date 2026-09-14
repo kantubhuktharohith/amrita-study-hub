@@ -67,3 +67,34 @@ async function getProfileMap(userIds: string[]): Promise<Map<string, string>> {
   const { data: profiles } = await supabase.from("profiles").select("user_id, full_name").in("user_id", unique);
   return new Map(profiles?.map((p) => [p.user_id, p.full_name]) || []);
 }
+
+export async function downloadDocument(options: {
+  fileUrl: string;
+  fileName?: string;
+  contentType?: "note" | "exam_paper";
+  contentId?: string;
+  currentDownloads?: number;
+}) {
+  const { fileUrl, fileName, contentType, contentId, currentDownloads = 0 } = options;
+  try {
+    const a = document.createElement("a");
+    a.href = fileUrl;
+    a.download = fileName || "download";
+    a.target = "_blank";
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+
+    if (contentType && contentId) {
+      const table = contentType === "note" ? "notes" : "exam_papers";
+      await supabase
+        .from(table)
+        .update({ downloads: currentDownloads + 1 })
+        .eq("id", contentId);
+    }
+  } catch (err) {
+    console.error("Download failed:", err);
+    throw err;
+  }
+}
+
