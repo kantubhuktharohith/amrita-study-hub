@@ -18,6 +18,7 @@ import { supabase } from "@/integrations/supabase/client";
 import { fetchNoteById } from "@/lib/noteQueries";
 import RatingSection from "@/components/RatingSection";
 import CommentsSection from "@/components/CommentsSection";
+import PdfViewer from "@/components/PdfViewer";
 import { toast } from "sonner";
 
 const NoteDetailPage = () => {
@@ -106,6 +107,10 @@ const NoteDetailPage = () => {
       note.file_url.toLowerCase().includes(`.${ext}`)
     );
 
+  const isOfficeDoc = ["doc", "docx", "ppt", "pptx", "xls", "xlsx"].some((ext) =>
+    note.file_url.toLowerCase().includes(`.${ext}`)
+  );
+
   return (
     <div className="min-h-screen bg-background text-foreground flex flex-col">
       {/* Top Document Header Bar - matching user screenshot */}
@@ -156,7 +161,7 @@ const NoteDetailPage = () => {
         </div>
       </div>
 
-      {/* Main Document View (Page 1, Page 2 scrollable inside application) */}
+      {/* Main Document View (In-app viewer without triggering direct download) */}
       <div
         ref={readerRef}
         className="w-full bg-neutral-900 flex justify-center overflow-auto min-h-[72vh]"
@@ -169,11 +174,17 @@ const NoteDetailPage = () => {
               className="max-w-full max-h-[85vh] object-contain rounded-md shadow-lg"
             />
           </div>
-        ) : (
+        ) : isOfficeDoc ? (
           <iframe
-            src={`${note.file_url}#toolbar=0&navpanes=0`}
+            src={`https://docs.google.com/gview?url=${encodeURIComponent(note.file_url)}&embedded=true`}
             title={note.title}
             className="w-full h-[80vh] md:h-[86vh] border-0 bg-neutral-900"
+          />
+        ) : (
+          <PdfViewer
+            url={note.file_url}
+            title={note.title}
+            className="min-h-[72vh]"
           />
         )}
       </div>
