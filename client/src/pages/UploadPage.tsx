@@ -1,12 +1,12 @@
 import { useState } from "react";
 import { Navigate, useNavigate } from "react-router-dom";
-import { Upload, FileText, Loader2, Code2, Sparkles } from "lucide-react";
+import { Upload, FileText, Loader2, } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Label } from "@/components/ui/label";
-import { DEPARTMENTS, SEMESTERS } from "@/data/academicConstants";
+import { SEMESTERS } from "@/data/academicConstants";
 import { toast } from "sonner";
 import { useAuth } from "@/contexts/AuthContext";
 import { supabase } from "@/integrations/supabase/client";
@@ -77,7 +77,6 @@ const UploadPage = () => {
       });
 
       if (insertError) throw insertError;
-
       toast.success("Notes uploaded successfully!");
       navigate("/my-uploads");
     } catch (err: unknown) {
@@ -93,13 +92,12 @@ const UploadPage = () => {
       <div className="mb-6">
         <h1 className="font-display text-2xl font-bold mb-1">Upload Notes & Study Materials</h1>
         <p className="text-sm text-muted-foreground">
-          Share college syllabus notes, programming language guides (Golang, Rust, Ruby, etc.), or non-syllabus skills.
+          Share college syllabus notes, programming language guides.
         </p>
       </div>
 
       <form onSubmit={handleSubmit} className="space-y-5 rounded-lg border bg-card p-6 shadow-card">
       
-
         {/* Title */}
         <div className="space-y-2">
           <Label htmlFor="title">Title *</Label>
@@ -107,22 +105,18 @@ const UploadPage = () => {
             id="title"
             value={title}
             onChange={(e) => setTitle(e.target.value)}
-            placeholder="e.g. Golang Concurrency & Microservices Guide"
             required
           />
         </div>
-
         {/* Subject / Language */}
         <div className="space-y-2">
           <div className="flex items-center justify-between">
             <Label htmlFor="subject">Subject / Programming Language *</Label>
-            <span className="text-xs text-muted-foreground">e.g. Golang, Rust, Ruby, DSA</span>
           </div>
           <Input
             id="subject"
             value={subject}
             onChange={(e) => setSubject(e.target.value)}
-            placeholder="e.g. Golang, Rust, Ruby, Web Dev, Compiler Design"
             required
           />
         </div>
@@ -130,8 +124,7 @@ const UploadPage = () => {
         {/* Semester - Optional for Non-syllabus/programming */}
         <div className="space-y-2">
           <div className="flex items-center justify-between">
-            <Label>Semester</Label>
-            <span className="text-[11px] text-muted-foreground">Optional</span>
+            <Label>Semester (optional)</Label>
           </div>
           <Select value={semester} onValueChange={setSemester}>
             <SelectTrigger className="bg-background">

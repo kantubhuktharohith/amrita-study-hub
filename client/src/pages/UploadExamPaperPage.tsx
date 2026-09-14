@@ -109,18 +109,14 @@ const UploadExamPaperPage = () => {
           <Input
             id="title"
             value={title}
-            onChange={(e) => setTitle(e.target.value)}
-            placeholder="e.g. DBMS Mid-1 2025"
-          />
+            onChange={(e) => setTitle(e.target.value)}/>
         </div>
         <div className="space-y-2">
           <Label htmlFor="subject">Subject *</Label>
           <Input
             id="subject"
             value={subject}
-            onChange={(e) => setSubject(e.target.value)}
-            placeholder="e.g. Database Management Systems"
-          />
+            onChange={(e) => setSubject(e.target.value)}/>
         </div>
 
         <div className="grid gap-4 sm:grid-cols-2">
