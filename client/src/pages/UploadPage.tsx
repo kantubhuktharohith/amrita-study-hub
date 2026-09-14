@@ -127,44 +127,23 @@ const UploadPage = () => {
           />
         </div>
 
-        {/* Department & Semester - Both Optional for Non-syllabus/programming */}
-        <div className="grid gap-4 sm:grid-cols-2">
-          <div className="space-y-2">
-            <div className="flex items-center justify-between">
-              <Label>Department</Label>
-              <span className="text-[11px] text-muted-foreground">Optional</span>
-            </div>
-            <Select value={department} onValueChange={setDepartment}>
-              <SelectTrigger className="bg-background">
-                <SelectValue placeholder="Optional (defaults to Tech)" />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="Programming & Tech">Programming & Tech (Non-Syllabus)</SelectItem>
-                <SelectItem value="General / All Branches">General / All Branches</SelectItem>
-                {DEPARTMENTS.filter(d => d !== "Programming & Tech" && d !== "General / All Branches").map((d) => (
-                  <SelectItem key={d} value={d}>{d}</SelectItem>
-                ))}
-              </SelectContent>
-            </Select>
+        {/* Semester - Optional for Non-syllabus/programming */}
+        <div className="space-y-2">
+          <div className="flex items-center justify-between">
+            <Label>Semester</Label>
+            <span className="text-[11px] text-muted-foreground">Optional</span>
           </div>
-
-          <div className="space-y-2">
-            <div className="flex items-center justify-between">
-              <Label>Semester</Label>
-              <span className="text-[11px] text-muted-foreground">Optional</span>
-            </div>
-            <Select value={semester} onValueChange={setSemester}>
-              <SelectTrigger className="bg-background">
-                <SelectValue placeholder="Optional (Non-Syllabus)" />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="0">Skill / Non-Syllabus (None)</SelectItem>
-                {SEMESTERS.map((s) => (
-                  <SelectItem key={s} value={String(s)}>Semester {s}</SelectItem>
-                ))}
-              </SelectContent>
-            </Select>
-          </div>
+          <Select value={semester} onValueChange={setSemester}>
+            <SelectTrigger className="bg-background">
+              <SelectValue placeholder="Optional (Non-Syllabus)" />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="0">Skill / Non-Syllabus (None)</SelectItem>
+              {SEMESTERS.map((s) => (
+                <SelectItem key={s} value={String(s)}>Semester {s}</SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
         </div>
 
         {/* Description */}
