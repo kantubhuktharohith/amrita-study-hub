@@ -1,16 +1,17 @@
 import React, { useState } from "react";
 import { TechVideoItem } from "@/data/techNewsData";
-import { Play, Radio, Eye, ExternalLink, Sparkles, X } from "lucide-react";
-import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
+import { Play, Radio, Eye, ExternalLink, Sparkles } from "lucide-react";
 import {
   Dialog,
   DialogContent,
+  DialogDescription,
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
 
-interface TechVideoCardProps {
+export type { TechVideoItem };
+
+export interface TechVideoCardProps {
   video: TechVideoItem;
 }
 
@@ -96,9 +97,9 @@ export const TechVideoCard: React.FC<TechVideoCardProps> = ({ video }) => {
               <DialogTitle className="text-base sm:text-lg font-bold text-foreground">
                 {video.title}
               </DialogTitle>
-              <p className="text-xs text-muted-foreground mt-0.5">
+              <DialogDescription className="text-xs text-muted-foreground mt-0.5">
                 Channel: <strong className="text-foreground">{video.channel}</strong> • {video.views}
-              </p>
+              </DialogDescription>
             </div>
           </DialogHeader>
 
@@ -136,3 +137,5 @@ export const TechVideoCard: React.FC<TechVideoCardProps> = ({ video }) => {
     </>
   );
 };
+
+export default TechVideoCard;

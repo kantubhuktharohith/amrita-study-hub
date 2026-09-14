@@ -25,6 +25,19 @@ export interface TechNewsItem {
   likesCount?: number;
 }
 
+export interface TechVideoItem {
+  id: string;
+  title: string;
+  description: string;
+  youtubeId: string;
+  thumbnailUrl: string;
+  channel: string;
+  views: string;
+  publishedAt: string;
+  duration?: string;
+  isLive?: boolean;
+}
+
 export const TECH_CATEGORIES = [
   { id: "all", label: "All News", icon: "🌐" },
   { id: "ai", label: "AI & GenAI", icon: "🤖" },
