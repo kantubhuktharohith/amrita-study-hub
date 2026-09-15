@@ -182,7 +182,7 @@ const Navbar = () => {
         </div>
 
         {/* Mobile menu (sign in button only when logged out; profile is in mobile bottom nav) */}
-        {!user && (
+          {!user && (
           <div className="flex items-center gap-2 md:hidden">
             <Link to="/login">
               <Button
@@ -192,7 +192,7 @@ const Navbar = () => {
                 Sign in
               </Button>
             </Link>
-          </div>
+        </div>
         )}
       </div>
     </nav>

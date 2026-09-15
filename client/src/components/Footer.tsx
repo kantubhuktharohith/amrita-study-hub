@@ -6,6 +6,12 @@ import {
   Instagram,
   Twitter,
   Mail,
+  Info,
+  BookOpen,
+  FileQuestion,
+  Compass,
+  Newspaper,
+  Users,
 } from "lucide-react";
 
 const DiscordIcon = ({ className }: { className?: string }) => (
@@ -73,7 +79,7 @@ const socialLinks: SocialLink[] = [
 
 const Footer = () => {
   return (
-    <footer className="border-t bg-card/80 backdrop-blur-sm mt-auto">
+    <footer className="border-t bg-card/80 backdrop-blur-sm mt-auto pb-20 md:pb-6">
       <div className="container py-8 md:py-10">
         <div className="grid grid-cols-1 gap-8 md:grid-cols-12 md:items-center">
           {/* Brand and Description */}
@@ -95,9 +101,20 @@ const Footer = () => {
             </p>
           </div>
 
-          {/* Navigation Links */}
-          <div className="md:col-span-5 flex flex-wrap justify-center gap-x-5 gap-y-2 text-sm text-muted-foreground">
-            
+          {/* Navigation Links including prominent About Us */}
+          <div className="md:col-span-5 flex flex-col items-center md:items-center space-y-2.5">
+            <span className="text-xs font-semibold uppercase tracking-wider text-muted-foreground/80">
+              About the Developer
+            </span>
+            <div className="flex flex-wrap justify-center gap-2 text-xs">
+              <Link
+                to="/about"
+                className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-primary/10 hover:bg-primary/20 text-primary font-semibold transition-all border border-primary/30 shadow-xs active:scale-95"
+              >
+                <Info className="h-3.5 w-3.5" />
+                About Us
+              </Link>
+            </div>
           </div>
 
           {/* Social Media Links */}
