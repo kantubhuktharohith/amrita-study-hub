@@ -51,6 +51,11 @@ export const getUserProfile = async (
   const cached = localMap[userId];
 
   try {
+    const { data: authData } = await supabase.auth.getUser();
+    const currentUser = authData?.user;
+    const isCurrent = currentUser?.id === userId;
+    const authMeta = isCurrent ? currentUser?.user_metadata : null;
+
     // 1. Fetch from Supabase profiles table
     const { data: remoteProfile, error } = await supabase
       .from("profiles")
@@ -62,16 +67,16 @@ export const getUserProfile = async (
       const merged: UserProfile = {
         id: remoteProfile.id,
         user_id: remoteProfile.user_id,
-        full_name: remoteProfile.full_name || cached?.full_name || fallbackMeta?.username || "Student",
-        department: remoteProfile.department || cached?.department || fallbackMeta?.department || null,
-        year: remoteProfile.year || cached?.year || fallbackMeta?.year || null,
-        avatar_url: remoteProfile.avatar_url || cached?.avatar_url || null,
-        bio: (remoteProfile as any).bio || cached?.bio || null,
-        github_url: (remoteProfile as any).github_url || cached?.github_url || null,
-        linkedin_url: (remoteProfile as any).linkedin_url || cached?.linkedin_url || null,
-        twitter_url: (remoteProfile as any).twitter_url || cached?.twitter_url || null,
-        website_url: (remoteProfile as any).website_url || cached?.website_url || null,
-        skills: (remoteProfile as any).skills || cached?.skills || [],
+        full_name: remoteProfile.full_name || authMeta?.full_name || cached?.full_name || fallbackMeta?.username || "Student",
+        department: remoteProfile.department || authMeta?.department || cached?.department || fallbackMeta?.department || null,
+        year: remoteProfile.year || (authMeta?.year ? Number(authMeta.year) : null) || cached?.year || fallbackMeta?.year || null,
+        avatar_url: remoteProfile.avatar_url || authMeta?.avatar_url || cached?.avatar_url || null,
+        bio: (remoteProfile as any).bio || authMeta?.bio || cached?.bio || null,
+        github_url: (remoteProfile as any).github_url || authMeta?.github || cached?.github_url || null,
+        linkedin_url: (remoteProfile as any).linkedin_url || authMeta?.linkedin || cached?.linkedin_url || null,
+        twitter_url: (remoteProfile as any).twitter_url || authMeta?.twitter || cached?.twitter_url || null,
+        website_url: (remoteProfile as any).website_url || authMeta?.website || cached?.website_url || null,
+        skills: (remoteProfile as any).skills || authMeta?.skills || cached?.skills || [],
         created_at: remoteProfile.created_at,
         updated_at: remoteProfile.updated_at,
       };
@@ -80,6 +85,24 @@ export const getUserProfile = async (
       localMap[userId] = merged;
       setStoredProfilesMap(localMap);
       return merged;
+    } else if (isCurrent && authMeta) {
+      // If no remote profile row exists yet, synthesize from auth metadata
+      const fromAuth: UserProfile = {
+        user_id: userId,
+        full_name: authMeta.full_name || cached?.full_name || fallbackMeta?.username || "Student",
+        department: authMeta.department || cached?.department || fallbackMeta?.department || null,
+        year: authMeta.year ? Number(authMeta.year) : cached?.year || null,
+        avatar_url: authMeta.avatar_url || cached?.avatar_url || null,
+        bio: authMeta.bio || cached?.bio || null,
+        github_url: authMeta.github || cached?.github_url || null,
+        linkedin_url: authMeta.linkedin || cached?.linkedin_url || null,
+        twitter_url: authMeta.twitter || cached?.twitter_url || null,
+        website_url: authMeta.website || cached?.website_url || null,
+        skills: authMeta.skills || cached?.skills || [],
+      };
+      localMap[userId] = fromAuth;
+      setStoredProfilesMap(localMap);
+      return fromAuth;
     }
   } catch (err) {
     console.warn("Could not fetch remote profile, using cached/fallback:", err);
@@ -129,42 +152,96 @@ export const saveUserProfile = async (
     updated_at: new Date().toISOString(),
   };
 
-  // 1. Try to update public.profiles in Supabase with all fields
+  // Base payload for update (without user_id)
+  const baseUpdatePayload = {
+    full_name: updated.full_name || "",
+    department: updated.department || null,
+    year: updated.year || null,
+    avatar_url: updated.avatar_url || null,
+    updated_at: updated.updated_at,
+  };
+
+  // Extended payload for update (including socials & bio)
+  const extendedUpdatePayload = {
+    ...baseUpdatePayload,
+    bio: updated.bio || null,
+    github_url: updated.github_url || null,
+    linkedin_url: updated.linkedin_url || null,
+    twitter_url: updated.twitter_url || null,
+    website_url: updated.website_url || null,
+    skills: updated.skills || [],
+  };
+
+  // Payloads for insert (requires user_id)
+  const baseInsertPayload = {
+    user_id: userId,
+    ...baseUpdatePayload,
+  };
+
+  const extendedInsertPayload = {
+    user_id: userId,
+    ...extendedUpdatePayload,
+  };
+
+  // 1. Try to save to public.profiles in Supabase
   try {
-    const payload: any = {
-      full_name: updated.full_name,
-      department: updated.department,
-      year: updated.year,
-      avatar_url: updated.avatar_url,
-      bio: updated.bio,
-      github_url: updated.github_url,
-      linkedin_url: updated.linkedin_url,
-      twitter_url: updated.twitter_url,
-      website_url: updated.website_url,
-    };
-
-    const { error } = await supabase
+    // Check if the profile row already exists in Supabase
+    const { data: existingRow, error: checkError } = await supabase
       .from("profiles")
-      .update(payload)
-      .eq("user_id", userId);
+      .select("id")
+      .eq("user_id", userId)
+      .maybeSingle();
 
-    if (error) {
-      // Fallback if specific extra columns don't exist in Supabase schema yet
-      await supabase
-        .from("profiles")
-        .update({
-          full_name: updated.full_name,
-          department: updated.department,
-          year: updated.year,
-          avatar_url: updated.avatar_url,
-        })
-        .eq("user_id", userId);
+    if (checkError) {
+      console.warn("Could not check existing profile in Supabase:", checkError);
     }
-  } catch (err) {
-    console.warn("Supabase profile update warning:", err);
+
+    if (existingRow) {
+      // Row exists -> UPDATE
+      const { error: updateExtErr } = await supabase
+        .from("profiles")
+        .update(extendedUpdatePayload as any)
+        .eq("user_id", userId);
+
+      if (updateExtErr) {
+        console.warn(
+          "Extended columns update failed, falling back to base columns:",
+          updateExtErr.message
+        );
+        const { error: updateBaseErr } = await supabase
+          .from("profiles")
+          .update(baseUpdatePayload as any)
+          .eq("user_id", userId);
+
+        if (updateBaseErr) {
+          console.error("Failed to update profile in Supabase:", updateBaseErr);
+        }
+      }
+    } else {
+      // Row does NOT exist -> INSERT
+      const { error: insertExtErr } = await supabase
+        .from("profiles")
+        .insert(extendedInsertPayload as any);
+
+      if (insertExtErr) {
+        console.warn(
+          "Extended columns insert failed, falling back to base columns:",
+          insertExtErr.message
+        );
+        const { error: insertBaseErr } = await supabase
+          .from("profiles")
+          .insert(baseInsertPayload as any);
+
+        if (insertBaseErr) {
+          console.error("Failed to insert profile in Supabase:", insertBaseErr);
+        }
+      }
+    }
+  } catch (err: any) {
+    console.error("Supabase profile save error:", err);
   }
 
-  // 2. Also update Supabase auth metadata if this is the active user
+  // 2. Also update Supabase auth metadata so data is preserved in auth.users
   try {
     await supabase.auth.updateUser({
       data: {
@@ -176,6 +253,7 @@ export const saveUserProfile = async (
         linkedin: updated.linkedin_url,
         twitter: updated.twitter_url,
         website: updated.website_url,
+        skills: updated.skills,
       },
     });
   } catch (e) {

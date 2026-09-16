@@ -11,6 +11,7 @@ import { toast } from "sonner";
 import collegeLogo from "@/assets/college-logo.jpg";
 import { DEPARTMENTS } from "@/data/academicConstants";
 import { useAuth } from "@/contexts/AuthContext";
+import { saveUserProfile } from "@/lib/profileService";
 
 const SignupPage = () => {
   const navigate = useNavigate();
@@ -77,11 +78,12 @@ const SignupPage = () => {
     } else {
       // Update profile with department and year
       const { data: { user } } = await supabase.auth.getUser();
-      if (user && (department || year)) {
-        await supabase.from("profiles").update({
+      if (user) {
+        await saveUserProfile(user.id, {
+          full_name: cleanFullName,
           department: department || null,
           year: year ? Number(year) : null,
-        }).eq("user_id", user.id);
+        });
       }
       toast.success("Account created successfully!");
       navigate("/");

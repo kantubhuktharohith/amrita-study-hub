@@ -4,20 +4,9 @@ import { Upload, FileText, Loader2, CheckCircle2, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
+import { Select,SelectContent,SelectItem,SelectTrigger,SelectValue } from "@/components/ui/select";
 import { Label } from "@/components/ui/label";
-import {
-  DEPARTMENTS,
-  SEMESTERS,
-  EXAM_TYPES,
-  EXAM_YEARS,
-} from "@/data/academicConstants";
+import { SEMESTERS } from "@/data/academicConstants";
 import { toast } from "sonner";
 import { useAuth } from "@/contexts/AuthContext";
 import { supabase } from "@/integrations/supabase/client";
@@ -27,13 +16,10 @@ const UploadExamPaperPage = () => {
   const { user } = useAuth();
   const navigate = useNavigate();
   const queryClient = useQueryClient();
-
   const [title, setTitle] = useState("");
   const [subject, setSubject] = useState("");
   const [department, setDepartment] = useState<string>("Computer Science & Engineering");
   const [semester, setSemester] = useState<string>("1");
-  const [examType, setExamType] = useState<string>("semester");
-  const [examYear, setExamYear] = useState<string>("2025");
   const [description, setDescription] = useState("");
   const [file, setFile] = useState<File | null>(null);
   const [uploading, setUploading] = useState(false);
@@ -67,10 +53,6 @@ const UploadExamPaperPage = () => {
     }
     if (!semester) {
       toast.error("Please select a semester.");
-      return;
-    }
-    if (!examYear) {
-      toast.error("Please select an exam year.");
       return;
     }
     if (!file) {
@@ -122,8 +104,6 @@ const UploadExamPaperPage = () => {
         department,
         semester: semNum,
         year: academicYear,
-        exam_type: examType,
-        exam_year: Number(examYear) || new Date().getFullYear(),
         description: description.trim() || null,
         file_url: urlData.publicUrl,
         file_name: file.name,
@@ -189,8 +169,6 @@ const UploadExamPaperPage = () => {
           />
         </div>
 
-        
-
         {/* Academic Details: Semester, Exam Type, Exam Year */}
         <div className="grid gap-4 sm:grid-cols-3">
           {/* Semester */}
@@ -209,10 +187,6 @@ const UploadExamPaperPage = () => {
               </SelectContent>
             </Select>
           </div>
-
-          
-
-          
         </div>
 
         {/* Description */}

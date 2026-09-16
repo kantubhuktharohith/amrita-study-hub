@@ -1,33 +1,14 @@
-import { Navigate } from "react-router-dom";
+import { Navigate, Link } from "react-router-dom";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/contexts/AuthContext";
 import { useIsAdmin } from "@/hooks/useIsAdmin";
-import {
-  fetchNotesWithProfiles,
-  fetchExamPapersWithProfiles,
-} from "@/lib/noteQueries";
+import { fetchNotesWithProfiles,fetchExamPapersWithProfiles } from "@/lib/noteQueries";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from "@/components/ui/table";
+import { Table,TableBody,TableCell,TableHead,TableHeader,TableRow } from "@/components/ui/table";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import {
-  AlertDialog,
-  AlertDialogAction,
-  AlertDialogCancel,
-  AlertDialogContent,
-  AlertDialogDescription,
-  AlertDialogFooter,
-  AlertDialogHeader,
-  AlertDialogTitle,
-  AlertDialogTrigger,
+import {AlertDialog,AlertDialogAction,AlertDialogCancel,AlertDialogContent,AlertDialogDescription,AlertDialogFooter,AlertDialogHeader,AlertDialogTitle,AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
 import {
   Loader2,
@@ -79,7 +60,43 @@ const AdminPanelPage = () => {
         <Loader2 className="h-8 w-8 animate-spin text-primary" />
       </div>
     );
-  if (!isAdmin) return <Navigate to="/" replace />;
+  if (!isAdmin) {
+    return (
+      <div className="container max-w-lg py-16 px-4">
+        <div className="rounded-xl border bg-card p-6 sm:p-8 text-center shadow-lg space-y-4">
+          <div className="mx-auto w-12 h-12 rounded-full bg-destructive/10 text-destructive flex items-center justify-center">
+            <Shield className="h-6 w-6" />
+          </div>
+          <h2 className="text-xl font-bold tracking-tight text-foreground">
+            Admin Access Required
+          </h2>
+          <p className="text-sm text-muted-foreground leading-relaxed">
+            You are signed in as <span className="font-semibold text-foreground">{user.email}</span>, but this account does not currently have administrator privileges.
+          </p>
+          <div className="rounded-lg bg-muted/60 p-3 text-left font-mono text-xs border text-muted-foreground space-y-1.5 overflow-x-auto">
+            <p className="text-[11px] font-sans font-medium text-foreground">
+              To grant admin access, run this in your Supabase SQL Editor:
+            </p>
+            <code className="text-primary block select-all">
+              INSERT INTO public.user_roles (user_id, role) VALUES ('{user.id}', 'admin');
+            </code>
+          </div>
+          <div className="pt-2 flex justify-center gap-3">
+            <Link to="/">
+              <Button variant="outline" size="sm">
+                Back to Home
+              </Button>
+            </Link>
+            <Link to="/login">
+              <Button size="sm" className="bg-hero-gradient text-primary-foreground">
+                Switch Account
+              </Button>
+            </Link>
+          </div>
+        </div>
+      </div>
+    );
+  }
 
   const pendingNotes = allNotes.filter((n) => n.status === "pending");
   const pendingPapers = allPapers.filter((p) => p.status === "pending");
