@@ -1,22 +1,10 @@
 import React, { useState, useEffect, useMemo } from "react";
-import {
-  TechNewsItem,
-  TECH_CATEGORIES,
-  CURATED_TECH_NEWS,
-  getBookmarkedNewsIds,
-  getLikedNewsIds,
-  fetchLiveHackerNews,
-} from "@/data/techNewsData";
+import { TechNewsItem,CURATED_TECH_NEWS,getBookmarkedNewsIds,getLikedNewsIds,fetchLiveHackerNews } from "@/data/techNewsData";
 import { TechNewsCard } from "@/components/news/TechNewsCard";
 import { TechNewsDetailModal } from "@/components/news/TechNewsDetailModal";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import {
-  Search,
-  RefreshCw,
-  Newspaper,
-  Bookmark,
-} from "lucide-react";
+import { Search,RefreshCw,Newspaper,Bookmark } from "lucide-react";
 import { toast } from "sonner";
 
 export const TechNewsPage: React.FC = () => {

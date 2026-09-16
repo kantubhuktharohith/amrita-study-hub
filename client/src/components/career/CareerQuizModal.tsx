@@ -1,19 +1,8 @@
 import React, { useState } from "react";
-import {
-  CAREER_QUIZ_QUESTIONS,
-  CAREER_PATHS,
-  CareerPath,
-} from "@/data/careerData";
-import {
-  Dialog,
-  DialogContent,
-  DialogHeader,
-  DialogTitle,
-  DialogDescription,
-} from "@/components/ui/dialog";
+import { CAREER_QUIZ_QUESTIONS,CAREER_PATHS,CareerPath } from "@/data/careerData";
+import { Dialog,DialogContent,DialogHeader,DialogTitle,DialogDescription } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
-import { Sparkles, ArrowRight, RotateCcw, CheckCircle, Compass } from "lucide-react";
+import { RotateCcw, CheckCircle, Compass } from "lucide-react";
 import { CareerPathCard } from "./CareerPathCard";
 
 interface CareerQuizModalProps {

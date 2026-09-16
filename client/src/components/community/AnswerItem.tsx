@@ -3,15 +3,7 @@ import { Link } from "react-router-dom";
 import { CommunityAnswer } from "@/data/communityData";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import {
-  ChevronUp,
-  ChevronDown,
-  CheckCircle,
-  Check,
-  Code2,
-  Share2,
-  Award,
-} from "lucide-react";
+import { ChevronUp,ChevronDown,CheckCircle,Check,Code2,Share2 } from "lucide-react";
 import { toast } from "sonner";
 
 interface AnswerItemProps {

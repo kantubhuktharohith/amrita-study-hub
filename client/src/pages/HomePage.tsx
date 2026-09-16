@@ -1,23 +1,8 @@
 import { Link } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 import { motion } from "framer-motion";
-import {
-  ArrowRight,
-  BookOpen,
-  Upload,
-  Search,
-  Users,
-  Compass,
-  Sparkles,
-  TrendingUp,
-  GraduationCap,
-  Award,
-  Briefcase,
-  FileText,
-} from "lucide-react";
+import { ArrowRight,BookOpen,Upload,Search,Compass,FileText } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
-import NoteCard from "@/components/NoteCard";
 import { fetchNotesWithProfiles } from "@/lib/noteQueries";
 import { CAREER_PATHS } from "@/data/careerData";
 
@@ -44,7 +29,7 @@ const features = [
   },
 ];
 
-const featuredCareers = CAREER_PATHS.slice(0, 4);
+
 
 const HomePage = () => {
   const { data: topNotes = [] } = useQuery({

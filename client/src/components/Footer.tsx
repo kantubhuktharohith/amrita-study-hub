@@ -1,18 +1,6 @@
 import collegeLogo from "@/assets/college-logo.jpg";
 import { Link } from "react-router-dom";
-import {
-  Github,
-  Linkedin,
-  Instagram,
-  Twitter,
-  Mail,
-  Info,
-  BookOpen,
-  FileQuestion,
-  Compass,
-  Newspaper,
-  Users,
-} from "lucide-react";
+import { Github,Linkedin,Instagram,Twitter,Mail,Info } from "lucide-react";
 
 const DiscordIcon = ({ className }: { className?: string }) => (
   <svg

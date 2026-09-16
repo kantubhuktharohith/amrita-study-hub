@@ -1,7 +1,4 @@
-import {
-  CommunityQuestion,
-  CommunityAnswer,
-} from "@/data/communityData";
+import { CommunityQuestion,CommunityAnswer } from "@/data/communityData";
 import { supabase } from "@/integrations/supabase/client";
 
 const STORAGE_KEY = "amrita_community_posts_real_v1";

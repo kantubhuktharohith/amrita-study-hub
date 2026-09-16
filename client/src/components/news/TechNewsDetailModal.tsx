@@ -1,28 +1,9 @@
 import React, { useState } from "react";
 import { TechNewsItem } from "@/data/techNewsData";
-import {
-  Dialog,
-  DialogContent,
-  DialogHeader,
-  DialogTitle,
-} from "@/components/ui/dialog";
+import { Dialog,DialogContent,DialogHeader,DialogTitle } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import {
-  Heart,
-  Bookmark,
-  Share2,
-  ExternalLink,
-  Clock,
-  Flame,
-  Lightbulb,
-  CheckCircle2,
-  Sparkles,
-  HelpCircle,
-  Building2,
-  User,
-  X,
-} from "lucide-react";
+import { Heart,Bookmark,Share2,ExternalLink,Clock,Flame,Lightbulb,CheckCircle2,Sparkles,HelpCircle,User } from "lucide-react";
 import { toast } from "sonner";
 
 interface TechNewsDetailModalProps {

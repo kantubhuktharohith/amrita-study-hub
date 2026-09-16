@@ -1,29 +1,13 @@
 import React, { useState, useMemo, useEffect } from "react";
 import { CommunityQuestion } from "@/data/communityData";
-import {
-  getCommunityQuestions,
-  fetchCommunityQuestions,
-  voteOnQuestion,
-  COMMUNITY_QUESTIONS_CONTENT_ID,
-  COMMUNITY_ANSWERS_CONTENT_ID,
-} from "@/lib/communityQueries";
+import { getCommunityQuestions,fetchCommunityQuestions,voteOnQuestion,COMMUNITY_QUESTIONS_CONTENT_ID,COMMUNITY_ANSWERS_CONTENT_ID } from "@/lib/communityQueries";
 import { QuestionCard } from "@/components/community/QuestionCard";
 import { AskQuestionModal } from "@/components/community/AskQuestionModal";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { useAuth } from "@/contexts/AuthContext";
 import { supabase } from "@/integrations/supabase/client";
-import {
-  Search,
-  Plus,
-  Flame,
-  Sparkles,
-  Award,
-  HelpCircle,
-  ShieldCheck,
-  BookOpen,
-} from "lucide-react";
-import { Link } from "react-router-dom";
+import { Search,Plus,Flame,Sparkles,Award,HelpCircle } from "lucide-react";
 import { AnimatePresence } from "framer-motion";
 
 const CommunityPage: React.FC = () => {

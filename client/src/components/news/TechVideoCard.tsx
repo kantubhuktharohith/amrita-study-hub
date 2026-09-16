@@ -1,13 +1,7 @@
 import React, { useState } from "react";
 import { TechVideoItem } from "@/data/techNewsData";
 import { Play, Radio, Eye, ExternalLink, Sparkles } from "lucide-react";
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogHeader,
-  DialogTitle,
-} from "@/components/ui/dialog";
+import { Dialog,DialogContent,DialogDescription,DialogHeader,DialogTitle } from "@/components/ui/dialog";
 
 export type { TechVideoItem };
 

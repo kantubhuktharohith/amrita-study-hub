@@ -1,28 +1,10 @@
 import React, { useState } from "react";
 import { CareerPath } from "@/data/careerData";
-import {
-  Dialog,
-  DialogContent,
-  DialogTitle,
-  DialogDescription,
-} from "@/components/ui/dialog";
+import { Dialog,DialogContent,DialogTitle,DialogDescription } from "@/components/ui/dialog";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import {
-  Briefcase,
-  TrendingUp,
-  Award,
-  Lightbulb,
-  Building2,
-  BookOpen,
-  ExternalLink,
-  CheckCircle2,
-  Layers,
-  GraduationCap,
-  Calendar,
-  Sparkles,
-} from "lucide-react";
+import { Briefcase,TrendingUp,Award,Lightbulb,Building2,BookOpen,ExternalLink,CheckCircle2,Layers,GraduationCap,Calendar,Sparkles } from "lucide-react";
 import { Link } from "react-router-dom";
 
 interface CareerDetailModalProps {

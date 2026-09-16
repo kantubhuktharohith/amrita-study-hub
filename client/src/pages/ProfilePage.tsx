@@ -3,61 +3,16 @@ import { useParams, useNavigate, Link, Navigate } from "react-router-dom";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/contexts/AuthContext";
-import {
-  getUserProfile,
-  saveUserProfile,
-  getUserCommunityActivity,
-  UserProfile,
-} from "@/lib/profileService";
+import { getUserProfile,saveUserProfile,getUserCommunityActivity,UserProfile } from "@/lib/profileService";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
 import { Badge } from "@/components/ui/badge";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
+import { Select,SelectContent,SelectItem,SelectTrigger,SelectValue } from "@/components/ui/select";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
-import {
-  Tabs,
-  TabsContent,
-  TabsList,
-  TabsTrigger,
-} from "@/components/ui/tabs";
-import {
-  Loader2,
-  User,
-  Mail,
-  Building,
-  GraduationCap,
-  Save,
-  Camera,
-  LogOut,
-  Github,
-  Linkedin,
-  Twitter,
-  Globe,
-  ExternalLink,
-  MessageSquare,
-  CheckCircle2,
-  Sparkles,
-  ArrowLeft,
-  Settings,
-  Eye,
-  ShieldCheck,
-  Share2,
-} from "lucide-react";
+import { Card,CardContent,CardDescription,CardHeader,CardTitle } from "@/components/ui/card";
+import {Loader2,User,Mail,Building,GraduationCap,Save,Camera,LogOut,Github,Linkedin,Twitter,Globe,ExternalLink,MessageSquare,Sparkles,ArrowLeft,Settings,ShieldCheck,Share2} from "lucide-react";
 import { toast } from "sonner";
 import { DEPARTMENTS } from "@/data/academicConstants";
 

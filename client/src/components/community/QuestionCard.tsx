@@ -3,16 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { CommunityQuestion } from "@/data/communityData";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import {
-  ChevronUp,
-  ChevronDown,
-  MessageSquare,
-  Share2,
-  Bookmark,
-  CheckCircle2,
-  Code2,
-  Eye,
-} from "lucide-react";
+import { ChevronUp,ChevronDown,MessageSquare,Share2,Bookmark,CheckCircle2,Code2,Eye } from "lucide-react";
 import { toast } from "sonner";
 
 interface QuestionCardProps {

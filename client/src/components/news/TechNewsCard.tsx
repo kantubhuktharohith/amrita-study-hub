@@ -1,15 +1,6 @@
 import React, { useState } from "react";
 import { TechNewsItem, toggleBookmarkNews, toggleLikeNews } from "@/data/techNewsData";
-import { Button } from "@/components/ui/button";
-import {
-  ExternalLink,
-  Bookmark,
-  Share2,
-  Flame,
-  Clock,
-  Heart,
-  Sparkles,
-} from "lucide-react";
+import { Bookmark,Share2,Flame,Clock,Heart,Sparkles } from "lucide-react";
 import { toast } from "sonner";
 
 interface TechNewsCardProps {

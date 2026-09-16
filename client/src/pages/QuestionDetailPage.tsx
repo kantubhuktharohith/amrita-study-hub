@@ -1,15 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useParams, Link, useNavigate } from "react-router-dom";
-import {
-  getQuestionById,
-  fetchQuestionById,
-  createAnswer,
-  voteOnQuestion,
-  voteOnAnswer,
-  acceptAnswer,
-  incrementQuestionViews,
-  COMMUNITY_ANSWERS_CONTENT_ID,
-} from "@/lib/communityQueries";
+import { getQuestionById,fetchQuestionById,createAnswer,voteOnQuestion,voteOnAnswer,acceptAnswer,incrementQuestionViews,COMMUNITY_ANSWERS_CONTENT_ID } from "@/lib/communityQueries";
 import { CommunityQuestion } from "@/data/communityData";
 import { AnswerItem } from "@/components/community/AnswerItem";
 import { Badge } from "@/components/ui/badge";
@@ -19,20 +10,7 @@ import { Label } from "@/components/ui/label";
 import { useAuth } from "@/contexts/AuthContext";
 import { useQuery } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
-import {
-  ArrowLeft,
-  ChevronUp,
-  ChevronDown,
-  MessageSquare,
-  Share2,
-  Bookmark,
-  CheckCircle2,
-  Code2,
-  Send,
-  Sparkles,
-  ShieldCheck,
-  BookOpen,
-} from "lucide-react";
+import { ArrowLeft,ChevronUp,ChevronDown,MessageSquare,Share2,Bookmark,CheckCircle2,Code2,Send,ShieldCheck,BookOpen } from "lucide-react";
 import { toast } from "sonner";
 
 const QuestionDetailPage: React.FC = () => {

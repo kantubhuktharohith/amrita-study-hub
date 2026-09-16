@@ -2,15 +2,7 @@ import React, { useState } from "react";
 import { YEARLY_ROADMAPS_BY_BRANCH, YearlyMilestone } from "@/data/careerData";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import {
-  GraduationCap,
-  Code,
-  Award,
-  FolderGit2,
-  Briefcase,
-  CheckCircle2,
-  Calendar,
-} from "lucide-react";
+import { GraduationCap,Code,Award,FolderGit2,Briefcase,CheckCircle2 } from "lucide-react";
 import { motion } from "framer-motion";
 
 const BRANCHES = [

@@ -1,23 +1,8 @@
 import React, { useState } from "react";
-import {
-  BRANCH_INTERVIEW_PREP,
-  BranchInterviewPrep,
-} from "@/data/careerData";
+import { BRANCH_INTERVIEW_PREP,BranchInterviewPrep } from "@/data/careerData";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import {
-  GraduationCap,
-  Briefcase,
-  CheckCircle2,
-  FileCheck,
-  Building2,
-  HelpCircle,
-  Sparkles,
-  Lightbulb,
-  ShieldCheck,
-  ChevronRight,
-  BookOpen,
-} from "lucide-react";
+import { GraduationCap,Briefcase,CheckCircle2,FileCheck,Building2,HelpCircle,Sparkles,Lightbulb,ShieldCheck,ChevronRight,BookOpen } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Link } from "react-router-dom";
 

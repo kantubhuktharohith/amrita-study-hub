@@ -1,56 +1,17 @@
 import React, { useState, useMemo } from "react";
-import {
-  CAREER_PATHS,
-  CareerPath,
-  INTERVIEW_PREP_CHECKLIST,
-} from "@/data/careerData";
-import { DEPARTMENTS } from "@/data/academicConstants";
+import { CAREER_PATHS,CareerPath } from "@/data/careerData";
 import { CareerPathCard } from "@/components/career/CareerPathCard";
 import { CareerDetailModal } from "@/components/career/CareerDetailModal";
 import { CareerQuizModal } from "@/components/career/CareerQuizModal";
 import { YearlyRoadmapView } from "@/components/career/YearlyRoadmapView";
 import { BranchInterviewPrepView } from "@/components/career/BranchInterviewPrepView";
 import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import {
-  Sparkles,
-  Compass,
-  GraduationCap,
-  Briefcase,
-  CheckCircle,
-  FileCheck,
-  BookOpen,
-  ArrowRight,
-  HelpCircle,
-} from "lucide-react";
+import { Sparkles,Compass,HelpCircle } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Link } from "react-router-dom";
+
 
 const ALL_DEPARTMENTS_FILTER = "All Branches";
-
-const BRANCH_BUTTONS = [
-  { label: "All Branches", value: ALL_DEPARTMENTS_FILTER },
-  { label: "CSE (Core)", value: "Computer Science & Engineering" },
-  { label: "CSE (AI & ML)", value: "Computer Science & Engineering (AI & ML)" },
-  { label: "CSE (AIDS)", value: "Computer Science & Engineering (AIDS)" },
-  {
-    label: "CSE (Data Science)",
-    value: "Computer Science & Engineering (Data Science)",
-  },
-  {
-    label: "CSE (Cyber Security)",
-    value: "Computer Science & Engineering (Cyber Security)",
-  },
-  {
-    label: "CSE (Big Data)",
-    value: "Computer Science & Engineering (Big Data Analytics)",
-  },
-  { label: "ECE", value: "Electronics & Communication" },
-  { label: "EEE", value: "Electrical & Electronics" },
-  { label: "Mechanical", value: "Mechanical Engineering" },
-  { label: "Civil", value: "Civil Engineering" },
-];
 
 const CareerGuidancePage: React.FC = () => {
   const [selectedDept, setSelectedDept] = useState<string>(

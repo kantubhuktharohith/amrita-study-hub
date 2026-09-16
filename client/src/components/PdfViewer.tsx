@@ -1,17 +1,6 @@
 import React, { useEffect, useRef, useState, useCallback } from "react";
 import * as pdfjsLib from "pdfjs-dist";
-import {
-  ChevronLeft,
-  ChevronRight,
-  ZoomIn,
-  ZoomOut,
-  RotateCw,
-  Loader2,
-  AlertCircle,
-  ExternalLink,
-  Layers,
-  ScrollText,
-} from "lucide-react";
+import { ChevronLeft,ChevronRight,ZoomIn,ZoomOut,RotateCw,Loader2,AlertCircle,ExternalLink,Layers,ScrollText } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 // Polyfill Promise.withResolvers for browsers that don't support it yet

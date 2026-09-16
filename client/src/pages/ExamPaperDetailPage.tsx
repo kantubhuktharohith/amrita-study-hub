@@ -1,16 +1,7 @@
 import { useState, useRef } from "react";
 import { useParams, useNavigate, Link } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
-import {
-  ArrowLeft,
-  Download,
-  Calendar,
-  User,
-  Flag,
-  Loader2,
-  Maximize2,
-  Minimize2,
-} from "lucide-react";
+import { ArrowLeft,Download,Calendar,User,Flag,Loader2,Maximize2,Minimize2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { supabase } from "@/integrations/supabase/client";
