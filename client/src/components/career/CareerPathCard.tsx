@@ -56,7 +56,7 @@ export const CareerPathCard: React.FC<CareerPathCardProps> = ({
         size="sm"
         className="w-full text-xs font-medium group-hover:bg-hero-gradient group-hover:text-primary-foreground group-hover:border-transparent transition-all duration-200"
       >
-        View Roadmap & Details
+        View Course Roadmap
         <ArrowRight className="ml-1.5 h-3.5 w-3.5 transition-transform group-hover:translate-x-1" />
       </Button>
     </motion.div>

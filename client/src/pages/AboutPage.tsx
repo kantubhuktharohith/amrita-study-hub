@@ -57,7 +57,7 @@ const AboutPage = () => {
             <p className="text-muted-foreground text-base mt-1">
               A Programmer / Website Developer
             </p>
-            <p className="text-muted-foreground/60 text-sm mt-0.5">The person behind GetMaterial</p>
+            <p className="text-muted-foreground/60 text-sm mt-0.5">The person behind CampusOrbit</p>
           </div>
         </motion.div>
 
@@ -88,7 +88,7 @@ const AboutPage = () => {
                   <div className="flex items-start gap-3">
                     <Heart className="h-5 w-5 text-primary mt-0.5 shrink-0" />
                     <p className="text-sm leading-relaxed text-foreground/80">
-                      Passionate full-stack developer and student who built <strong className="text-primary">GetMaterial</strong> to help fellow students
+                      Passionate full-stack developer and student who built <strong className="text-primary">CampusOrbit</strong> to help fellow students
                       easily share and access study notes, exam papers, and learning resources. I believe in
                       making education accessible and collaborative.
                     </p>

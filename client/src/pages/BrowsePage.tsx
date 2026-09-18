@@ -1,5 +1,6 @@
-import { useState, useMemo } from "react";
+import { useState, useMemo, useEffect } from "react";
 import { useQuery } from "@tanstack/react-query";
+import { useSearchParams } from "react-router-dom";
 import { AnimatePresence, motion } from "framer-motion";
 import SearchBar from "@/components/SearchBar";
 import FilterPanel from "@/components/FilterPanel";
@@ -15,8 +16,15 @@ type SortOption = "newest" | "oldest" | "most-downloaded" | "title-az" | "title-
 
 const BrowsePage = () => {
   const isMobile = useIsMobile();
+  const [searchParams] = useSearchParams();
   const [filtersOpen, setFiltersOpen] = useState(false);
-  const [search, setSearch] = useState("");
+  const [search, setSearch] = useState(searchParams.get("search") || "");
+
+  // Sync search state when URL search param changes (e.g. from roadmap links)
+  useEffect(() => {
+    const urlSearch = searchParams.get("search");
+    if (urlSearch) setSearch(urlSearch);
+  }, [searchParams]);
   const [department, setDepartment] = useState("all");
   const [semester, setSemester] = useState("all");
   const [year, setYear] = useState("all");

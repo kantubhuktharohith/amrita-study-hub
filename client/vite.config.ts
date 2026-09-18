@@ -31,9 +31,9 @@ export default defineConfig(({ mode }) => ({
         cleanupOutdatedCaches: true,
       },
       manifest: {
-        name: "GetMaterial - Notes Sharing Platform",
-        short_name: "GetMaterial",
-        description: "A collaborative notes-sharing platform for Amrita Sai Institute students",
+        name: "CampusOrbit - Student Learning & Career Ecosystem",
+        short_name: "CampusOrbit",
+        description: "A collaborative notes-sharing and career guidance platform for Amrita Sai Institute students",
         theme_color: "#f97316",
         background_color: "#0c0a09",
         display: "standalone",

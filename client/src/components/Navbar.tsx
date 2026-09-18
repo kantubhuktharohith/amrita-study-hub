@@ -65,7 +65,7 @@ const Navbar = () => {
             alt="College Logo"
             className="h-9 w-9 rounded-lg object-cover"
           />
-          <span className="font-display text-xl font-bold">GetMaterial</span>
+          <span className="font-display text-xl font-bold">CampusOrbit</span>
         </Link>
 
         {/* Desktop Navigation Links */}

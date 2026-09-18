@@ -1,4 +1,4 @@
-# Amrita Sai Study Hub (GetMaterial)
+# CampusOrbit (Amrita Sai Study Hub)
 
 A modern, decoupled web application and peer collaboration platform designed for engineering students at **Amrita Sai Institute of Science & Technology**.
 

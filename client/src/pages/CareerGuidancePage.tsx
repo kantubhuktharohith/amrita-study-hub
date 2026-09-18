@@ -3,7 +3,6 @@ import { CAREER_PATHS,CareerPath } from "@/data/careerData";
 import { CareerPathCard } from "@/components/career/CareerPathCard";
 import { CareerDetailModal } from "@/components/career/CareerDetailModal";
 import { CareerQuizModal } from "@/components/career/CareerQuizModal";
-import { YearlyRoadmapView } from "@/components/career/YearlyRoadmapView";
 import { BranchInterviewPrepView } from "@/components/career/BranchInterviewPrepView";
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
@@ -17,7 +16,7 @@ const CareerGuidancePage: React.FC = () => {
   const [selectedDept, setSelectedDept] = useState<string>(
     ALL_DEPARTMENTS_FILTER,
   );
-  const [activeTab, setActiveTab] = useState<"roles" | "yearly" | "interview">(
+  const [activeTab, setActiveTab] = useState<"roles" | "interview">(
     "roles",
   );
 
@@ -55,30 +54,23 @@ const CareerGuidancePage: React.FC = () => {
             className="max-w-3xl mx-auto text-center"
           >
             <div className="mb-3 inline-flex items-center gap-2 rounded-full border bg-primary/10 px-3.5 py-1 text-xs font-semibold text-primary">
-              <Sparkles className="h-3.5 w-3.5" /> Amrita Sai Career Guidance &
-              Roadmaps
+              <Sparkles className="h-3.5 w-3.5" /> CampusOrbit Course Roadmaps & Career Prep
             </div>
-            <h1 className="mb-3 font-display text-3xl font-bold tracking-tight sm:text-4xl md:text-5xl">
-              Career Guidance for{" "}
-              <span className="text-gradient">All Engineering Courses</span>
+            <h1 className="font-display text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight text-foreground">
+              Step-by-Step <span className="text-gradient">Course Roadmaps</span>
             </h1>
-            <p className="text-sm sm:text-base text-muted-foreground leading-relaxed mb-6 max-w-2xl mx-auto">
-              Clear, step-by-step career pathways, year-by-year college
-              milestones, high-value certifications, project ideas, and
-              interview strategies tailored for every engineering branch.
+            <p className="mt-3 text-sm sm:text-base text-muted-foreground max-w-xl mx-auto">
+              Master the exact technologies, practical frameworks, and projects for your desired engineering field.
             </p>
 
-            {/* Quick Action CTA buttons */}
-            <div className="flex flex-wrap items-center justify-center gap-3">
+            {/* Actions */}
+            <div className="mt-6 flex flex-wrap items-center justify-center gap-3">
               <Button
                 onClick={() => setIsQuizModalOpen(true)}
-                size="lg"
-                className="bg-hero-gradient text-primary-foreground hover:opacity-90 shadow-sm text-xs sm:text-sm"
+                className="bg-hero-gradient text-white text-xs sm:text-sm font-semibold shadow-md hover:opacity-90 transition-opacity gap-2"
               >
-                <Compass className="mr-2 h-4 w-4" /> Find My Ideal Career Path
-                Quiz
+                <Compass className="h-4 w-4" /> Take Career Quiz
               </Button>
-              
             </div>
 
             {/* Key stats */}
@@ -88,7 +80,7 @@ const CareerGuidancePage: React.FC = () => {
                   9+
                 </div>
                 <div className="text-xs text-muted-foreground">
-                  Departments Covered
+                  Branches Covered
                 </div>
               </div>
               <div className="p-2">
@@ -96,15 +88,15 @@ const CareerGuidancePage: React.FC = () => {
                   12+
                 </div>
                 <div className="text-xs text-muted-foreground">
-                  In-Demand Roles
+                  Course Roadmaps
                 </div>
               </div>
               <div className="p-2">
                 <div className="text-xl sm:text-2xl font-bold text-foreground">
-                  1st - 4th
+                  Step-by-Step
                 </div>
                 <div className="text-xs text-muted-foreground">
-                  Year-by-Year Roadmaps
+                  Phased Curriculum
                 </div>
               </div>
               <div className="p-2">
@@ -112,7 +104,7 @@ const CareerGuidancePage: React.FC = () => {
                   100% Free
                 </div>
                 <div className="text-xs text-muted-foreground">
-                  Curated Resources
+                  Learning Resources
                 </div>
               </div>
             </div>
@@ -129,14 +121,11 @@ const CareerGuidancePage: React.FC = () => {
         >
           {/* Main Top Navigation Switcher */}
           <div className="flex justify-center mb-8">
-            <TabsList className="grid w-full max-w-md grid-cols-3">
-              <TabsTrigger value="roles" className="text-xs sm:text-sm">
-                Role Explorer
+            <TabsList className="grid w-full max-w-sm grid-cols-2">
+              <TabsTrigger value="roles" className="text-xs sm:text-sm font-medium">
+                Course Roadmaps
               </TabsTrigger>
-              <TabsTrigger value="yearly" className="text-xs sm:text-sm">
-                4-Year Roadmap
-              </TabsTrigger>
-              <TabsTrigger value="interview" className="text-xs sm:text-sm">
+              <TabsTrigger value="interview" className="text-xs sm:text-sm font-medium">
                 Interview Prep
               </TabsTrigger>
             </TabsList>
@@ -215,12 +204,7 @@ const CareerGuidancePage: React.FC = () => {
             )}
           </TabsContent>
 
-          {/* TAB 2: 4-Year Milestones Timeline */}
-          <TabsContent value="yearly">
-            <YearlyRoadmapView />
-          </TabsContent>
-
-          {/* TAB 3: Interview & Placement Prep Hub */}
+          {/* Interview & Placement Prep Hub */}
           <TabsContent value="interview" className="space-y-6">
             <BranchInterviewPrepView />
           </TabsContent>

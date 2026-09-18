@@ -1,6 +1,6 @@
 {
-  "name": "GetMaterial - Amrita Sai Study Hub",
-  "short_name": "GetMaterial",
+  "name": "CampusOrbit - Amrita Sai Study Hub",
+  "short_name": "CampusOrbit",
   "description": "Collaborative study notes, past papers, and career roadmaps for students.",
   "start_url": "/",
   "display": "standalone",

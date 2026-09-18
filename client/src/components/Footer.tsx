@@ -79,7 +79,7 @@ const Footer = () => {
                 className="h-9 w-9 rounded-lg object-cover ring-1 ring-border shadow-sm group-hover:scale-105 transition-transform"
               />
               <span className="font-display text-xl font-bold tracking-tight text-foreground">
-                Get<span className="text-primary">Material</span>
+                Campus<span className="text-primary">Orbit</span>
               </span>
             </Link>
             <p className="text-xs text-muted-foreground leading-relaxed max-w-sm mx-auto md:mx-0">
@@ -133,7 +133,7 @@ const Footer = () => {
 
         {/* Bottom divider and copyright */}
         <div className="mt-8 border-t border-border/50 pt-6 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs text-muted-foreground">
-          <p>@ {new Date().getFullYear()} GetMaterial · All rights reserved Rohith Kantubhuktha.</p>
+          <p>@ {new Date().getFullYear()} CampusOrbit · All rights reserved Rohith Kantubhuktha.</p>
           <p className="flex items-center gap-1">
             Built For ASIST Students.
           </p>

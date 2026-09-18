@@ -40,33 +40,68 @@ export const CareerQuizModal: React.FC<CareerQuizModalProps> = ({
     setShowResults(false);
   };
 
-  // Calculate matched career paths based on user answers
-  const getMatchedCareers = (): CareerPath[] => {
-    if (selectedAnswers.length === 0) return CAREER_PATHS.slice(0, 3);
+  // Calculate matched career paths with precision scoring and match percentages
+  const getMatchedCareers = (): { career: CareerPath; matchPercentage: number }[] => {
+    if (selectedAnswers.length === 0) {
+      return CAREER_PATHS.slice(0, 4).map((c) => ({ career: c, matchPercentage: 85 }));
+    }
 
-    const chosenCategories: string[] = [];
-    const chosenDepts: string[] = [];
+    const scored = CAREER_PATHS.map((career) => {
+      let score = 0;
+      let maxPossible = 0;
 
-    selectedAnswers.forEach((ansIndex, qIndex) => {
-      const q = CAREER_QUIZ_QUESTIONS[qIndex];
-      if (q && q.options[ansIndex]) {
-        chosenCategories.push(q.options[ansIndex].suggestedCategory);
-        chosenDepts.push(...q.options[ansIndex].suggestedDepartments);
-      }
+      selectedAnswers.forEach((ansIndex, qIndex) => {
+        const q = CAREER_QUIZ_QUESTIONS[qIndex];
+        const selectedOpt = q?.options[ansIndex];
+        if (!selectedOpt) return;
+
+        maxPossible += 50; // 30 for category + 20 for department
+
+        // Category match (+30 points)
+        if (career.category === selectedOpt.suggestedCategory) {
+          score += 30;
+        }
+
+        // Department match (+20 points)
+        if (selectedOpt.suggestedDepartments.includes(career.department)) {
+          score += 20;
+        } else if (
+          career.department === "All Departments" &&
+          selectedOpt.suggestedCategory === "Government & Higher Studies"
+        ) {
+          score += 20;
+        }
+      });
+
+      // Normalize match percentage between 65% and 98%
+      const percentage =
+        maxPossible > 0
+          ? Math.min(98, Math.max(65, Math.round((score / maxPossible) * 100)))
+          : 70;
+
+      return {
+        career,
+        score,
+        matchPercentage: score > 0 ? percentage : 50,
+      };
     });
 
-    const matches = CAREER_PATHS.filter((path) => {
-      const catMatch = chosenCategories.includes(path.category);
-      const deptMatch =
-        path.department === "All Departments" ||
-        chosenDepts.includes(path.department);
-      return catMatch || deptMatch;
-    });
+    // Sort by highest match score and select top 4 matches
+    const filtered = scored
+      .filter((item) => item.score > 0)
+      .sort((a, b) => b.score - a.score);
 
-    return matches.length > 0 ? matches : CAREER_PATHS.slice(0, 3);
+    const finalResults =
+      filtered.length > 0
+        ? filtered
+        : scored.sort((a, b) => b.score - a.score);
+
+    return finalResults.slice(0, 4);
   };
 
   const matchedCareers = getMatchedCareers();
+  const answeredCount = selectedAnswers.filter((a) => a !== undefined).length;
+  const progressPercent = (answeredCount / CAREER_QUIZ_QUESTIONS.length) * 100;
 
   return (
     <Dialog open={isOpen} onOpenChange={(open) => !open && onClose()}>
@@ -80,19 +115,31 @@ export const CareerQuizModal: React.FC<CareerQuizModalProps> = ({
           </DialogTitle>
           <DialogDescription className="text-xs sm:text-sm">
             {showResults
-              ? "Based on your interests, tools preference, and goals, here are the top matching career pathways:"
+              ? "Based on your technical interests, favorite toolkits, and post-grad aspirations, here are your top matches:"
               : `Question ${currentStep + 1} of ${CAREER_QUIZ_QUESTIONS.length}: Answer 3 quick questions to discover tailored roadmaps.`}
           </DialogDescription>
         </DialogHeader>
 
         {!showResults ? (
           <div>
-            {/* Progress bar */}
-            <div className="w-full bg-muted rounded-full h-1.5 mb-6 overflow-hidden">
-              <div
-                className="bg-hero-gradient h-full transition-all duration-300"
-                style={{ width: `${((currentStep + 1) / CAREER_QUIZ_QUESTIONS.length) * 100}%` }}
-              />
+            {/* Progress bar and counter */}
+            <div className="mb-6 space-y-2">
+              <div className="flex items-center justify-between text-xs text-muted-foreground">
+                <span className="font-semibold text-foreground">
+                  Question {currentStep + 1} of {CAREER_QUIZ_QUESTIONS.length}
+                </span>
+                <span className="text-[11px] font-medium">
+                  {answeredCount === 0
+                    ? "0% completed"
+                    : `${Math.round(progressPercent)}% completed`}
+                </span>
+              </div>
+              <div className="w-full bg-muted rounded-full h-2 overflow-hidden">
+                <div
+                  className="bg-hero-gradient h-full transition-all duration-300 ease-out"
+                  style={{ width: `${progressPercent}%` }}
+                />
+              </div>
             </div>
 
             {/* Question */}
@@ -144,7 +191,7 @@ export const CareerQuizModal: React.FC<CareerQuizModalProps> = ({
                 Back
               </Button>
               <div className="text-xs text-muted-foreground">
-                Step {currentStep + 1} of {CAREER_QUIZ_QUESTIONS.length}
+                {answeredCount} of {CAREER_QUIZ_QUESTIONS.length} answered
               </div>
             </div>
           </div>
@@ -154,7 +201,7 @@ export const CareerQuizModal: React.FC<CareerQuizModalProps> = ({
               <div className="flex items-center gap-2">
                 <CheckCircle className="h-5 w-5 text-emerald-500 shrink-0" />
                 <span className="text-xs sm:text-sm font-medium">
-                  We found <span className="font-bold text-primary">{matchedCareers.length} career options</span> tailored to your strengths!
+                  We found <span className="font-bold text-primary">{matchedCareers.length} top career pathways</span> matching your profile!
                 </span>
               </div>
               <Button onClick={handleReset} variant="outline" size="sm" className="text-xs gap-1.5 h-8">
@@ -163,15 +210,29 @@ export const CareerQuizModal: React.FC<CareerQuizModalProps> = ({
             </div>
 
             <div className="grid gap-4 sm:grid-cols-2">
-              {matchedCareers.map((career) => (
-                <CareerPathCard
-                  key={career.id}
-                  career={career}
-                  onSelect={(item) => {
-                    onClose();
-                    onSelectCareer(item);
-                  }}
-                />
+              {matchedCareers.map(({ career, matchPercentage }, idx) => (
+                <div key={career.id} className="relative group">
+                  {/* Match percentage badge */}
+                  <div className="absolute top-3 right-3 z-10">
+                    <span
+                      className={`inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-bold shadow-xs ${
+                        idx === 0
+                          ? "bg-emerald-500/15 text-emerald-600 dark:text-emerald-400 border border-emerald-500/30"
+                          : "bg-primary/10 text-primary border border-primary/20"
+                      }`}
+                    >
+                      {idx === 0 ? "🏆 Top Match" : "⭐ Great Fit"} · {matchPercentage}%
+                    </span>
+                  </div>
+
+                  <CareerPathCard
+                    career={career}
+                    onSelect={(item) => {
+                      onClose();
+                      onSelectCareer(item);
+                    }}
+                  />
+                </div>
               ))}
             </div>
 

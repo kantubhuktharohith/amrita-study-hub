@@ -4,8 +4,9 @@ import { Dialog,DialogContent,DialogTitle,DialogDescription } from "@/components
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Briefcase,TrendingUp,Award,Lightbulb,Building2,BookOpen,ExternalLink,CheckCircle2,Layers,GraduationCap,Calendar,Sparkles } from "lucide-react";
+import { Briefcase,TrendingUp,Award,Lightbulb,Building2,BookOpen,ExternalLink,CheckCircle2,Layers,GraduationCap,Calendar,Sparkles,ListTree } from "lucide-react";
 import { Link } from "react-router-dom";
+import { CourseMindMapRoadmap } from "./CourseMindMapRoadmap";
 
 interface CareerDetailModalProps {
   career: CareerPath | null;
@@ -24,7 +25,7 @@ export const CareerDetailModal: React.FC<CareerDetailModalProps> = ({
 
   return (
     <Dialog open={isOpen} onOpenChange={(open) => !open && onClose()}>
-      <DialogContent className="max-w-3xl w-full h-[88vh] max-h-[88vh] p-0 overflow-hidden flex flex-col gap-0 border rounded-xl shadow-2xl">
+      <DialogContent className="max-w-4xl lg:max-w-5xl w-full h-[92vh] max-h-[92vh] p-0 overflow-hidden flex flex-col gap-0 border rounded-xl shadow-2xl">
         {/* Header with gradient accent (Fixed at top) */}
         <div className="bg-hero-gradient p-5 sm:p-6 text-primary-foreground shrink-0 relative">
           <div className="flex flex-wrap items-center gap-2 mb-2">
@@ -61,7 +62,7 @@ export const CareerDetailModal: React.FC<CareerDetailModalProps> = ({
           <div className="bg-muted/40 border-b p-2 sm:p-3 shrink-0">
             <TabsList className="grid w-full grid-cols-4">
               <TabsTrigger value="roadmap" className="text-xs sm:text-sm flex items-center gap-1">
-                <Calendar className="h-3.5 w-3.5 hidden sm:inline" /> 4-Year Roadmap
+                <ListTree className="h-3.5 w-3.5 hidden sm:inline" /> Course Roadmap
               </TabsTrigger>
               <TabsTrigger value="skills" className="text-xs sm:text-sm flex items-center gap-1">
                 <Sparkles className="h-3.5 w-3.5 hidden sm:inline" /> Skills & Tools
@@ -75,105 +76,30 @@ export const CareerDetailModal: React.FC<CareerDetailModalProps> = ({
             </TabsList>
           </div>
 
-          {/* Tab 1: 4-Year College Roadmap */}
-          <TabsContent value="roadmap" className="flex-1 overflow-y-auto p-4 sm:p-6 space-y-5 min-h-0 focus-visible:outline-none">
-            <div className="rounded-lg border bg-muted/30 p-3 text-xs text-muted-foreground flex items-center gap-2">
-              <GraduationCap className="h-4 w-4 text-primary shrink-0" />
-              <span>Follow this step-by-step 4-year milestone plan from Semester 1 to Semester 8.</span>
-            </div>
+          {/* Tab 1: Course Learning Roadmap (Visual Tree Mind Map) */}
+          <TabsContent value="roadmap" className="flex-1 overflow-y-auto p-4 sm:p-6 space-y-4 min-h-0 focus-visible:outline-none">
+            <div className="space-y-4">
+              <CourseMindMapRoadmap career={career} />
 
-            <div className="relative border-l-2 border-primary/30 ml-4 pl-6 space-y-6 my-4">
-              {/* Year 1 */}
-              <div className="relative">
-                <div className="absolute -left-[31px] top-0 h-5 w-5 rounded-full border-2 border-primary bg-background flex items-center justify-center text-[10px] font-bold text-primary">
-                  1
-                </div>
-                <h4 className="font-semibold text-sm text-foreground flex items-center gap-2">
-                  1st Year: Foundations & Exploration
-                </h4>
-                <ul className="mt-2 space-y-1.5 text-xs text-muted-foreground">
-                  {career.roadmap.year1.map((item, idx) => (
-                    <li key={idx} className="flex items-start gap-2">
-                      <CheckCircle2 className="h-3.5 w-3.5 text-emerald-500 shrink-0 mt-0.5" />
-                      <span>{item}</span>
-                    </li>
+              {/* Key College Subjects to Master */}
+              <div className="rounded-lg border p-4 bg-card/60">
+                <h5 className="text-xs font-semibold uppercase tracking-wider text-muted-foreground mb-2 flex items-center gap-1.5">
+                  <BookOpen className="h-3.5 w-3.5 text-primary" /> Key College Subjects Connected to this Roadmap
+                </h5>
+                <div className="flex flex-wrap gap-1.5">
+                  {career.recommendedCoursesInCollege.map((subject, idx) => (
+                    <Badge key={idx} variant="outline" className="text-xs py-1">
+                      {subject}
+                    </Badge>
                   ))}
-                </ul>
-              </div>
-
-              {/* Year 2 */}
-              <div className="relative">
-                <div className="absolute -left-[31px] top-0 h-5 w-5 rounded-full border-2 border-primary bg-background flex items-center justify-center text-[10px] font-bold text-primary">
-                  2
                 </div>
-                <h4 className="font-semibold text-sm text-foreground flex items-center gap-2">
-                  2nd Year: Core Competency & Hands-on Tools
-                </h4>
-                <ul className="mt-2 space-y-1.5 text-xs text-muted-foreground">
-                  {career.roadmap.year2.map((item, idx) => (
-                    <li key={idx} className="flex items-start gap-2">
-                      <CheckCircle2 className="h-3.5 w-3.5 text-emerald-500 shrink-0 mt-0.5" />
-                      <span>{item}</span>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-
-              {/* Year 3 */}
-              <div className="relative">
-                <div className="absolute -left-[31px] top-0 h-5 w-5 rounded-full border-2 border-primary bg-background flex items-center justify-center text-[10px] font-bold text-primary">
-                  3
+                <div className="mt-2.5">
+                  <Link to="/browse" onClick={onClose}>
+                    <Button variant="ghost" size="sm" className="h-7 text-xs text-primary px-1 hover:bg-primary/10">
+                      Find study notes for these subjects →
+                    </Button>
+                  </Link>
                 </div>
-                <h4 className="font-semibold text-sm text-foreground flex items-center gap-2">
-                  3rd Year: Advanced Projects & Summer Internships
-                </h4>
-                <ul className="mt-2 space-y-1.5 text-xs text-muted-foreground">
-                  {career.roadmap.year3.map((item, idx) => (
-                    <li key={idx} className="flex items-start gap-2">
-                      <CheckCircle2 className="h-3.5 w-3.5 text-emerald-500 shrink-0 mt-0.5" />
-                      <span>{item}</span>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-
-              {/* Year 4 */}
-              <div className="relative">
-                <div className="absolute -left-[31px] top-0 h-5 w-5 rounded-full border-2 border-primary bg-background flex items-center justify-center text-[10px] font-bold text-primary">
-                  4
-                </div>
-                <h4 className="font-semibold text-sm text-foreground flex items-center gap-2">
-                  4th Year: Capstone & Placement Drives
-                </h4>
-                <ul className="mt-2 space-y-1.5 text-xs text-muted-foreground">
-                  {career.roadmap.year4.map((item, idx) => (
-                    <li key={idx} className="flex items-start gap-2">
-                      <CheckCircle2 className="h-3.5 w-3.5 text-emerald-500 shrink-0 mt-0.5" />
-                      <span>{item}</span>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            </div>
-
-            {/* College subjects connection */}
-            <div className="mt-6 rounded-lg border p-4 bg-card">
-              <h5 className="text-xs font-semibold uppercase tracking-wider text-muted-foreground mb-2 flex items-center gap-1.5">
-                <BookOpen className="h-3.5 w-3.5 text-primary" /> Key College Subjects to Master for this Role
-              </h5>
-              <div className="flex flex-wrap gap-1.5">
-                {career.recommendedCoursesInCollege.map((subject, idx) => (
-                  <Badge key={idx} variant="outline" className="text-xs py-1">
-                    {subject}
-                  </Badge>
-                ))}
-              </div>
-              <div className="mt-3">
-                <Link to="/browse" onClick={onClose}>
-                  <Button variant="ghost" size="sm" className="h-7 text-xs text-primary px-2 hover:bg-primary/10">
-                    Find study notes for these subjects →
-                  </Button>
-                </Link>
               </div>
             </div>
             <div className="h-6" />

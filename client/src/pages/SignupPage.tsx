@@ -97,7 +97,7 @@ const SignupPage = () => {
             <img src={collegeLogo} alt="College Logo" className="h-full w-full object-cover" />
           </div>
           <h1 className="font-display text-2xl font-bold">Create an account</h1>
-          <p className="text-sm text-muted-foreground">Join GetMaterial and start sharing notes</p>
+          <p className="text-sm text-muted-foreground">Join CampusOrbit and start sharing notes</p>
         </div>
 
         <div className="space-y-4 rounded-lg border bg-card p-6 shadow-card">
