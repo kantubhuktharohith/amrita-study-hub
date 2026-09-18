@@ -7,6 +7,7 @@ import notesRouter from './routes/notes.js';
 import examPapersRouter from './routes/examPapers.js';
 import communityRouter from './routes/community.js';
 import careerRouter from './routes/career.js';
+import profilesRouter from './routes/profiles.js';
 
 dotenv.config();
 
@@ -39,6 +40,7 @@ app.use('/api/notes', notesRouter);
 app.use('/api/exam-papers', examPapersRouter);
 app.use('/api/community', communityRouter);
 app.use('/api/career', careerRouter);
+app.use('/api/profiles', profilesRouter);
 
 // Root route
 app.get('/', (_req: Request, res: Response) => {
@@ -51,6 +53,7 @@ app.get('/', (_req: Request, res: Response) => {
       examPapers: '/api/exam-papers',
       community: '/api/community/info',
       career: '/api/career/categories',
+      profiles: '/api/profiles/:userId',
     },
     docs: 'https://github.com/amrita-study-hub',
   });
