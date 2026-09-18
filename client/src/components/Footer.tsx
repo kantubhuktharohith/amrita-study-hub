@@ -133,7 +133,7 @@ const Footer = () => {
 
         {/* Bottom divider and copyright */}
         <div className="mt-8 border-t border-border/50 pt-6 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs text-muted-foreground">
-          <p>@ {new Date().getFullYear()} GetMaterial · All rights reserved Tripura Veni Students.</p>
+          <p>@ {new Date().getFullYear()} GetMaterial · All rights reserved Rohith Kantubhuktha.</p>
           <p className="flex items-center gap-1">
             Built For ASIST Students.
           </p>
