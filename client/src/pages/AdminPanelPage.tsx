@@ -1,13 +1,14 @@
-import { Navigate, Link } from "react-router-dom";
+import { useState } from "react";
+import { Link } from "react-router-dom";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
-import { useAuth } from "@/contexts/AuthContext";
-import { useIsAdmin } from "@/hooks/useIsAdmin";
 import { fetchNotesWithProfiles,fetchExamPapersWithProfiles } from "@/lib/noteQueries";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Table,TableBody,TableCell,TableHead,TableHeader,TableRow } from "@/components/ui/table";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
 import {AlertDialog,AlertDialogAction,AlertDialogCancel,AlertDialogContent,AlertDialogDescription,AlertDialogFooter,AlertDialogHeader,AlertDialogTitle,AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
 import {
@@ -19,25 +20,38 @@ import {
   FileText,
   Users,
   Clock,
+  Lock,
+  Eye,
+  EyeOff,
 } from "lucide-react";
 import { toast } from "sonner";
 import { format } from "date-fns";
 
+// Admin credentials strictly from environment variables
+const ADMIN_ID = import.meta.env.VITE_ADMIN_ID;
+const ADMIN_PASSWORD = import.meta.env.VITE_ADMIN_PASSWORD;
+
 const AdminPanelPage = () => {
-  const { user } = useAuth();
-  const { isAdmin, isLoading: adminLoading } = useIsAdmin();
+  const [isAuthenticated, setIsAuthenticated] = useState(() => {
+    return sessionStorage.getItem("campusorbit_admin_auth") === "true";
+  });
+  const [adminId, setAdminId] = useState("");
+  const [adminPassword, setAdminPassword] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
+  const [loginError, setLoginError] = useState("");
+
   const queryClient = useQueryClient();
 
   const { data: allNotes = [], isLoading: notesLoading } = useQuery({
     queryKey: ["admin-all-notes"],
     queryFn: () => fetchNotesWithProfiles(),
-    enabled: isAdmin,
+    enabled: isAuthenticated,
   });
 
   const { data: allPapers = [], isLoading: papersLoading } = useQuery({
     queryKey: ["admin-all-papers"],
     queryFn: () => fetchExamPapersWithProfiles(),
-    enabled: isAdmin,
+    enabled: isAuthenticated,
   });
 
   const { data: allProfiles = [], isLoading: profilesLoading } = useQuery({
@@ -50,48 +64,108 @@ const AdminPanelPage = () => {
       if (error) throw error;
       return data || [];
     },
-    enabled: isAdmin,
+    enabled: isAuthenticated,
   });
 
-  if (!user) return <Navigate to="/login" replace />;
-  if (adminLoading)
+  const handleAdminLogin = (e: React.FormEvent) => {
+    e.preventDefault();
+    setLoginError("");
+    if (adminId === ADMIN_ID && adminPassword === ADMIN_PASSWORD) {
+      setIsAuthenticated(true);
+      sessionStorage.setItem("campusorbit_admin_auth", "true");
+      toast.success("Welcome, Admin!");
+    } else {
+      setLoginError("Invalid admin ID or password. Please try again.");
+    }
+  };
+
+  const handleAdminLogout = () => {
+    setIsAuthenticated(false);
+    sessionStorage.removeItem("campusorbit_admin_auth");
+    setAdminId("");
+    setAdminPassword("");
+  };
+
+  // Show login gate if not authenticated
+  if (!isAuthenticated) {
     return (
-      <div className="flex justify-center py-20">
-        <Loader2 className="h-8 w-8 animate-spin text-primary" />
-      </div>
-    );
-  if (!isAdmin) {
-    return (
-      <div className="container max-w-lg py-16 px-4">
-        <div className="rounded-xl border bg-card p-6 sm:p-8 text-center shadow-lg space-y-4">
-          <div className="mx-auto w-12 h-12 rounded-full bg-destructive/10 text-destructive flex items-center justify-center">
-            <Shield className="h-6 w-6" />
-          </div>
-          <h2 className="text-xl font-bold tracking-tight text-foreground">
-            Admin Access Required
-          </h2>
-          <p className="text-sm text-muted-foreground leading-relaxed">
-            You are signed in as <span className="font-semibold text-foreground">{user.email}</span>, but this account does not currently have administrator privileges.
-          </p>
-          <div className="rounded-lg bg-muted/60 p-3 text-left font-mono text-xs border text-muted-foreground space-y-1.5 overflow-x-auto">
-            <p className="text-[11px] font-sans font-medium text-foreground">
-              To grant admin access, run this in your Supabase SQL Editor:
-            </p>
-            <code className="text-primary block select-all">
-              INSERT INTO public.user_roles (user_id, role) VALUES ('{user.id}', 'admin');
-            </code>
-          </div>
-          <div className="pt-2 flex justify-center gap-3">
-            <Link to="/">
-              <Button variant="outline" size="sm">
-                Back to Home
+      <div className="min-h-[70vh] flex items-center justify-center px-4">
+        <div className="w-full max-w-sm">
+          <div className="rounded-2xl border bg-card p-6 sm:p-8 shadow-xl space-y-6">
+            {/* Header */}
+            <div className="text-center space-y-2">
+              <div className="mx-auto w-14 h-14 rounded-full bg-primary/10 flex items-center justify-center">
+                <Lock className="h-7 w-7 text-primary" />
+              </div>
+              <h2 className="text-xl font-bold tracking-tight text-foreground">
+                Admin Login
+              </h2>
+              <p className="text-xs text-muted-foreground">
+                Enter your admin credentials to access the panel
+              </p>
+            </div>
+
+            {/* Login Form */}
+            <form onSubmit={handleAdminLogin} className="space-y-4">
+              <div className="space-y-2">
+                <Label htmlFor="admin-id" className="text-sm font-medium">
+                  Admin ID
+                </Label>
+                <Input
+                  id="admin-id"
+                  type="text"
+                  placeholder="Enter admin ID"
+                  value={adminId}
+                  onChange={(e) => setAdminId(e.target.value)}
+                  className="h-10"
+                  autoFocus
+                  required
+                />
+              </div>
+              <div className="space-y-2">
+                <Label htmlFor="admin-password" className="text-sm font-medium">
+                  Password
+                </Label>
+                <div className="relative">
+                  <Input
+                    id="admin-password"
+                    type={showPassword ? "text" : "password"}
+                    placeholder="Enter password"
+                    value={adminPassword}
+                    onChange={(e) => setAdminPassword(e.target.value)}
+                    className="h-10 pr-10"
+                    required
+                  />
+                  <button
+                    type="button"
+                    onClick={() => setShowPassword(!showPassword)}
+                    className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground transition-colors"
+                  >
+                    {showPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
+                  </button>
+                </div>
+              </div>
+
+              {loginError && (
+                <p className="text-xs text-destructive font-medium bg-destructive/10 rounded-lg px-3 py-2">
+                  {loginError}
+                </p>
+              )}
+
+              <Button
+                type="submit"
+                className="w-full bg-hero-gradient text-white font-semibold h-10"
+              >
+                <Shield className="h-4 w-4 mr-2" />
+                Login to Admin Panel
               </Button>
-            </Link>
-            <Link to="/login">
-              <Button size="sm" className="bg-hero-gradient text-primary-foreground">
-                Switch Account
-              </Button>
-            </Link>
+            </form>
+
+            <div className="text-center">
+              <Link to="/" className="text-xs text-muted-foreground hover:text-primary transition-colors">
+                ← Back to Home
+              </Link>
+            </div>
           </div>
         </div>
       </div>
@@ -133,13 +207,22 @@ const AdminPanelPage = () => {
 
   const handleDeleteNote = async (noteId: string, fileUrl: string) => {
     try {
-      const urlParts = fileUrl.split("/notes/");
-      if (urlParts[1])
-        await supabase.storage
-          .from("notes")
-          .remove([decodeURIComponent(urlParts[1])]);
+      if (fileUrl) {
+        try {
+          const urlParts = fileUrl.split("/notes/");
+          if (urlParts.length > 1) {
+            const filePath = decodeURIComponent(urlParts[1]);
+            await supabase.storage.from("notes").remove([filePath]);
+          }
+        } catch (storageErr) {
+          console.error("Failed to delete file from storage:", storageErr);
+          // Continue to delete the database record even if storage deletion fails
+        }
+      }
+      
       const { error } = await supabase.from("notes").delete().eq("id", noteId);
       if (error) throw error;
+      
       queryClient.invalidateQueries({ queryKey: ["admin-all-notes"] });
       queryClient.invalidateQueries({ queryKey: ["notes"] });
       queryClient.invalidateQueries({ queryKey: ["top-notes"] });
@@ -151,16 +234,22 @@ const AdminPanelPage = () => {
 
   const handleDeletePaper = async (paperId: string, fileUrl: string) => {
     try {
-      const urlParts = fileUrl.split("/exam-papers/");
-      if (urlParts[1])
-        await supabase.storage
-          .from("exam-papers")
-          .remove([decodeURIComponent(urlParts[1])]);
-      const { error } = await supabase
-        .from("exam_papers")
-        .delete()
-        .eq("id", paperId);
+      if (fileUrl) {
+        try {
+          const urlParts = fileUrl.split("/exam-papers/");
+          if (urlParts.length > 1) {
+            const filePath = decodeURIComponent(urlParts[1]);
+            await supabase.storage.from("exam-papers").remove([filePath]);
+          }
+        } catch (storageErr) {
+          console.error("Failed to delete file from storage:", storageErr);
+          // Continue to delete the database record even if storage deletion fails
+        }
+      }
+
+      const { error } = await supabase.from("exam_papers").delete().eq("id", paperId);
       if (error) throw error;
+      
       queryClient.invalidateQueries({ queryKey: ["admin-all-papers"] });
       queryClient.invalidateQueries({ queryKey: ["exam-papers"] });
       toast.success("Exam paper deleted.");
@@ -191,14 +280,19 @@ const AdminPanelPage = () => {
 
   return (
     <div className="container py-8">
-      <div className="mb-6 flex items-center gap-3">
-        <Shield className="h-7 w-7 text-primary" />
-        <div>
-          <h1 className="font-display text-2xl font-bold">Admin Panel</h1>
-          <p className="text-sm text-muted-foreground">
-            Manage uploads, users, and pending content
-          </p>
+      <div className="mb-6 flex items-center justify-between">
+        <div className="flex items-center gap-3">
+          <Shield className="h-7 w-7 text-primary" />
+          <div>
+            <h1 className="font-display text-2xl font-bold">Admin Panel</h1>
+            <p className="text-sm text-muted-foreground">
+              Manage uploads, users, and pending content
+            </p>
+          </div>
         </div>
+        <Button variant="outline" size="sm" onClick={handleAdminLogout}>
+          Logout
+        </Button>
       </div>
 
       {/* Quick stats */}
