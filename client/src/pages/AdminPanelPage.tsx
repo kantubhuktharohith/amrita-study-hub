@@ -2,14 +2,33 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
-import { fetchNotesWithProfiles,fetchExamPapersWithProfiles } from "@/lib/noteQueries";
+import {
+  fetchNotesWithProfiles,
+  fetchExamPapersWithProfiles,
+} from "@/lib/noteQueries";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Table,TableBody,TableCell,TableHead,TableHeader,TableRow } from "@/components/ui/table";
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import {AlertDialog,AlertDialogAction,AlertDialogCancel,AlertDialogContent,AlertDialogDescription,AlertDialogFooter,AlertDialogHeader,AlertDialogTitle,AlertDialogTrigger,
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
 import {
   Loader2,
@@ -141,7 +160,11 @@ const AdminPanelPage = () => {
                     onClick={() => setShowPassword(!showPassword)}
                     className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground transition-colors"
                   >
-                    {showPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
+                    {showPassword ? (
+                      <EyeOff className="h-4 w-4" />
+                    ) : (
+                      <Eye className="h-4 w-4" />
+                    )}
                   </button>
                 </div>
               </div>
@@ -162,7 +185,10 @@ const AdminPanelPage = () => {
             </form>
 
             <div className="text-center">
-              <Link to="/" className="text-xs text-muted-foreground hover:text-primary transition-colors">
+              <Link
+                to="/"
+                className="text-xs text-muted-foreground hover:text-primary transition-colors"
+              >
                 ← Back to Home
               </Link>
             </div>
@@ -171,39 +197,6 @@ const AdminPanelPage = () => {
       </div>
     );
   }
-
-  const pendingNotes = allNotes.filter((n) => n.status === "pending");
-  const pendingPapers = allPapers.filter((p) => p.status === "pending");
-
-  const handleApprove = async (table: "notes" | "exam_papers", id: string) => {
-    const { error } = await supabase
-      .from(table)
-      .update({ status: "approved" })
-      .eq("id", id);
-    if (error) {
-      toast.error(error.message);
-      return;
-    }
-    toast.success("Approved!");
-    queryClient.invalidateQueries({ queryKey: ["admin-all-notes"] });
-    queryClient.invalidateQueries({ queryKey: ["admin-all-papers"] });
-    queryClient.invalidateQueries({ queryKey: ["notes"] });
-    queryClient.invalidateQueries({ queryKey: ["exam-papers"] });
-  };
-
-  const handleReject = async (table: "notes" | "exam_papers", id: string) => {
-    const { error } = await supabase
-      .from(table)
-      .update({ status: "rejected" })
-      .eq("id", id);
-    if (error) {
-      toast.error(error.message);
-      return;
-    }
-    toast.success("Rejected.");
-    queryClient.invalidateQueries({ queryKey: ["admin-all-notes"] });
-    queryClient.invalidateQueries({ queryKey: ["admin-all-papers"] });
-  };
 
   const handleDeleteNote = async (noteId: string, fileUrl: string) => {
     try {
@@ -216,13 +209,12 @@ const AdminPanelPage = () => {
           }
         } catch (storageErr) {
           console.error("Failed to delete file from storage:", storageErr);
-          // Continue to delete the database record even if storage deletion fails
         }
       }
-      
+
       const { error } = await supabase.from("notes").delete().eq("id", noteId);
       if (error) throw error;
-      
+
       queryClient.invalidateQueries({ queryKey: ["admin-all-notes"] });
       queryClient.invalidateQueries({ queryKey: ["notes"] });
       queryClient.invalidateQueries({ queryKey: ["top-notes"] });
@@ -243,39 +235,21 @@ const AdminPanelPage = () => {
           }
         } catch (storageErr) {
           console.error("Failed to delete file from storage:", storageErr);
-          // Continue to delete the database record even if storage deletion fails
         }
       }
 
-      const { error } = await supabase.from("exam_papers").delete().eq("id", paperId);
+      const { error } = await supabase
+        .from("exam_papers")
+        .delete()
+        .eq("id", paperId);
       if (error) throw error;
-      
+
       queryClient.invalidateQueries({ queryKey: ["admin-all-papers"] });
       queryClient.invalidateQueries({ queryKey: ["exam-papers"] });
       toast.success("Exam paper deleted.");
     } catch (err: any) {
       toast.error(err.message || "Failed to delete.");
     }
-  };
-
-  const statusBadge = (status: string) => {
-    if (status === "approved")
-      return (
-        <Badge className="bg-green-500/15 text-green-700 dark:text-green-400 border-green-500/30">
-          Approved
-        </Badge>
-      );
-    if (status === "pending")
-      return (
-        <Badge className="bg-yellow-500/15 text-yellow-700 dark:text-yellow-400 border-yellow-500/30">
-          Pending
-        </Badge>
-      );
-    return (
-      <Badge className="bg-red-500/15 text-red-700 dark:text-red-400 border-red-500/30">
-        Rejected
-      </Badge>
-    );
   };
 
   return (
@@ -315,65 +289,16 @@ const AdminPanelPage = () => {
           </div>
           <p className="mt-1 text-2xl font-bold">{allProfiles.length}</p>
         </div>
-        <div className="rounded-lg border bg-card p-4">
-          <div className="flex items-center gap-2 text-muted-foreground text-sm">
-            <Clock className="h-4 w-4" /> Pending
-          </div>
-          <p className="mt-1 text-2xl font-bold text-yellow-600">
-            {pendingNotes.length + pendingPapers.length}
-          </p>
-        </div>
       </div>
 
-      <Tabs defaultValue="pending">
+      <Tabs defaultValue="notes">
         <TabsList className="mb-6 flex-wrap">
-          <TabsTrigger value="pending">
-            Pending ({pendingNotes.length + pendingPapers.length})
-          </TabsTrigger>
           <TabsTrigger value="notes">All Notes ({allNotes.length})</TabsTrigger>
           <TabsTrigger value="papers">
             All Papers ({allPapers.length})
           </TabsTrigger>
           <TabsTrigger value="users">Users ({allProfiles.length})</TabsTrigger>
         </TabsList>
-
-        {/* Pending tab */}
-        <TabsContent value="pending">
-          {pendingNotes.length + pendingPapers.length === 0 ? (
-            <p className="py-12 text-center text-muted-foreground">
-              No pending content 🎉
-            </p>
-          ) : (
-            <div className="space-y-6">
-              {pendingNotes.length > 0 && (
-                <div>
-                  <h3 className="mb-3 font-semibold">Pending Notes</h3>
-                  <ContentTable
-                    items={pendingNotes}
-                    type="notes"
-                    statusBadge={statusBadge}
-                    onApprove={(id) => handleApprove("notes", id)}
-                    onReject={(id) => handleReject("notes", id)}
-                    onDelete={handleDeleteNote}
-                  />
-                </div>
-              )}
-              {pendingPapers.length > 0 && (
-                <div>
-                  <h3 className="mb-3 font-semibold">Pending Exam Papers</h3>
-                  <ContentTable
-                    items={pendingPapers}
-                    type="papers"
-                    statusBadge={statusBadge}
-                    onApprove={(id) => handleApprove("exam_papers", id)}
-                    onReject={(id) => handleReject("exam_papers", id)}
-                    onDelete={handleDeletePaper}
-                  />
-                </div>
-              )}
-            </div>
-          )}
-        </TabsContent>
 
         {/* All Notes tab */}
         <TabsContent value="notes">
@@ -383,9 +308,6 @@ const AdminPanelPage = () => {
             <ContentTable
               items={allNotes}
               type="notes"
-              statusBadge={statusBadge}
-              onApprove={(id) => handleApprove("notes", id)}
-              onReject={(id) => handleReject("notes", id)}
               onDelete={handleDeleteNote}
             />
           )}
@@ -399,9 +321,6 @@ const AdminPanelPage = () => {
             <ContentTable
               items={allPapers}
               type="papers"
-              statusBadge={statusBadge}
-              onApprove={(id) => handleApprove("exam_papers", id)}
-              onReject={(id) => handleReject("exam_papers", id)}
               onDelete={handleDeletePaper}
             />
           )}
@@ -451,16 +370,10 @@ const AdminPanelPage = () => {
 function ContentTable({
   items,
   type,
-  statusBadge,
-  onApprove,
-  onReject,
   onDelete,
 }: {
   items: any[];
   type: "notes" | "papers";
-  statusBadge: (s: string) => JSX.Element;
-  onApprove: (id: string) => void;
-  onReject: (id: string) => void;
   onDelete: (id: string, fileUrl: string) => void;
 }) {
   return (
@@ -472,7 +385,6 @@ function ContentTable({
             <TableHead>Subject</TableHead>
             <TableHead>Department</TableHead>
             <TableHead>Uploader</TableHead>
-            <TableHead>Status</TableHead>
             <TableHead>Date</TableHead>
             <TableHead className="text-right">Actions</TableHead>
           </TableRow>
@@ -490,34 +402,11 @@ function ContentTable({
               <TableCell className="text-sm">
                 {item.uploader_name || "Unknown"}
               </TableCell>
-              <TableCell>{statusBadge(item.status)}</TableCell>
               <TableCell className="text-sm text-muted-foreground">
                 {format(new Date(item.created_at), "dd MMM yyyy")}
               </TableCell>
               <TableCell className="text-right">
                 <div className="flex items-center justify-end gap-1">
-                  {item.status === "pending" && (
-                    <>
-                      <Button
-                        variant="ghost"
-                        size="icon"
-                        className="h-8 w-8 text-green-600 hover:text-green-700 hover:bg-green-500/10"
-                        onClick={() => onApprove(item.id)}
-                        title="Approve"
-                      >
-                        <CheckCircle className="h-4 w-4" />
-                      </Button>
-                      <Button
-                        variant="ghost"
-                        size="icon"
-                        className="h-8 w-8 text-red-600 hover:text-red-700 hover:bg-red-500/10"
-                        onClick={() => onReject(item.id)}
-                        title="Reject"
-                      >
-                        <XCircle className="h-4 w-4" />
-                      </Button>
-                    </>
-                  )}
                   <AlertDialog>
                     <AlertDialogTrigger asChild>
                       <Button
