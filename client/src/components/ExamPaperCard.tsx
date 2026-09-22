@@ -51,8 +51,6 @@ const ExamPaperCard = ({ paper, rating }: { paper: ExamPaperWithProfile; rating?
 
       <div className="flex flex-wrap gap-1.5 mb-3">
         <Badge variant="outline" className="text-[10px] px-1.5 py-0">Sem {paper.semester}</Badge>
-        <Badge variant="outline" className="text-[10px] px-1.5 py-0">{paper.department.split(" ")[0]}</Badge>
-        <Badge variant="outline" className="text-[10px] px-1.5 py-0">{paper.exam_year}</Badge>
       </div>
 
       <div className="flex items-center justify-between text-xs text-muted-foreground">

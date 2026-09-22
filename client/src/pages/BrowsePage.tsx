@@ -66,7 +66,22 @@ const BrowsePage = () => {
       .filter((n) => {
         if (!search) return true;
         const q = search.toLowerCase();
-        return n.title.toLowerCase().includes(q) || n.subject.toLowerCase().includes(q) || n.description?.toLowerCase().includes(q);
+        const content = `${n.title} ${n.subject} ${n.description || ""}`.toLowerCase();
+        
+        // Exact match
+        if (content.includes(q)) return true;
+
+        // Smart token match for long roadmap phrases
+        const qTokens = q.split(/[\s,()]+/).filter(w => w.length > 2 && !["and", "the", "for", "with", "learn", "basic", "basics", "master", "use"].includes(w));
+        
+        if (qTokens.length > 0) {
+          return qTokens.some(token => {
+            const cleanToken = token.replace(/[0-9]+$/, ''); // html5 -> html
+            return content.includes(token) || (cleanToken.length > 2 && content.includes(cleanToken));
+          });
+        }
+        
+        return false;
       })
       .filter((n) => department === "all" || n.department === department)
       .filter((n) => semester === "all" || n.semester === Number(semester))

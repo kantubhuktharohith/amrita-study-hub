@@ -2,7 +2,6 @@ import { FileText, Image, File, Download, User, Star } from "lucide-react";
 import { Link } from "react-router-dom";
 import { Badge } from "@/components/ui/badge";
 import { useQuery } from "@tanstack/react-query";
-
 import { supabase } from "@/integrations/supabase/client";
 import type { Tables } from "@/integrations/supabase/types";
 
@@ -57,9 +56,6 @@ const NoteCard = ({ note, rating }: { note: NoteWithProfile; rating?: number }) 
         ) : (
           <Badge variant="secondary" className="text-[10px] px-1.5 py-0 bg-primary/10 text-primary font-medium">Skill / Tech</Badge>
         )}
-        <Badge variant="outline" className="text-[10px] px-1.5 py-0">
-          {note.department === "Programming & Tech" ? "Programming" : note.department.split(" ")[0]}
-        </Badge>
       </div>
 
       <div className="flex items-center justify-between text-xs text-muted-foreground">
