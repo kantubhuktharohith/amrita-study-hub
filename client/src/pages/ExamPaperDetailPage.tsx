@@ -11,12 +11,19 @@ import RatingSection from "@/components/RatingSection";
 import CommentsSection from "@/components/CommentsSection";
 import PdfViewer from "@/components/PdfViewer";
 import { toast } from "sonner";
+import { useAuth } from "@/contexts/AuthContext";
+import { useIsAdmin } from "@/hooks/useIsAdmin";
+import { EditExamPaperModal } from "@/components/EditExamPaperModal";
+import { Pencil } from "lucide-react";
 
 const ExamPaperDetailPage = () => {
 
   const { id } = useParams();
   const navigate = useNavigate();
+  const { user } = useAuth();
+  const { isAdmin } = useIsAdmin();
   const [isFullscreen, setIsFullscreen] = useState(false);
+  const [isEditing, setIsEditing] = useState(false);
   const readerRef = useRef<HTMLDivElement>(null);
 
   const { data: paper, isLoading } = useQuery({
@@ -128,8 +135,20 @@ const ExamPaperDetailPage = () => {
           </h1>
         </div>
 
-        {/* Right Actions: Download, Fullscreen */}
+        {/* Right Actions: Edit, Download, Fullscreen */}
         <div className="flex items-center gap-1.5 shrink-0">
+          {(user?.id === paper.user_id || isAdmin) && (
+            <Button
+              variant="ghost"
+              size="icon"
+              className="text-white hover:bg-neutral-800 rounded-md border border-neutral-700 h-9 w-9"
+              onClick={() => setIsEditing(true)}
+              title="Edit Exam Paper Details"
+            >
+              <Pencil className="h-4 w-4" />
+            </Button>
+          )}
+
           <Button
             variant="ghost"
             size="icon"
@@ -251,6 +270,12 @@ const ExamPaperDetailPage = () => {
           <CommentsSection contentType="exam_paper" contentId={paper.id} />
         </div>
       </div>
+
+      <EditExamPaperModal
+        paper={paper}
+        open={isEditing}
+        onOpenChange={setIsEditing}
+      />
     </div>
   );
 };

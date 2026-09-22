@@ -10,12 +10,19 @@ import RatingSection from "@/components/RatingSection";
 import CommentsSection from "@/components/CommentsSection";
 import PdfViewer from "@/components/PdfViewer";
 import { toast } from "sonner";
+import { useAuth } from "@/contexts/AuthContext";
+import { useIsAdmin } from "@/hooks/useIsAdmin";
+import { EditNoteModal } from "@/components/EditNoteModal";
+import { Pencil } from "lucide-react";
 
 const NoteDetailPage = () => {
 
   const { id } = useParams();
   const navigate = useNavigate();
+  const { user } = useAuth();
+  const { isAdmin } = useIsAdmin();
   const [isFullscreen, setIsFullscreen] = useState(false);
+  const [isEditing, setIsEditing] = useState(false);
   const readerRef = useRef<HTMLDivElement>(null);
 
   const { data: note, isLoading } = useQuery({
@@ -123,8 +130,20 @@ const NoteDetailPage = () => {
           </h1>
         </div>
 
-        {/* Right Actions: Download, Fullscreen */}
+        {/* Right Actions: Edit, Download, Fullscreen */}
         <div className="flex items-center gap-1.5 shrink-0">
+          {(user?.id === note.user_id || isAdmin) && (
+            <Button
+              variant="ghost"
+              size="icon"
+              className="text-white hover:bg-neutral-800 rounded-md border border-neutral-700 h-9 w-9"
+              onClick={() => setIsEditing(true)}
+              title="Edit Note Details"
+            >
+              <Pencil className="h-4 w-4" />
+            </Button>
+          )}
+
           <Button
             variant="ghost"
             size="icon"
@@ -258,6 +277,12 @@ const NoteDetailPage = () => {
           <CommentsSection contentType="note" contentId={note.id} />
         </div>
       </div>
+
+      <EditNoteModal
+        note={note}
+        open={isEditing}
+        onOpenChange={setIsEditing}
+      />
     </div>
   );
 };
