@@ -7,11 +7,25 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useAuth } from "@/contexts/AuthContext";
-import { fetchNotesWithProfiles, fetchExamPapersWithProfiles, type ExamPaperWithProfile } from "@/lib/noteQueries";
+import {
+  fetchNotesWithProfiles,
+  fetchExamPapersWithProfiles,
+  type ExamPaperWithProfile,
+} from "@/lib/noteQueries";
 import { supabase } from "@/integrations/supabase/client";
 import { Loader2, Trash2, Pencil } from "lucide-react";
 import { toast } from "sonner";
-import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger } from "@/components/ui/alert-dialog";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "@/components/ui/alert-dialog";
 import { useIsAdmin } from "@/hooks/useIsAdmin";
 import EditNoteModal from "@/components/EditNoteModal";
 import EditExamPaperModal from "@/components/EditExamPaperModal";
@@ -22,7 +36,9 @@ const MyUploadsPage = () => {
   const { isAdmin } = useIsAdmin();
 
   const [editingNote, setEditingNote] = useState<NoteWithProfile | null>(null);
-  const [editingPaper, setEditingPaper] = useState<ExamPaperWithProfile | null>(null);
+  const [editingPaper, setEditingPaper] = useState<ExamPaperWithProfile | null>(
+    null,
+  );
 
   const { data: notes = [], isLoading: notesLoading } = useQuery({
     queryKey: ["my-notes", user?.id],
@@ -42,15 +58,24 @@ const MyUploadsPage = () => {
     try {
       try {
         const urlParts = fileUrl.split("/notes/");
-        if (urlParts[1]) await supabase.storage.from("notes").remove([decodeURIComponent(urlParts[1])]);
+        if (urlParts[1])
+          await supabase.storage
+            .from("notes")
+            .remove([decodeURIComponent(urlParts[1])]);
       } catch (storageErr) {
         console.warn("Storage deletion warning:", storageErr);
       }
 
-      const { data, error } = await supabase.from("notes").delete().eq("id", noteId).select();
+      const { data, error } = await supabase
+        .from("notes")
+        .delete()
+        .eq("id", noteId)
+        .select();
       if (error) throw error;
       if (!data || data.length === 0) {
-        throw new Error("Database blocked deletion. Please run the SQL migration in Supabase SQL Editor to allow deleting your own uploads.");
+        throw new Error(
+          "Database blocked deletion. Please run the SQL migration in Supabase SQL Editor to allow deleting your own uploads.",
+        );
       }
 
       queryClient.invalidateQueries({ queryKey: ["my-notes"] });
@@ -67,15 +92,24 @@ const MyUploadsPage = () => {
     try {
       try {
         const urlParts = fileUrl.split("/exam-papers/");
-        if (urlParts[1]) await supabase.storage.from("exam-papers").remove([decodeURIComponent(urlParts[1])]);
+        if (urlParts[1])
+          await supabase.storage
+            .from("exam-papers")
+            .remove([decodeURIComponent(urlParts[1])]);
       } catch (storageErr) {
         console.warn("Storage deletion warning:", storageErr);
       }
 
-      const { data, error } = await supabase.from("exam_papers").delete().eq("id", paperId).select();
+      const { data, error } = await supabase
+        .from("exam_papers")
+        .delete()
+        .eq("id", paperId)
+        .select();
       if (error) throw error;
       if (!data || data.length === 0) {
-        throw new Error("Database blocked deletion. Please run the SQL migration in Supabase SQL Editor to allow deleting your own uploads.");
+        throw new Error(
+          "Database blocked deletion. Please run the SQL migration in Supabase SQL Editor to allow deleting your own uploads.",
+        );
       }
 
       queryClient.invalidateQueries({ queryKey: ["my-exam-papers"] });
@@ -92,23 +126,33 @@ const MyUploadsPage = () => {
       <div className="mb-6 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
         <div>
           <h1 className="font-display text-2xl font-bold mb-1">My Uploads</h1>
-          <p className="text-sm text-muted-foreground">Manage and edit your uploaded notes and exam papers</p>
+          <p className="text-sm text-muted-foreground">
+            Manage and edit your uploaded notes and exam papers
+          </p>
         </div>
       </div>
 
       <Tabs defaultValue="notes">
         <TabsList className="mb-6">
           <TabsTrigger value="notes">Notes ({notes.length})</TabsTrigger>
-          <TabsTrigger value="exam-papers">Exam Papers ({examPapers.length})</TabsTrigger>
+          <TabsTrigger value="exam-papers">
+            Exam Papers ({examPapers.length})
+          </TabsTrigger>
         </TabsList>
 
         <TabsContent value="notes">
           {notesLoading ? (
-            <div className="py-16 flex justify-center"><Loader2 className="h-8 w-8 animate-spin text-primary" /></div>
+            <div className="py-16 flex justify-center">
+              <Loader2 className="h-8 w-8 animate-spin text-primary" />
+            </div>
           ) : notes.length === 0 ? (
             <div className="py-16 text-center">
-              <p className="text-muted-foreground mb-4">No notes uploaded yet.</p>
-              <Link to="/upload"><Button variant="outline">Upload notes</Button></Link>
+              <p className="text-muted-foreground mb-4">
+                No notes uploaded yet.
+              </p>
+              <Link to="/upload">
+                <Button variant="outline">Upload notes</Button>
+              </Link>
             </div>
           ) : (
             <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
@@ -116,7 +160,9 @@ const MyUploadsPage = () => {
                 <div key={note.id} className="relative group">
                   <NoteCard note={note} />
                   {note.status === "pending" && (
-                    <Badge className="absolute top-2 right-2 bg-warning text-warning-foreground text-[10px]">Pending</Badge>
+                    <Badge className="absolute top-2 right-2 bg-warning text-warning-foreground text-[10px]">
+                      Pending
+                    </Badge>
                   )}
 
                   <div className="absolute bottom-2 right-2 flex items-center gap-1.5 opacity-90 sm:opacity-0 sm:group-hover:opacity-100 transition-opacity z-10">
@@ -149,11 +195,20 @@ const MyUploadsPage = () => {
                       <AlertDialogContent>
                         <AlertDialogHeader>
                           <AlertDialogTitle>Delete this note?</AlertDialogTitle>
-                          <AlertDialogDescription>This will permanently delete "{note.title}". This cannot be undone.</AlertDialogDescription>
+                          <AlertDialogDescription>
+                            This will permanently delete "{note.title}". This
+                            cannot be undone.
+                          </AlertDialogDescription>
                         </AlertDialogHeader>
                         <AlertDialogFooter>
                           <AlertDialogCancel>Cancel</AlertDialogCancel>
-                          <AlertDialogAction onClick={() => handleDeleteNote(note.id, note.file_url)}>Delete</AlertDialogAction>
+                          <AlertDialogAction
+                            onClick={() =>
+                              handleDeleteNote(note.id, note.file_url)
+                            }
+                          >
+                            Delete
+                          </AlertDialogAction>
                         </AlertDialogFooter>
                       </AlertDialogContent>
                     </AlertDialog>
@@ -166,11 +221,17 @@ const MyUploadsPage = () => {
 
         <TabsContent value="exam-papers">
           {papersLoading ? (
-            <div className="py-16 flex justify-center"><Loader2 className="h-8 w-8 animate-spin text-primary" /></div>
+            <div className="py-16 flex justify-center">
+              <Loader2 className="h-8 w-8 animate-spin text-primary" />
+            </div>
           ) : examPapers.length === 0 ? (
             <div className="py-16 text-center">
-              <p className="text-muted-foreground mb-4">No exam papers uploaded yet.</p>
-              <Link to="/upload-exam-paper"><Button variant="outline">Upload exam paper</Button></Link>
+              <p className="text-muted-foreground mb-4">
+                No exam papers uploaded yet.
+              </p>
+              <Link to="/upload-exam-paper">
+                <Button variant="outline">Upload exam paper</Button>
+              </Link>
             </div>
           ) : (
             <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
@@ -178,7 +239,9 @@ const MyUploadsPage = () => {
                 <div key={paper.id} className="relative group">
                   <ExamPaperCard paper={paper} />
                   {paper.status === "pending" && (
-                    <Badge className="absolute top-2 right-2 bg-warning text-warning-foreground text-[10px]">Pending</Badge>
+                    <Badge className="absolute top-2 right-2 bg-warning text-warning-foreground text-[10px]">
+                      Pending
+                    </Badge>
                   )}
 
                   <div className="absolute bottom-2 right-2 flex items-center gap-1.5 opacity-90 sm:opacity-0 sm:group-hover:opacity-100 transition-opacity z-10">
@@ -210,12 +273,23 @@ const MyUploadsPage = () => {
                       </AlertDialogTrigger>
                       <AlertDialogContent>
                         <AlertDialogHeader>
-                          <AlertDialogTitle>Delete this exam paper?</AlertDialogTitle>
-                          <AlertDialogDescription>This will permanently delete "{paper.title}". This cannot be undone.</AlertDialogDescription>
+                          <AlertDialogTitle>
+                            Delete this exam paper?
+                          </AlertDialogTitle>
+                          <AlertDialogDescription>
+                            This will permanently delete "{paper.title}". This
+                            cannot be undone.
+                          </AlertDialogDescription>
                         </AlertDialogHeader>
                         <AlertDialogFooter>
                           <AlertDialogCancel>Cancel</AlertDialogCancel>
-                          <AlertDialogAction onClick={() => handleDeletePaper(paper.id, paper.file_url)}>Delete</AlertDialogAction>
+                          <AlertDialogAction
+                            onClick={() =>
+                              handleDeletePaper(paper.id, paper.file_url)
+                            }
+                          >
+                            Delete
+                          </AlertDialogAction>
                         </AlertDialogFooter>
                       </AlertDialogContent>
                     </AlertDialog>

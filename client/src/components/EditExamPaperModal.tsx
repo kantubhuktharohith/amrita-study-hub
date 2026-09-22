@@ -128,22 +128,6 @@ export const EditExamPaperModal = ({ paper, open, onOpenChange }: EditExamPaperM
             />
           </div>
 
-          <div className="space-y-1.5">
-            <Label htmlFor="edit-paper-department">Department / Branch</Label>
-            <Select value={department} onValueChange={setDepartment}>
-              <SelectTrigger id="edit-paper-department">
-                <SelectValue placeholder="Select Department" />
-              </SelectTrigger>
-              <SelectContent className="max-h-60">
-                {DEPARTMENTS.map((dept) => (
-                  <SelectItem key={dept} value={dept}>
-                    {dept}
-                  </SelectItem>
-                ))}
-              </SelectContent>
-            </Select>
-          </div>
-
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
             <div className="space-y-1.5">
               <Label htmlFor="edit-paper-semester">Semester</Label>
@@ -155,38 +139,6 @@ export const EditExamPaperModal = ({ paper, open, onOpenChange }: EditExamPaperM
                   {SEMESTERS.map((sem) => (
                     <SelectItem key={sem} value={String(sem)}>
                       Sem {sem}
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
-            </div>
-
-            <div className="space-y-1.5">
-              <Label htmlFor="edit-paper-exam-type">Exam Type</Label>
-              <Select value={examType} onValueChange={setExamType}>
-                <SelectTrigger id="edit-paper-exam-type">
-                  <SelectValue placeholder="Exam Type" />
-                </SelectTrigger>
-                <SelectContent>
-                  {EXAM_TYPES.map((type) => (
-                    <SelectItem key={type.value} value={type.value}>
-                      {type.label}
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
-            </div>
-
-            <div className="space-y-1.5">
-              <Label htmlFor="edit-paper-year">Exam Year</Label>
-              <Select value={examYear} onValueChange={setExamYear}>
-                <SelectTrigger id="edit-paper-year">
-                  <SelectValue placeholder="Year" />
-                </SelectTrigger>
-                <SelectContent>
-                  {EXAM_YEARS.map((yr) => (
-                    <SelectItem key={yr} value={String(yr)}>
-                      {yr}
                     </SelectItem>
                   ))}
                 </SelectContent>
