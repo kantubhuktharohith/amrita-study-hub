@@ -6,7 +6,7 @@ import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Loader2 } from "lucide-react";
-import { DEPARTMENTS, SEMESTERS, EXAM_TYPES, EXAM_YEARS } from "@/data/academicConstants";
+import { SEMESTERS } from "@/data/academicConstants";
 import { supabase } from "@/integrations/supabase/client";
 import { useQueryClient } from "@tanstack/react-query";
 import { toast } from "sonner";
@@ -22,10 +22,7 @@ export const EditExamPaperModal = ({ paper, open, onOpenChange }: EditExamPaperM
   const queryClient = useQueryClient();
   const [title, setTitle] = useState("");
   const [subject, setSubject] = useState("");
-  const [department, setDepartment] = useState("");
   const [semester, setSemester] = useState<string>("1");
-  const [examType, setExamType] = useState<string>("semester");
-  const [examYear, setExamYear] = useState<string>("2024");
   const [description, setDescription] = useState("");
   const [saving, setSaving] = useState(false);
 
@@ -33,10 +30,7 @@ export const EditExamPaperModal = ({ paper, open, onOpenChange }: EditExamPaperM
     if (paper) {
       setTitle(paper.title || "");
       setSubject(paper.subject || "");
-      setDepartment(paper.department || "Computer Science & Engineering");
       setSemester(paper.semester ? String(paper.semester) : "1");
-      setExamType(paper.exam_type || "semester");
-      setExamYear(paper.exam_year ? String(paper.exam_year) : String(new Date().getFullYear()));
       setDescription(paper.description || "");
     }
   }, [paper, open]);
@@ -58,18 +52,14 @@ export const EditExamPaperModal = ({ paper, open, onOpenChange }: EditExamPaperM
     try {
       const semNum = Number(semester) || 1;
       const academicYear = Math.ceil(semNum / 2) || 1;
-      const yearNum = Number(examYear) || new Date().getFullYear();
 
       const { data, error } = await supabase
         .from("exam_papers")
         .update({
           title: title.trim(),
           subject: subject.trim(),
-          department: department.trim() || "Computer Science & Engineering",
           semester: semNum,
           year: academicYear,
-          exam_type: examType,
-          exam_year: yearNum,
           description: description.trim() || null,
         })
         .eq("id", paper.id)
